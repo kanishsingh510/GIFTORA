@@ -156,7 +156,8 @@ const blankAddress = {
 };
 
 async function api(path, options = {}) {
-  const response = await fetch(`/api${path}`, {
+  const baseUrl = import.meta.env.VITE_API_URL || "/api";
+  const response = await fetch(`${baseUrl}${path}`, {
     headers: {
       "Content-Type": "application/json",
       ...(options.headers || {})
