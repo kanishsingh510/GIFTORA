@@ -321,8 +321,13 @@ export default function App() {
   useEffect(() => {
     api("/products")
       .then((data) => {
-        setProducts(data);
-        setApiMode("api");
+        if (data && data.length > 0) {
+          setProducts(data);
+          setApiMode("api");
+        } else {
+          setProducts(fallbackProducts);
+          setApiMode("demo");
+        }
       })
       .catch(() => {
         setProducts(fallbackProducts);
