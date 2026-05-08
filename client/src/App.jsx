@@ -750,7 +750,15 @@ export default function App() {
                   className="focus-ring group relative flex h-11 items-center gap-3 rounded-xl bg-ink px-6 text-sm font-black text-white transition-all hover:bg-slate-800"
                 >
                   <User size={18} className="text-coral" />
-                  <span>Login / Register</span>
+                  <span>Consumer Login</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => openLogin("seller")}
+                  className="focus-ring flex h-11 items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 text-sm font-bold text-slate-700 hover:border-ink hover:bg-slate-50 transition-all"
+                >
+                  <ShieldCheck size={18} className="text-primary" />
+                  <span>Seller Access</span>
                 </button>
               </div>
             )}
