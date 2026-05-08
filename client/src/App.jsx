@@ -374,8 +374,9 @@ export default function App() {
     setLoginForm({ ...demoAccounts[role], password: "demo123" });
   }
 
-  function openLogin(role = "consumer") {
-    selectLoginRole(role);
+  function openLogin(role = "consumer", mode = "login") {
+    setLoginRole(role);
+    setLoginMode(mode);
     setLoginOpen(true);
   }
 
@@ -721,24 +722,33 @@ export default function App() {
                 </button>
               </div>
             ) : (
-              <>
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="flex items-center rounded-xl bg-slate-100 p-1">
+                   <button
+                     type="button"
+                     onClick={() => openLogin("consumer", "login")}
+                     className="px-4 py-2 text-xs font-black uppercase tracking-widest text-slate-600 hover:text-ink transition-colors"
+                   >
+                     Login
+                   </button>
+                   <div className="w-[1px] h-4 bg-slate-300 mx-1" />
+                   <button
+                     type="button"
+                     onClick={() => openLogin("consumer", "register")}
+                     className="px-4 py-2 text-xs font-black uppercase tracking-widest text-slate-600 hover:text-ink transition-colors"
+                   >
+                     Join
+                   </button>
+                </div>
                 <button
                   type="button"
-                  onClick={() => openLogin("consumer")}
-                  className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-sm font-bold text-slate-700 hover:border-mint"
+                  onClick={() => openLogin("seller", "login")}
+                  className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-xl bg-ink px-4 text-[10px] font-black uppercase tracking-widest text-white hover:bg-slate-800 shadow-lg shadow-slate-200"
                 >
-                  <User size={17} aria-hidden="true" />
-                  Consumer login
+                  <ShieldCheck size={14} aria-hidden="true" />
+                  Admin
                 </button>
-                <button
-                  type="button"
-                  onClick={() => openLogin("seller")}
-                  className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-lg bg-ink px-4 text-sm font-black text-white hover:bg-slate-800"
-                >
-                  <ShieldCheck size={17} aria-hidden="true" />
-                  Admin Login
-                </button>
-              </>
+              </div>
             )}
           </div>
         </div>
@@ -849,49 +859,6 @@ function LoginPanel({ role, mode, setMode, form, setForm, selectRole, onSubmit, 
           </p>
           <h2 className="mt-2 text-3xl font-black">{roleCopy.title}</h2>
           <p className="mt-3 text-sm leading-6 text-white/75">{roleCopy.subtitle}</p>
-          
-          <div className="mt-5 grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={() => selectRole("consumer")}
-              className={`focus-ring min-h-11 rounded-lg border px-3 text-sm font-black ${
-                role === "consumer"
-                  ? "border-white bg-white text-ink"
-                  : "border-white/20 bg-white/5 text-white"
-              }`}
-            >
-              Consumer
-            </button>
-            <button
-              type="button"
-              onClick={() => selectRole("seller")}
-              className={`focus-ring min-h-11 rounded-lg border px-3 text-sm font-black ${
-                role === "seller"
-                  ? "border-white bg-white text-ink"
-                  : "border-white/20 bg-white/5 text-white"
-              }`}
-            >
-              Admin
-            </button>
-          </div>
-          
-          <div className="mt-6 border-t border-white/10 pt-4">
-             <p className="text-xs font-bold text-white/50 uppercase tracking-widest">Auth Mode</p>
-             <div className="mt-2 flex gap-4">
-                <button 
-                  onClick={() => setMode("login")}
-                  className={`text-sm font-black ${mode === "login" ? "text-lemon underline underline-offset-4" : "text-white/70 hover:text-white"}`}
-                >
-                  Sign In
-                </button>
-                <button 
-                  onClick={() => setMode("register")}
-                  className={`text-sm font-black ${mode === "register" ? "text-lemon underline underline-offset-4" : "text-white/70 hover:text-white"}`}
-                >
-                  Create Account
-                </button>
-             </div>
-          </div>
         </div>
 
         <form onSubmit={onSubmit} className="grid gap-4">
