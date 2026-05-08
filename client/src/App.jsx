@@ -375,6 +375,19 @@ export default function App() {
       );
       return;
     }
+    
+    if (tab.id === "orders" && session?.email) {
+      api(`/orders?email=${encodeURIComponent(session.email)}`)
+        .then((data) => setOrders(data))
+        .catch(() => {});
+    }
+    
+    if (tab.id === "seller") {
+      api("/orders")
+        .then((data) => setAdminOrders(data))
+        .catch(() => {});
+    }
+
     setActiveTab(tab.id);
   }
 
@@ -529,6 +542,21 @@ export default function App() {
       );
     } catch {
       setNotice("Price saved locally. Start the API for database persistence.");
+    }
+  }
+
+  async function addProduct(productData) {
+    try {
+      const created = await api("/products", {
+        method: "POST",
+        body: JSON.stringify(productData)
+      });
+      setProducts((current) => [created, ...current]);
+      setNotice(`New product "${created.name}" added to catalog.`);
+      return true;
+    } catch (error) {
+      setNotice(`Failed to add product: ${error.message}`);
+      return false;
     }
   }
 
@@ -712,6 +740,7 @@ export default function App() {
             products={products}
             orders={adminOrders}
             saveProductPrice={saveProductPrice}
+            addProduct={addProduct}
             updateOrderStatus={updateOrderStatus}
           />
         ) : null}
@@ -1467,19 +1496,85 @@ function OrderCard({ order }) {
   );
 }
 
-function AdminView({ metrics, products, orders, saveProductPrice, updateOrderStatus }) {
+function AdminView({ metrics, products, orders, saveProductPrice, addProduct, updateOrderStatus }) {
+  const [showAdd, setShowAdd] = useState(false);
+  const [newProduct, setNewProduct] = useState({
+    name: "",
+    category: "Mugs",
+    price: "",
+    description: ""
+  });
+
+  async function handleAdd(e) {
+    e.preventDefault();
+    const success = await addProduct(newProduct);
+    if (success) {
+      setShowAdd(false);
+      setNewProduct({ name: "", category: "Mugs", price: "", description: "" });
+    }
+  }
+
   return (
     <div className="space-y-5">
       <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
-        <p className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-coral">
-          <Store size={16} aria-hidden="true" />
-          Seller portal
-        </p>
-        <h2 className="mt-2 text-3xl font-black">Seller dashboard</h2>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">
-          Product pricing, catalog status, customer orders, fulfillment tracking, and sales analytics are locked to seller login.
-        </p>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-coral">
+              <Store size={16} aria-hidden="true" />
+              Seller portal
+            </p>
+            <h2 className="mt-2 text-3xl font-black">Seller dashboard</h2>
+          </div>
+          <button
+            onClick={() => setShowAdd(!showAdd)}
+            className="focus-ring inline-flex h-11 items-center gap-2 rounded-lg bg-ink px-4 text-sm font-black text-white hover:bg-slate-800"
+          >
+            {showAdd ? <Clock3 size={18} /> : <Plus size={18} />}
+            {showAdd ? "Close form" : "Add new product"}
+          </button>
+        </div>
       </section>
+
+      {showAdd && (
+        <section className="rounded-lg border border-mint bg-mint/5 p-4 shadow-soft sm:p-5">
+          <h2 className="text-xl font-black">Add new gift product</h2>
+          <form onSubmit={handleAdd} className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <Field
+              label="Product Name"
+              value={newProduct.name}
+              onChange={(v) => setNewProduct({ ...newProduct, name: v })}
+            />
+            <label className="grid gap-1.5">
+              <span className="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Category</span>
+              <select
+                value={newProduct.category}
+                onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
+                className="focus-ring min-h-11 rounded-lg border border-slate-200 bg-white px-3 text-sm"
+              >
+                <option>Mugs</option>
+                <option>T-Shirts</option>
+                <option>Phone Covers</option>
+                <option>Photo Frames</option>
+                <option>Keychains</option>
+              </select>
+            </label>
+            <Field
+              label="Base Price"
+              type="number"
+              value={newProduct.price}
+              onChange={(v) => setNewProduct({ ...newProduct, price: v })}
+            />
+            <div className="flex items-end">
+              <button
+                type="submit"
+                className="focus-ring h-11 w-full rounded-lg bg-coral text-sm font-black text-white hover:bg-orange-600"
+              >
+                Save to Catalog
+              </button>
+            </div>
+          </form>
+        </section>
+      )}
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <AdminMetric icon={Boxes} label="Orders" value={metrics.placed} />
@@ -1492,7 +1587,7 @@ function AdminView({ metrics, products, orders, saveProductPrice, updateOrderSta
         <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-coral">Products</p>
           <h2 className="text-3xl font-black">Catalog management</h2>
-          <div className="mt-5 space-y-3">
+          <div className="scrollbar-thin mt-5 max-h-[500px] space-y-3 overflow-auto pr-1">
             {products.map((product) => (
               <div key={product.slug} className="rounded-lg border border-slate-200 bg-slate-50 p-3">
                 <div className="flex items-start justify-between gap-3">
