@@ -34,6 +34,7 @@ const fallbackProducts = [
     category: "Mugs",
     price: 349,
     compareAt: 499,
+    image: "https://images.unsplash.com/photo-1514228742587-6b1558fbed20?q=80&w=800&auto=format&fit=crop",
     description: "Glossy 325 ml mug with wrap-around print area and gift-ready packaging.",
     leadTime: "2 days",
     rating: 4.8,
@@ -50,6 +51,7 @@ const fallbackProducts = [
     category: "T-Shirts",
     price: 599,
     compareAt: 799,
+    image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop",
     description: "Soft cotton tee with crisp DTG print support for photos and custom text.",
     leadTime: "3 days",
     rating: 4.7,
@@ -66,6 +68,7 @@ const fallbackProducts = [
     category: "Phone Covers",
     price: 449,
     compareAt: 649,
+    image: "https://images.unsplash.com/photo-1586105449897-20b5efeb3233?q=80&w=800&auto=format&fit=crop",
     description: "Durable matte phone cover with edge-to-edge image personalization.",
     leadTime: "2 days",
     rating: 4.6,
@@ -82,6 +85,7 @@ const fallbackProducts = [
     category: "Photo Frames",
     price: 699,
     compareAt: 999,
+    image: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=800&auto=format&fit=crop",
     description: "Premium tabletop frame with printed photo insert and message strip.",
     leadTime: "4 days",
     rating: 4.9,
@@ -106,7 +110,7 @@ const tabs = [
   { id: "studio", label: "Studio", icon: Sparkles },
   { id: "cart", label: "Cart", icon: ShoppingCart, role: "consumer" },
   { id: "orders", label: "Orders", icon: PackageCheck, role: "consumer" },
-  { id: "seller", label: "Seller", icon: Store, role: "seller" }
+  { id: "seller", label: "Admin Panel", icon: ShieldCheck, role: "seller" }
 ];
 
 const placements = [
@@ -335,8 +339,8 @@ export default function App() {
       setLoginOpen(false);
       setNotice(
         isRegister
-          ? `Account created! Logged in as ${nextSession.role}.`
-          : `Logged in as ${nextSession.role}.`
+          ? `Admin account created! Dashboard unlocked.`
+          : `Admin access granted. Welcome back.`
       );
 
       if (nextSession.role === "seller") {
@@ -662,10 +666,10 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => openLogin("seller")}
-                  className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-lg bg-ink px-3 text-sm font-bold text-white hover:bg-slate-800"
+                  className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-lg bg-ink px-4 text-sm font-black text-white hover:bg-slate-800"
                 >
-                  <Store size={17} aria-hidden="true" />
-                  Seller login
+                  <ShieldCheck size={17} aria-hidden="true" />
+                  Admin Login
                 </button>
               </>
             )}
@@ -755,13 +759,13 @@ function LoginPanel({ role, mode, setMode, form, setForm, selectRole, onSubmit, 
   const roleCopy =
     role === "seller"
       ? {
-          title: isRegister ? "Become a Seller" : "Seller login",
-          subtitle: "Manage products, prices, customer orders, and order status.",
-          icon: Store
+          title: isRegister ? "Create Admin Account" : "Admin Login",
+          subtitle: "Full access to product catalog, orders, and studio analytics.",
+          icon: ShieldCheck
         }
       : {
-          title: isRegister ? "Create Account" : "Consumer login",
-          subtitle: "Customize gifts, checkout, save delivery details, and track orders.",
+          title: isRegister ? "Create Account" : "Consumer Login",
+          subtitle: "Customize gifts, track orders, and manage your gift collections.",
           icon: User
         };
   const Icon = roleCopy.icon;
@@ -800,7 +804,7 @@ function LoginPanel({ role, mode, setMode, form, setForm, selectRole, onSubmit, 
                   : "border-white/20 bg-white/5 text-white"
               }`}
             >
-              Seller
+              Admin
             </button>
           </div>
           
@@ -860,7 +864,7 @@ function LoginPanel({ role, mode, setMode, form, setForm, selectRole, onSubmit, 
               className="focus-ring inline-flex min-h-11 items-center gap-2 rounded-lg bg-coral px-6 text-sm font-black text-white hover:bg-[#df4937]"
             >
               <LogIn size={17} aria-hidden="true" />
-              {isRegister ? "Register Now" : `Login as ${role}`}
+              {isRegister ? "Register Now" : `Login as ${role === "seller" ? "Admin" : "Consumer"}`}
             </button>
             <button
               type="button"
@@ -1191,40 +1195,41 @@ function ProductPreview({ product, customizer }) {
   );
 }
 
-function ProductCard({ product, selected, onSelect }) {
+function ProductCard({ product, onSelect }) {
   return (
-    <button
-      type="button"
-      onClick={onSelect}
-      className={`focus-ring rounded-lg border p-4 text-left transition ${
-        selected
-          ? "border-ink bg-ink text-white"
-          : "border-slate-200 bg-white hover:border-mint hover:shadow-soft"
-      }`}
-    >
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <p className={`text-xs font-bold uppercase tracking-[0.18em] ${selected ? "text-lemon" : "text-coral"}`}>
-            {product.category}
-          </p>
-          <h4 className="mt-1 text-lg font-black leading-tight">{product.name}</h4>
+    <article className="glass-card overflow-hidden group hover-lift border-transparent hover:border-mint/30 transition-all duration-500">
+      <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <button
+          onClick={() => onSelect(product)}
+          className="absolute bottom-4 left-4 right-4 focus-ring h-11 translate-y-4 rounded-xl bg-white px-4 text-sm font-black text-ink opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100"
+        >
+          Customize this Gift
+        </button>
+      </div>
+      <div className="p-5">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-widest text-coral">{product.category}</p>
+            <h3 className="mt-1 text-xl font-black tracking-tight text-slate-800">{product.name}</h3>
+          </div>
+          <p className="text-lg font-black text-ink">{money(product.price)}</p>
         </div>
-        <span className={`rounded-lg px-2 py-1 text-sm font-black ${selected ? "bg-white text-ink" : "bg-lemon/25 text-ink"}`}>
-          {money(product.price)}
-        </span>
+        <div className="mt-4 flex items-center gap-3 text-slate-500">
+          <div className="flex items-center gap-1 text-sm font-black text-amber-500">
+            <Star size={14} fill="currentColor" />
+            {product.rating}
+          </div>
+          <div className="h-1 w-1 rounded-full bg-slate-300" />
+          <p className="text-xs font-bold uppercase tracking-widest">{product.orders}+ custom designs</p>
+        </div>
       </div>
-      <p className={`mt-3 text-sm leading-6 ${selected ? "text-white/75" : "text-slate-600"}`}>
-        {product.description}
-      </p>
-      <div className="mt-4 flex flex-wrap gap-2 text-xs font-bold">
-        <span className={`rounded-md px-2 py-1 ${selected ? "bg-white/10" : "bg-slate-100"}`}>
-          {product.material}
-        </span>
-        <span className={`rounded-md px-2 py-1 ${selected ? "bg-white/10" : "bg-slate-100"}`}>
-          {product.rating} rating
-        </span>
-      </div>
-    </button>
+    </article>
   );
 }
 
@@ -1444,6 +1449,54 @@ function SummaryRow({ label, value, strong = false }) {
   );
 }
 
+function StudioView({ products, activeTab, onSelectProduct }) {
+  return (
+    <div className="grid gap-8 lg:grid-cols-[1fr_350px]">
+      <section className="space-y-8 animate-fade-in">
+        <div className="glass-card p-6 sm:p-8">
+          <p className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.2em] text-coral">
+            <Sparkles size={14} aria-hidden="true" />
+            Gift Customizer
+          </p>
+          <h2 className="mt-2 text-4xl font-black tracking-tight">Giftora Studio</h2>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-500 font-medium">
+            Select a premium gift from our catalog and personalize it with your favorite memories, colors, and messages.
+          </p>
+        </div>
+
+        <div className="grid gap-6 sm:grid-cols-2">
+          {products.map((product) => (
+            <ProductCard key={product.slug} product={product} onSelect={onSelectProduct} />
+          ))}
+        </div>
+      </section>
+
+      <aside className="space-y-6">
+         <div className="glass-card p-6 text-center bg-ink text-white">
+            <h3 className="text-lg font-black">Need Help?</h3>
+            <p className="mt-2 text-sm text-slate-300">Contact our design team for bulk orders or specialized requests.</p>
+            <button className="mt-4 w-full rounded-xl bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-widest hover:bg-white/20 transition-all">Support</button>
+         </div>
+         <div className="glass-card p-6">
+            <h3 className="text-lg font-black">Secure Shopping</h3>
+            <div className="mt-4 grid gap-3">
+               {[
+                 { icon: ShieldCheck, label: "256-bit Encryption" },
+                 { icon: Truck, label: "Express Delivery" },
+                 { icon: RefreshCcw, label: "Easy Returns" }
+               ].map((item, i) => (
+                 <div key={i} className="flex items-center gap-3 text-sm font-semibold text-slate-600">
+                    <item.icon size={16} className="text-coral" />
+                    {item.label}
+                 </div>
+               ))}
+            </div>
+         </div>
+      </aside>
+    </div>
+  );
+}
+
 function OrdersView({ orders, user, setUser, setActiveTab }) {
   return (
     <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
@@ -1489,38 +1542,49 @@ function OrdersView({ orders, user, setUser, setActiveTab }) {
 function OrderCard({ order }) {
   const currentIndex = Math.max(statusFlow.indexOf(order.status), 0);
   return (
-    <article className="rounded-lg border border-slate-200 bg-slate-50 p-4">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+    <article className="glass-card bg-white/50 p-6 animate-fade-in border-slate-100">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h3 className="text-lg font-black">{order.orderNumber}</h3>
-          <p className="mt-1 text-sm text-slate-600">
-            {order.items?.length || 0} item(s) | {money(order.totals?.grandTotal || 0)}
+          <h3 className="text-xl font-black tracking-tight text-slate-800">{order.orderNumber}</h3>
+          <p className="mt-1 text-sm font-semibold text-slate-500">
+            {order.items?.length || 0} item(s) | <span className="text-slate-800">{money(order.totals?.grandTotal || 0)}</span>
           </p>
         </div>
-        <span className="inline-flex w-fit items-center gap-2 rounded-lg bg-mint/15 px-3 py-2 text-sm font-black text-teal-900">
+        <span className="inline-flex w-fit items-center gap-2 rounded-xl bg-mint/10 px-4 py-2 text-xs font-black uppercase tracking-widest text-teal-700">
           <PackageCheck size={16} aria-hidden="true" />
           {order.status}
         </span>
       </div>
-      <div className="mt-4 grid gap-2 sm:grid-cols-6">
+      
+      <div className="mt-8 grid gap-2 sm:grid-cols-6">
         {statusFlow.map((status, index) => (
           <div
             key={status}
-            className={`min-h-14 rounded-lg border px-2 py-2 text-xs font-bold ${
+            className={`relative min-h-[60px] rounded-xl border p-3 transition-all duration-300 ${
               index <= currentIndex
-                ? "border-mint bg-mint/10 text-teal-900"
-                : "border-slate-200 bg-white text-slate-500"
+                ? "border-mint bg-mint/5 text-teal-900 shadow-sm shadow-mint/10"
+                : "border-slate-100 bg-white/30 text-slate-400"
             }`}
           >
-            {status}
+            <p className="text-[10px] font-black uppercase tracking-tighter">{status}</p>
+            {index < currentIndex && (
+              <div className="absolute -right-1.5 top-1/2 -translate-y-1/2 z-10 hidden sm:block">
+                 <div className="h-3 w-3 rounded-full bg-mint shadow-glow" />
+              </div>
+            )}
           </div>
         ))}
       </div>
-      <div className="mt-4 grid gap-2 text-sm text-slate-600">
+      
+      <div className="mt-6 space-y-3 rounded-2xl bg-slate-50/50 p-4">
+        <p className="text-xs font-black uppercase tracking-widest text-slate-400">Live Updates</p>
         {(order.tracking || []).slice(-3).map((entry, index) => (
-          <p key={`${entry.label}-${index}`}>
-            <span className="font-bold text-slate-800">{entry.label}:</span> {entry.note}
-          </p>
+          <div key={`${entry.label}-${index}`} className="flex gap-3 text-sm">
+             <div className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-coral" />
+             <p className="text-slate-600">
+               <span className="font-bold text-slate-800">{entry.label}:</span> {entry.note}
+             </p>
+          </div>
         ))}
       </div>
     </article>
@@ -1546,41 +1610,41 @@ function AdminView({ metrics, products, orders, saveProductPrice, addProduct, up
   }
 
   return (
-    <div className="space-y-5">
-      <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div className="space-y-6 animate-fade-in">
+      <section className="glass-card p-6 sm:p-8">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-coral">
-              <Store size={16} aria-hidden="true" />
-              Seller portal
+            <p className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.2em] text-coral">
+              <ShieldCheck size={14} aria-hidden="true" />
+              Administrative Control
             </p>
-            <h2 className="mt-2 text-3xl font-black">Seller dashboard</h2>
+            <h2 className="mt-2 text-4xl font-black tracking-tight">Admin Dashboard</h2>
           </div>
           <button
             onClick={() => setShowAdd(!showAdd)}
-            className="focus-ring inline-flex h-11 items-center gap-2 rounded-lg bg-ink px-4 text-sm font-black text-white hover:bg-slate-800"
+            className="focus-ring inline-flex h-12 items-center gap-2 rounded-xl bg-ink px-6 text-sm font-black text-white hover:bg-slate-800 transition-all shadow-lg"
           >
             {showAdd ? <Clock3 size={18} /> : <Plus size={18} />}
-            {showAdd ? "Close form" : "Add new product"}
+            {showAdd ? "Close Form" : "Add New Product"}
           </button>
         </div>
       </section>
 
       {showAdd && (
-        <section className="rounded-lg border border-mint bg-mint/5 p-4 shadow-soft sm:p-5">
-          <h2 className="text-xl font-black">Add new gift product</h2>
-          <form onSubmit={handleAdd} className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <section className="glass-card border-mint/30 bg-mint/5 p-6 animate-fade-in">
+          <h2 className="text-xl font-black">Register New Product</h2>
+          <form onSubmit={handleAdd} className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <Field
               label="Product Name"
               value={newProduct.name}
               onChange={(v) => setNewProduct({ ...newProduct, name: v })}
             />
-            <label className="grid gap-1.5">
-              <span className="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Category</span>
+            <label className="grid gap-2">
+              <span className="text-xs font-bold uppercase tracking-widest text-slate-500">Category</span>
               <select
                 value={newProduct.category}
                 onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
-                className="focus-ring min-h-11 rounded-lg border border-slate-200 bg-white px-3 text-sm"
+                className="focus-ring min-h-11 rounded-lg border border-slate-200 bg-white px-3 text-sm font-semibold"
               >
                 <option>Mugs</option>
                 <option>T-Shirts</option>
@@ -1590,7 +1654,7 @@ function AdminView({ metrics, products, orders, saveProductPrice, addProduct, up
               </select>
             </label>
             <Field
-              label="Base Price"
+              label="Base Price (INR)"
               type="number"
               value={newProduct.price}
               onChange={(v) => setNewProduct({ ...newProduct, price: v })}
@@ -1598,42 +1662,45 @@ function AdminView({ metrics, products, orders, saveProductPrice, addProduct, up
             <div className="flex items-end">
               <button
                 type="submit"
-                className="focus-ring h-11 w-full rounded-lg bg-coral text-sm font-black text-white hover:bg-orange-600"
+                className="focus-ring h-12 w-full rounded-xl bg-coral text-sm font-black text-white hover:bg-orange-600 shadow-lg shadow-coral/20"
               >
-                Save to Catalog
+                Publish to Catalog
               </button>
             </div>
           </form>
         </section>
       )}
 
-      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <AdminMetric icon={Boxes} label="Orders" value={metrics.placed} />
-        <AdminMetric icon={BarChart3} label="Revenue" value={money(metrics.revenue)} />
-        <AdminMetric icon={CreditCard} label="Avg. order" value={money(metrics.avgOrder)} />
-        <AdminMetric icon={Settings} label="Preview state" value={metrics.conversion} />
+      <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <AdminMetric icon={Boxes} label="Total Orders" value={metrics.placed} />
+        <AdminMetric icon={BarChart3} label="Gross Revenue" value={money(metrics.revenue)} />
+        <AdminMetric icon={CreditCard} label="Avg. Order Value" value={money(metrics.avgOrder)} />
+        <AdminMetric icon={Settings} label="System State" value={metrics.conversion} />
       </section>
 
-      <section className="grid gap-5 lg:grid-cols-[0.85fr_1.15fr]">
-        <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-coral">Products</p>
-          <h2 className="text-3xl font-black">Catalog management</h2>
-          <div className="scrollbar-thin mt-5 max-h-[500px] space-y-3 overflow-auto pr-1">
+      <section className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="glass-card p-6">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-coral">Inventory</p>
+          <h2 className="mt-1 text-2xl font-black">Catalog Control</h2>
+          <div className="scrollbar-thin mt-6 max-h-[500px] space-y-4 overflow-auto pr-2">
             {products.map((product) => (
-              <div key={product.slug} className="rounded-lg border border-slate-200 bg-slate-50 p-3">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <h3 className="font-black">{product.name}</h3>
-                    <p className="text-sm text-slate-600">{product.category}</p>
+              <div key={product.slug} className="rounded-2xl border border-slate-100 bg-white/50 p-4 hover:border-mint transition-colors">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex gap-4">
+                     <img src={product.image} className="w-16 h-16 rounded-xl object-cover" alt="" />
+                     <div>
+                        <h3 className="font-black text-slate-800">{product.name}</h3>
+                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{product.category}</p>
+                     </div>
                   </div>
                   <label className="grid gap-1">
-                    <span className="text-xs font-bold uppercase text-slate-500">Price</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Price Adjustment</span>
                     <input
                       type="number"
                       min="1"
                       defaultValue={product.price}
                       onBlur={(event) => saveProductPrice(product.slug, event.target.value)}
-                      className="focus-ring h-10 w-28 rounded-lg border border-slate-200 bg-white px-3 text-sm"
+                      className="focus-ring h-10 w-24 rounded-lg border border-slate-200 bg-white px-3 text-sm font-bold"
                     />
                   </label>
                 </div>
@@ -1642,28 +1709,28 @@ function AdminView({ metrics, products, orders, saveProductPrice, addProduct, up
           </div>
         </div>
 
-        <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-coral">Orders</p>
-          <h2 className="text-3xl font-black">Order management</h2>
-          <div className="scrollbar-thin mt-5 max-h-[560px] space-y-3 overflow-auto pr-1">
+        <div className="glass-card p-6">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-coral">Fulfillment</p>
+          <h2 className="mt-1 text-2xl font-black">Order Queue</h2>
+          <div className="scrollbar-thin mt-6 max-h-[560px] space-y-4 overflow-auto pr-2">
             {orders.length === 0 ? (
-              <div className="grid min-h-44 place-items-center rounded-lg border border-dashed border-slate-300 text-center">
-                <p className="font-bold text-slate-600">No customer orders yet.</p>
+              <div className="grid min-h-44 place-items-center rounded-2xl border border-dashed border-slate-200 text-center">
+                <p className="font-bold text-slate-400">No active customer orders.</p>
               </div>
             ) : (
               orders.map((order) => (
-                <div key={order.orderNumber} className="rounded-lg border border-slate-200 bg-slate-50 p-3">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div key={order.orderNumber} className="rounded-2xl border border-slate-100 bg-white/50 p-4 hover:border-mint transition-colors">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                      <h3 className="font-black">{order.orderNumber}</h3>
-                      <p className="text-sm text-slate-600">
+                      <h3 className="font-black text-slate-800">{order.orderNumber}</h3>
+                      <p className="text-sm font-semibold text-slate-500">
                         {order.customer?.name} | {money(order.totals?.grandTotal || 0)}
                       </p>
                     </div>
                     <select
                       value={order.status}
                       onChange={(event) => updateOrderStatus(order.orderNumber, event.target.value)}
-                      className="focus-ring min-h-10 rounded-lg border border-slate-200 bg-white px-3 text-sm font-bold"
+                      className="focus-ring min-h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm font-bold text-slate-700"
                     >
                       {statusFlow.map((status) => (
                         <option key={status} value={status}>

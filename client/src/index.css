@@ -1,45 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;600;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  color: #172033;
-  background: #f5f7fb;
-  font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+  --primary: #2DD4BF; /* Mint */
+  --secondary: #F43F5E; /* Coral */
+  --ink: #0F172A; /* Slate 900 */
+  --ink-light: #1E293B; /* Slate 800 */
+  --glass: rgba(255, 255, 255, 0.7);
+  --glass-dark: rgba(15, 23, 42, 0.8);
+  --radius: 1.5rem;
 }
 
 * {
   box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
   margin: 0;
-  min-width: 320px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(245, 247, 251, 0.94)),
-    #f5f7fb;
+  min-height: 100vh;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--ink);
+  background-color: #F8FAFC;
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(170, 78%, 78%, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(347, 87%, 82%, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(180, 50%, 85%, 0.1) 0px, transparent 50%);
+  background-attachment: fixed;
 }
 
-button,
-input,
-select,
-textarea {
-  font: inherit;
+h1, h2, h3, h4, .font-heading {
+  font-family: 'Outfit', sans-serif;
 }
 
+/* Glassmorphism Classes */
+.glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+}
+
+.dark-glass {
+  background: var(--glass-dark);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  color: white;
+}
+
+/* Custom UI Elements */
 .focus-ring:focus-visible {
-  outline: 3px solid rgba(20, 184, 166, 0.38);
-  outline-offset: 2px;
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
 }
 
 .preview-stage {
-  min-height: 430px;
-  background:
-    linear-gradient(135deg, rgba(20, 184, 166, 0.09), transparent 32%),
-    linear-gradient(315deg, rgba(243, 95, 76, 0.12), transparent 30%),
-    #ffffff;
+  min-height: 480px;
+  background: #fff;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: inset 0 0 100px rgba(0,0,0,0.02), 0 20px 50px -20px rgba(0,0,0,0.1);
 }
 
 .mockup {
@@ -48,59 +75,43 @@ textarea {
   display: grid;
   place-items: center;
   background: var(--product-color);
-  box-shadow: 0 22px 50px rgba(23, 32, 51, 0.16);
+  box-shadow: 0 30px 60px -15px rgba(15, 23, 42, 0.2);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Mug Mockup Re-styling */
 .mockup-mug {
-  width: min(260px, 70vw);
-  height: 210px;
-  border-radius: 26px 26px 42px 42px;
+  width: min(240px, 60vw);
+  height: 200px;
+  border-radius: 20px 20px 40px 40px;
 }
 
 .mockup-mug::after {
   content: "";
   position: absolute;
-  right: -46px;
-  top: 48px;
-  width: 88px;
-  height: 98px;
+  right: -42px;
+  top: 40px;
+  width: 80px;
+  height: 90px;
   border: 18px solid var(--product-color);
   border-left: 0;
-  border-radius: 0 54px 54px 0;
-  filter: drop-shadow(12px 12px 16px rgba(23, 32, 51, 0.12));
+  border-radius: 0 50px 50px 0;
 }
 
-.mockup-tee {
-  width: min(310px, 78vw);
-  height: 320px;
-  border-radius: 34px 34px 26px 26px;
-  clip-path: polygon(20% 0, 36% 0, 42% 13%, 58% 13%, 64% 0, 80% 0, 100% 24%, 84% 40%, 78% 100%, 22% 100%, 16% 40%, 0 24%);
-}
-
+/* Phone Mockup Re-styling */
 .mockup-phone {
-  width: min(205px, 58vw);
-  height: 365px;
-  border: 12px solid #111827;
-  border-radius: 42px;
+  width: min(190px, 50vw);
+  height: 350px;
+  border: 10px solid #111827;
+  border-radius: 40px;
 }
 
-.mockup-phone::before {
-  content: "";
-  position: absolute;
-  left: 22px;
-  top: 22px;
-  width: 46px;
-  height: 46px;
-  border: 7px solid rgba(17, 24, 39, 0.7);
-  border-radius: 16px;
-}
-
-.mockup-frame {
-  width: min(315px, 78vw);
-  height: 250px;
-  border: 22px solid var(--product-color);
-  border-radius: 18px;
-  background: #fff;
+/* Tee Mockup Re-styling */
+.mockup-tee {
+  width: min(300px, 75vw);
+  height: 310px;
+  border-radius: 30px;
+  clip-path: polygon(20% 0, 36% 0, 42% 13%, 58% 13%, 64% 0, 80% 0, 100% 24%, 84% 40%, 78% 100%, 22% 100%, 16% 40%, 0 24%);
 }
 
 .print-area {
@@ -108,67 +119,56 @@ textarea {
   display: grid;
   place-items: center;
   overflow: hidden;
-  border: 1px dashed rgba(23, 32, 51, 0.22);
-  background: rgba(255, 255, 255, 0.7);
-}
-
-.mockup-mug .print-area {
-  width: 68%;
-  height: 62%;
-  border-radius: 18px;
-}
-
-.mockup-tee .print-area {
-  width: 47%;
-  height: 39%;
-  margin-top: 50px;
-  border-radius: 14px;
-}
-
-.mockup-phone .print-area {
-  width: 78%;
-  height: 68%;
-  margin-top: 48px;
-  border-radius: 26px;
-}
-
-.mockup-frame .print-area {
-  width: 100%;
-  height: 100%;
-  border: 0;
-  border-radius: 2px;
+  border: 2px dashed rgba(15, 23, 42, 0.1);
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .custom-text {
   position: absolute;
   left: 50%;
-  max-width: 88%;
+  max-width: 90%;
   transform: translateX(-50%);
   text-align: center;
-  line-height: 1.05;
-  overflow-wrap: anywhere;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-weight: 800;
 }
 
-.placement-top {
-  top: 10%;
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.placement-center {
-  top: 48%;
-  transform: translate(-50%, -50%);
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
 }
 
-.placement-bottom {
-  bottom: 10%;
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+.hover-lift:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+/* Scrollbar */
 .scrollbar-thin::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: rgba(23, 32, 51, 0.18);
-  border-radius: 999px;
+  background: #CBD5E1;
+  border-radius: 10px;
 }
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Utilities */
+.text-coral { color: var(--secondary); }
+.bg-coral { background-color: var(--secondary); }
+.border-coral { border-color: var(--secondary); }
+.text-ink { color: var(--ink); }
+.bg-ink { background-color: var(--ink); }
