@@ -96,6 +96,48 @@ h1, h2, h3, h4, .font-heading {
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+@media (max-width: 768px) {
+  :root {
+    --radius: 1rem;
+  }
+  
+  body {
+    font-size: 14px;
+  }
+
+  .glass-card {
+    border-radius: 16px;
+    padding: 1rem !important;
+  }
+
+  .preview-stage {
+    min-height: 350px;
+  }
+
+  .mockup-mug {
+    width: 160px;
+    height: 140px;
+  }
+
+  .mockup-mug::after {
+    right: -25px;
+    top: 25px;
+    width: 50px;
+    height: 60px;
+    border-width: 10px;
+  }
+
+  h1 { font-size: 1.75rem !important; }
+  h2 { font-size: 1.5rem !important; }
+  h3 { font-size: 1.25rem !important; }
+}
+
+@media (max-width: 480px) {
+  .preview-stage {
+    min-height: 300px;
+  }
+}
+
 .mockup-mug {
   width: 200px;
   height: 180px;

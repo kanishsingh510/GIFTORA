@@ -680,7 +680,7 @@ export default function App() {
             </div>
           </div>
 
-          <nav className="flex items-center gap-1" aria-label="Giftora sections">
+          <nav className="flex items-center gap-1 overflow-x-auto pb-2 scrollbar-none lg:overflow-visible" aria-label="Giftora sections">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               const selected = activeTab === tab.id;
@@ -689,7 +689,7 @@ export default function App() {
                   key={tab.id}
                   type="button"
                   onClick={() => handleTabClick(tab)}
-                  className={`nav-link flex items-center gap-2 text-sm font-bold ${selected ? "active" : ""}`}
+                  className={`nav-link flex shrink-0 items-center gap-2 text-sm font-bold ${selected ? "active" : ""}`}
                 >
                   <Icon size={16} aria-hidden="true" />
                   {tab.label}
