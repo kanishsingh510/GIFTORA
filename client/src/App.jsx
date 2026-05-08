@@ -402,6 +402,11 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  function handleModeChange(mode) {
+    setLoginMode(mode);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   async function handleLogin(event) {
     event?.preventDefault();
     const isRegister = loginMode === "register";
@@ -783,7 +788,7 @@ export default function App() {
           <LoginPanel
             role={loginRole}
             mode={loginMode}
-            setMode={setLoginMode}
+            setMode={handleModeChange}
             form={loginForm}
             setForm={setLoginForm}
             selectRole={selectLoginRole}
