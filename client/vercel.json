@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://your-backend-url.onrender.com/api/:path*"
+      "destination": "https://giftora-1uie.onrender.com/api/:path*"
     },
     {
       "source": "/(.*)",

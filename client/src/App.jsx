@@ -10,6 +10,7 @@ import {
   LogIn,
   LogOut,
   MapPin,
+  Package,
   PackageCheck,
   Palette,
   Plus,
@@ -287,7 +288,6 @@ export default function App() {
   const [paymentMethod, setPaymentMethod] = useState("Giftora Secure Demo Pay");
   const [notice, setNotice] = useState("");
   const [search, setSearch] = useState("");
-  const [apiMode, setApiMode] = useState("connecting");
 
   const selectedProduct =
     products.find((product) => product.slug === selectedSlug) || products[0] || fallbackProducts[0];
@@ -374,6 +374,16 @@ export default function App() {
       .then((data) => setOrders(data))
       .catch(() => {});
   }, [user.email]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (loginOpen) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [loginOpen]);
 
   function selectLoginRole(role) {
     setLoginRole(role);
