@@ -722,32 +722,52 @@ export default function App() {
                 </button>
               </div>
             ) : (
-              <div className="flex flex-wrap items-center gap-2">
-                <div className="flex items-center rounded-xl bg-slate-100 p-1">
-                   <button
-                     type="button"
-                     onClick={() => openLogin("consumer", "login")}
-                     className="px-4 py-2 text-xs font-black uppercase tracking-widest text-slate-600 hover:text-ink transition-colors"
-                   >
-                     Login
-                   </button>
-                   <div className="w-[1px] h-4 bg-slate-300 mx-1" />
-                   <button
-                     type="button"
-                     onClick={() => openLogin("consumer", "register")}
-                     className="px-4 py-2 text-xs font-black uppercase tracking-widest text-slate-600 hover:text-ink transition-colors"
-                   >
-                     Join
-                   </button>
+              <div className="flex flex-wrap items-center gap-4">
+                {/* Consumer Auth */}
+                <div className="flex flex-col items-center gap-1">
+                   <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Consumer</p>
+                   <div className="flex items-center rounded-xl bg-slate-100 p-1">
+                      <button
+                        type="button"
+                        onClick={() => openLogin("consumer", "login")}
+                        className="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-slate-600 hover:text-ink transition-colors"
+                      >
+                        Login
+                      </button>
+                      <div className="w-[1px] h-3 bg-slate-300 mx-1" />
+                      <button
+                        type="button"
+                        onClick={() => openLogin("consumer", "register")}
+                        className="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-slate-600 hover:text-ink transition-colors"
+                      >
+                        Join
+                      </button>
+                   </div>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => openLogin("seller", "login")}
-                  className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-xl bg-ink px-4 text-[10px] font-black uppercase tracking-widest text-white hover:bg-slate-800 shadow-lg shadow-slate-200"
-                >
-                  <ShieldCheck size={14} aria-hidden="true" />
-                  Admin
-                </button>
+
+                <div className="h-8 w-[1px] bg-slate-200 hidden sm:block" />
+
+                {/* Admin Auth */}
+                <div className="flex flex-col items-center gap-1">
+                   <p className="text-[10px] font-black uppercase tracking-widest text-coral">Admin Panel</p>
+                   <div className="flex items-center rounded-xl bg-ink p-1">
+                      <button
+                        type="button"
+                        onClick={() => openLogin("seller", "login")}
+                        className="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-white/70 hover:text-white transition-colors"
+                      >
+                        Login
+                      </button>
+                      <div className="w-[1px] h-3 bg-white/20 mx-1" />
+                      <button
+                        type="button"
+                        onClick={() => openLogin("seller", "register")}
+                        className="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-white/70 hover:text-white transition-colors"
+                      >
+                        Join
+                      </button>
+                   </div>
+                </div>
               </div>
             )}
           </div>
