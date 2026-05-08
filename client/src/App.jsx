@@ -1451,54 +1451,6 @@ function SummaryRow({ label, value, strong = false }) {
   );
 }
 
-function StudioView({ products, activeTab, onSelectProduct }) {
-  return (
-    <div className="grid gap-8 lg:grid-cols-[1fr_350px]">
-      <section className="space-y-8 animate-fade-in">
-        <div className="glass-card p-6 sm:p-8">
-          <p className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.2em] text-coral">
-            <Sparkles size={14} aria-hidden="true" />
-            Gift Customizer
-          </p>
-          <h2 className="mt-2 text-4xl font-black tracking-tight">Giftora Studio</h2>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-500 font-medium">
-            Select a premium gift from our catalog and personalize it with your favorite memories, colors, and messages.
-          </p>
-        </div>
-
-        <div className="grid gap-6 sm:grid-cols-2">
-          {products.map((product) => (
-            <ProductCard key={product.slug} product={product} onSelect={onSelectProduct} />
-          ))}
-        </div>
-      </section>
-
-      <aside className="space-y-6">
-         <div className="glass-card p-6 text-center bg-ink text-white">
-            <h3 className="text-lg font-black">Need Help?</h3>
-            <p className="mt-2 text-sm text-slate-300">Contact our design team for bulk orders or specialized requests.</p>
-            <button className="mt-4 w-full rounded-xl bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-widest hover:bg-white/20 transition-all">Support</button>
-         </div>
-         <div className="glass-card p-6">
-            <h3 className="text-lg font-black">Secure Shopping</h3>
-            <div className="mt-4 grid gap-3">
-               {[
-                 { icon: ShieldCheck, label: "256-bit Encryption" },
-                 { icon: Truck, label: "Express Delivery" },
-                 { icon: RefreshCcw, label: "Easy Returns" }
-               ].map((item, i) => (
-                 <div key={i} className="flex items-center gap-3 text-sm font-semibold text-slate-600">
-                    <item.icon size={16} className="text-coral" />
-                    {item.label}
-                 </div>
-               ))}
-            </div>
-         </div>
-      </aside>
-    </div>
-  );
-}
-
 function OrdersView({ orders, user, setUser, setActiveTab }) {
   return (
     <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
