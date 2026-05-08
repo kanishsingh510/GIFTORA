@@ -42,6 +42,7 @@ function cleanProduct(product) {
     category: raw.category,
     price: raw.price,
     compareAt: raw.compareAt,
+    image: raw.image,
     description: raw.description,
     leadTime: raw.leadTime,
     rating: raw.rating,
