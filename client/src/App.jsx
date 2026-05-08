@@ -757,17 +757,25 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => openLogin("consumer")}
-                  className="focus-ring group relative flex h-11 items-center gap-3 rounded-xl bg-ink px-6 text-sm font-black text-white transition-all hover:bg-slate-800"
+                  className={`focus-ring group relative flex h-11 items-center gap-3 rounded-xl px-6 text-sm font-black transition-all ${
+                    loginOpen && loginRole === "consumer"
+                      ? "bg-coral text-white"
+                      : "bg-ink text-white hover:bg-slate-800"
+                  }`}
                 >
-                  <User size={18} className="text-coral" />
+                  <User size={18} className={loginOpen && loginRole === "consumer" ? "text-white" : "text-coral"} />
                   <span>Consumer Login</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => openLogin("seller")}
-                  className="focus-ring flex h-11 items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 text-sm font-bold text-slate-700 hover:border-ink hover:bg-slate-50 transition-all"
+                  className={`focus-ring flex h-11 items-center gap-2 rounded-xl border px-5 text-sm font-bold transition-all ${
+                    loginOpen && loginRole === "seller"
+                      ? "border-primary bg-primary/10 text-primary"
+                      : "border-slate-200 bg-white text-slate-700 hover:border-ink hover:bg-slate-50"
+                  }`}
                 >
-                  <ShieldCheck size={18} className="text-primary" />
+                  <ShieldCheck size={18} />
                   <span>Seller Access</span>
                 </button>
               </div>
