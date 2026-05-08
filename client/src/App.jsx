@@ -1206,14 +1206,14 @@ function ProductPreview({ product, customizer }) {
             alt="Uploaded custom design preview"
             className="h-full w-full object-cover"
           />
-        ) : (
-          <div className="grid h-full w-full place-items-center bg-slate-100 text-center text-sm font-bold text-slate-500">
+        ) : !customizer.text ? (
+          <div className="grid h-full w-full place-items-center bg-slate-50 text-center text-[10px] font-black uppercase tracking-widest text-slate-300">
             <span className="inline-flex flex-col items-center gap-2 px-4">
-              <ImageIcon size={24} aria-hidden="true" />
-              Upload Image
+              <ImageIcon size={20} aria-hidden="true" />
+              Design Area
             </span>
           </div>
-        )}
+        ) : null}
         <span
           className={`custom-text placement-${customizer.placement} ${fontClass} text-lg font-black sm:text-xl`}
           style={{ color: customizer.textColor }}
