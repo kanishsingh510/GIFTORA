@@ -800,6 +800,7 @@ export default function App() {
             addToCart={addToCart}
             search={search}
             setSearch={setSearch}
+            session={session}
           />
         ) : null}
 
@@ -970,7 +971,7 @@ function LoginPanel({ role, mode, setMode, form, setForm, selectRole, onSubmit, 
   );
 }
 
-function StudioView({ apiMode, products, allProducts, selectedProduct, selectedSlug, setSelectedSlug, customizer, updateCustomizer, handleUpload, addToCart, search, setSearch }) {
+function StudioView({ apiMode, products, allProducts, selectedProduct, selectedSlug, setSelectedSlug, customizer, updateCustomizer, handleUpload, addToCart, search, setSearch, session }) {
   return (
     <div className="space-y-12 animate-fade-in">
       <section className="text-center py-10 px-4">
@@ -1015,6 +1016,7 @@ function StudioView({ apiMode, products, allProducts, selectedProduct, selectedS
              updateCustomizer={updateCustomizer}
              handleUpload={handleUpload}
              addToCart={addToCart}
+             session={session}
            />
         </div>
       </section>
@@ -1027,7 +1029,8 @@ function CustomizerPanel({
   customizer,
   updateCustomizer,
   handleUpload,
-  addToCart
+  addToCart,
+  session
 }) {
   return (
     <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
