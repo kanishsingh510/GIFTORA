@@ -1093,9 +1093,11 @@ function StudioView({ apiMode, products, allProducts, selectedProduct, selectedS
            </div>
         </div>
 
-        <div className="space-y-8" ref={customizerRef}>
+        <div className="space-y-8">
            <h3 className="text-xl font-black sm:text-2xl">2. Customize & Preview</h3>
-           <PreviewPanel product={selectedProduct} customizer={customizer} />
+           <div ref={customizerRef}>
+             <PreviewPanel product={selectedProduct} customizer={customizer} />
+           </div>
            <CustomizerPanel
              selectedProduct={selectedProduct}
              customizer={customizer}
