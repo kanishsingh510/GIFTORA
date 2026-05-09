@@ -35,7 +35,7 @@ export default function App() {
   const [apiMode, setApiMode] = useState("connecting");
   const [products, setProducts] = useState([]);
   const [session, setSession] = useState(null);
-  const [loadingSession, setLoadingSession] = useState(true);
+  const [checkingSession, setCheckingSession] = useState(true);
 
   const tabs = useMemo(() => {
     if (session?.role === "seller") {
@@ -94,22 +94,25 @@ export default function App() {
     };
   }, [adminOrders, cart.length]);
 
-  // Initial Load: Products and Session
+  // Initial Load: Session and Products
   useEffect(() => {
-    // Check session
-    api("/auth/me")
-      .then((user) => {
+    async function init() {
+      // 1. Check session
+      try {
+        const user = await api("/auth/me");
         setSession(user);
         if (user.role === "consumer") {
           setUser({ name: user.name, email: user.email, phone: user.phone || "" });
         }
-      })
-      .catch(() => setSession(null))
-      .finally(() => setLoadingSession(false));
+      } catch (err) {
+        setSession(null);
+      } finally {
+        setCheckingSession(false);
+      }
 
-    // Load products
-    api("/products")
-      .then((data) => {
+      // 2. Load products
+      try {
+        const data = await api("/products");
         if (data && data.length > 0) {
           setProducts(data);
           setApiMode("api");
@@ -117,11 +120,13 @@ export default function App() {
           setProducts(fallbackProducts);
           setApiMode("demo");
         }
-      })
-      .catch(() => {
+      } catch (err) {
         setProducts(fallbackProducts);
         setApiMode("demo");
-      });
+      }
+    }
+
+    init();
   }, []);
 
   // Sync Orders
@@ -302,14 +307,6 @@ export default function App() {
     } catch (error) { setNotice(error.message); }
   }
 
-  if (loadingSession) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-white">
-        <RefreshCcw className="animate-spin text-coral" size={32} />
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen text-ink">
       <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/92 backdrop-blur">
@@ -347,7 +344,9 @@ export default function App() {
           </nav>
 
           <div className="flex items-center gap-4">
-            {session ? (
+            {checkingSession ? (
+              <RefreshCcw className="animate-spin text-slate-300" size={18} />
+            ) : session ? (
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
                    <div className="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center">
@@ -398,19 +397,26 @@ export default function App() {
 
         <Routes>
           <Route path="/" element={
-            <StudioView
-              products={filteredProducts}
-              selectedProduct={selectedProduct}
-              selectedSlug={selectedSlug}
-              setSelectedSlug={setSelectedSlug}
-              customizer={customizer}
-              updateCustomizer={updateCustomizer}
-              handleUpload={handleUpload}
-              addToCart={addToCart}
-              search={search}
-              setSearch={setSearch}
-              session={session}
-            />
+            products.length === 0 ? (
+              <div className="flex min-h-[400px] flex-col items-center justify-center text-center">
+                <RefreshCcw className="mb-4 animate-spin text-coral" size={32} />
+                <p className="text-sm font-black uppercase tracking-widest text-slate-400">Syncing with studio...</p>
+              </div>
+            ) : (
+              <StudioView
+                products={filteredProducts}
+                selectedProduct={selectedProduct}
+                selectedSlug={selectedSlug}
+                setSelectedSlug={setSelectedSlug}
+                customizer={customizer}
+                updateCustomizer={updateCustomizer}
+                handleUpload={handleUpload}
+                addToCart={addToCart}
+                search={search}
+                setSearch={setSearch}
+                session={session}
+              />
+            )
           } />
           
           <Route path="/cart" element={
