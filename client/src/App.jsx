@@ -226,7 +226,7 @@ const blankAddress = {
 };
 
 async function api(path, options = {}) {
-  const baseUrl = import.meta.env.VITE_API_URL || "/api";
+  const baseUrl = "/api";
   const response = await fetch(`${baseUrl}${path}`, {
     headers: {
       "Content-Type": "application/json",
