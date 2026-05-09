@@ -354,8 +354,12 @@ export default function App() {
         .then((data) => setAdminOrders(data))
         .catch((err) => {
           setAdminOrders([]);
-          setNotice(`Failed to load orders: ${err.message}`);
+          setNotice(`Failed to load admin orders: ${err.message}`);
         });
+    } else if (session?.role === "consumer" && session.email) {
+      api(`/orders?email=${session.email}`)
+        .then((data) => setOrders(data))
+        .catch(() => setOrders([]));
     }
   }, [session]);
 
