@@ -337,11 +337,15 @@ export default function App() {
         setProducts(fallbackProducts);
         setApiMode("demo");
       });
-
-    api("/orders")
-      .then((data) => setAdminOrders(data))
-      .catch(() => setAdminOrders([]));
   }, []);
+
+  useEffect(() => {
+    if (session?.role === "seller") {
+      api("/orders")
+        .then((data) => setAdminOrders(data))
+        .catch(() => setAdminOrders([]));
+    }
+  }, [session]);
 
   useEffect(() => {
     setCustomizer((current) => ({
@@ -1730,7 +1734,13 @@ function AdminView({ metrics, products, orders, saveProductPrice, addProduct, up
                    <img src={product.image} className="w-14 h-14 rounded-xl object-cover" alt="" />
                    <div>
                       <h3 className="font-black text-slate-800">{product.name}</h3>
-                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{product.category}</p>
+                      <div className="flex items-center gap-2">
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{product.category}</p>
+                        <span className="h-1 w-1 rounded-full bg-slate-300" />
+                        <p className="text-[10px] font-black text-coral uppercase tracking-widest">
+                          {orders.filter(o => o.items?.some(i => i.slug === product.slug)).length} Orders
+                        </p>
+                      </div>
                    </div>
                 </div>
                 <div className="flex items-center gap-4">
