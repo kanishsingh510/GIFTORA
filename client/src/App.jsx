@@ -226,10 +226,15 @@ const blankAddress = {
 };
 
 async function api(path, options = {}) {
-  const envUrl = import.meta.env.VITE_API_URL || "";
-  const baseUrl = envUrl.replace(/\/+$/, "") || "/api";
+  let baseUrl = (import.meta.env.VITE_API_URL || "/api").replace(/\/+$/, "");
+  
+  // Ensure /api is present if hitting a remote server directly
+  if (baseUrl.startsWith("http") && !baseUrl.endsWith("/api") && !path.startsWith("/api")) {
+    baseUrl += "/api";
+  }
+
   const cleanPath = path.startsWith("/") ? path : `/${path}`;
-  const url = envUrl ? `${baseUrl}${cleanPath}` : `${baseUrl}${cleanPath}`;
+  const url = `${baseUrl}${cleanPath}`;
 
   const response = await fetch(url, {
     headers: {
