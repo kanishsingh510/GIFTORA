@@ -57,7 +57,7 @@ function cleanProduct(product) {
 function cleanOrder(order) {
   const raw = order.toObject ? order.toObject() : order;
   return {
-    orderNumber: raw.orderNumber,
+    orderNumber: raw.orderNumber || raw._id?.toString() || "ORD-LEGACY",
     customer: raw.customer,
     address: raw.address,
     items: raw.items,

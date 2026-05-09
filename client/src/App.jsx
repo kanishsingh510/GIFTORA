@@ -343,7 +343,10 @@ export default function App() {
     if (session?.role === "seller") {
       api("/orders")
         .then((data) => setAdminOrders(data))
-        .catch(() => setAdminOrders([]));
+        .catch((err) => {
+          setAdminOrders([]);
+          setNotice(`Failed to load orders: ${err.message}`);
+        });
     }
   }, [session]);
 
