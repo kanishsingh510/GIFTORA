@@ -978,14 +978,31 @@ function LoginPanel({ role, mode, setMode, form, setForm, selectRole, onSubmit, 
           </div>
           
           <div className="mt-8 border-t border-white/10 pt-6">
-             <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 mb-3">Wrong place?</p>
-             <button
-                type="button"
-                onClick={() => selectRole(role === "seller" ? "consumer" : "seller")}
-                className="text-xs font-bold text-lemon hover:text-white transition-colors underline underline-offset-4"
-             >
-                Switch to {role === "seller" ? "Customer" : "Admin"} mode
-             </button>
+             <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 mb-3">Account Type</p>
+             <div className="flex rounded-xl bg-white/5 p-1">
+                <button
+                  type="button"
+                  onClick={() => selectRole("consumer")}
+                  className={`flex-1 rounded-lg py-2 text-xs font-black uppercase tracking-widest transition-all ${
+                    role === "consumer" 
+                      ? "bg-coral text-white shadow-lg" 
+                      : "text-white/60 hover:text-white"
+                  }`}
+                >
+                  Customer
+                </button>
+                <button
+                  type="button"
+                  onClick={() => selectRole("seller")}
+                  className={`flex-1 rounded-lg py-2 text-xs font-black uppercase tracking-widest transition-all ${
+                    role === "seller" 
+                      ? "bg-coral text-white shadow-lg" 
+                      : "text-white/60 hover:text-white"
+                  }`}
+                >
+                  Admin
+                </button>
+             </div>
           </div>
         </div>
 
