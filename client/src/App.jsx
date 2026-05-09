@@ -293,8 +293,10 @@ export default function App() {
   const [loginMode, setLoginMode] = useState("login"); // "login" or "register"
   const [loginRole, setLoginRole] = useState("consumer");
   const [loginForm, setLoginForm] = useState({
-    ...demoAccounts.consumer,
-    password: "demo123"
+    name: "",
+    email: "",
+    password: "",
+    phone: ""
   });
   const [user, setUser] = useState(() => getSaved("giftora-user", blankUser));
   const [address, setAddress] = useState(() => getSaved("giftora-address", blankAddress));
@@ -416,12 +418,13 @@ export default function App() {
 
   function selectLoginRole(role) {
     setLoginRole(role);
-    setLoginForm({ ...demoAccounts[role], password: "demo123" });
+    setLoginForm({ name: "", email: "", password: "", phone: "" });
   }
 
   function openLogin(role = "consumer", mode = "login") {
     setLoginRole(role);
     setLoginMode(mode);
+    setLoginForm({ name: "", email: "", password: "", phone: "" });
     setLoginOpen(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -434,13 +437,12 @@ export default function App() {
   async function handleLogin(event) {
     event?.preventDefault();
     const isRegister = loginMode === "register";
-    const base = demoAccounts[loginRole];
     const authPayload = {
       role: loginRole,
-      name: loginForm.name || base.name,
-      email: loginForm.email || base.email,
-      password: loginForm.password || "demo123",
-      phone: loginForm.phone || base.phone
+      name: loginForm.name,
+      email: loginForm.email,
+      password: loginForm.password,
+      phone: loginForm.phone
     };
 
     try {
