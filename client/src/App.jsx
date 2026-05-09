@@ -615,10 +615,6 @@ export default function App() {
     };
 
     try {
-      await api("/auth/demo", {
-        method: "POST",
-        body: JSON.stringify({ ...user, role: "consumer", address })
-      });
       const created = await api("/orders", {
         method: "POST",
         body: JSON.stringify(payload)
@@ -627,8 +623,8 @@ export default function App() {
       setAdminOrders((current) => [created, ...current]);
       setCart([]);
       setActiveTab("orders");
-      setNotice(`Order ${created.orderNumber} confirmed.`);
-    } catch {
+      setNotice(`Order ${created.orderNumber} confirmed!`);
+    } catch (error) {
       const localOrder = {
         orderNumber: `LOCAL-${Date.now()}`,
         ...payload,
@@ -651,7 +647,7 @@ export default function App() {
       setAdminOrders((current) => [localOrder, ...current]);
       setCart([]);
       setActiveTab("orders");
-      setNotice(`Order ${localOrder.orderNumber} confirmed in local mode.`);
+      setNotice(`Order saved locally: ${error.message}`);
     }
   }
 
