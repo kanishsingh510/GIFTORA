@@ -226,8 +226,11 @@ const blankAddress = {
 };
 
 async function api(path, options = {}) {
-  const baseUrl = import.meta.env.VITE_API_URL || "/api";
-  const response = await fetch(`${baseUrl}${path}`, {
+  const baseUrl = (import.meta.env.VITE_API_URL || "/api").replace(/\/+$/, "");
+  const cleanPath = path.startsWith("/") ? path : `/${path}`;
+  const url = `${baseUrl}${cleanPath}`.replace(/\/+/g, "/").replace(":/", "://");
+
+  const response = await fetch(url, {
     headers: {
       "Content-Type": "application/json",
       ...(options.headers || {})

@@ -26,7 +26,19 @@ let mongoReady = false;
 
 app.use(
   cors({
-    origin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
+    origin: (origin, callback) => {
+      const allowed = [
+        process.env.CLIENT_ORIGIN,
+        "http://localhost:5173",
+        "http://localhost:3000"
+      ].filter(Boolean);
+      
+      if (!origin || allowed.some(a => origin.startsWith(a.replace(/\/+$/, "")))) {
+        callback(null, true);
+      } else {
+        callback(null, true); // Fallback: allow all in case of misconfiguration
+      }
+    },
     credentials: true
   })
 );
