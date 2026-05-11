@@ -159,16 +159,28 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
           </div>
         </div>
 
-        {/* Product Grid Section */}
-        <div className="px-4">
-          <div className="flex items-center justify-between mb-5">
+        {/* Product Horizontal Scroll Section */}
+        <div className="pl-4">
+          <div className="flex items-center justify-between mb-5 pr-4">
             <h3 className="text-xl font-black text-ink">New Arrivals</h3>
             <button onClick={() => navigate("/studio")} className="text-[11px] font-black text-coral uppercase tracking-widest">See All</button>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-none pr-4">
             {featuredProducts.map((p) => (
-              <ProductCard key={p.id} product={p} selected={false} onSelect={() => navigate("/studio")} />
+              <div key={p.id} className="min-w-[160px] w-[160px]">
+                <ProductCard product={p} selected={false} onSelect={() => navigate("/studio")} />
+              </div>
             ))}
+            {/* View More Card */}
+            <div 
+              onClick={() => navigate("/studio")}
+              className="min-w-[140px] w-[140px] rounded-2xl bg-slate-50 border border-dashed border-slate-200 flex flex-col items-center justify-center gap-2 active:scale-95 transition-transform"
+            >
+              <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-coral">
+                <Sparkles size={20} />
+              </div>
+              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">View More</span>
+            </div>
           </div>
         </div>
       </div>
