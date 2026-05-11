@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { Sparkles, ShoppingBag, Gift, Truck, ShieldCheck, ArrowRight, Heart, Star } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Sparkles, ShoppingBag, Gift, Truck, ShieldCheck, ArrowRight, Heart, Star, ChevronLeft, ChevronRight } from "lucide-react";
 import CategoryCard from "../components/CategoryCard.jsx";
 import Testimonials from "../components/Testimonials.jsx";
 import { fallbackProducts } from "../utils/constants.js";
@@ -50,42 +51,72 @@ const categories = [
   }
 ];
 
+const heroImages = [
+  "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=1600",
+  "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=1600",
+  "https://images.unsplash.com/photo-1512418490979-92798ccc1380?q=80&w=1600",
+  "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1600"
+];
+
 export default function HomeView() {
   const navigate = useNavigate();
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + heroImages.length) % heroImages.length);
 
   // Featured products from fallback
   const featuredProducts = fallbackProducts.slice(0, 4);
 
   return (
     <div className="animate-fade-in pb-20">
-      {/* Hero Section - Clean & High Impact */}
-      <section className="relative py-32 px-4 text-center">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(20,184,166,0.05)_0,transparent_70%)] -z-10" />
-        <p className="text-[10px] font-black uppercase tracking-[0.5em] text-orange-500 mb-6">India's Premium Gifting Studio</p>
-        <h1 className="text-5xl font-black tracking-tighter sm:text-8xl text-ink leading-none mb-8">
-          Personalized <br />
-          <span className="text-orange-500 italic">With Love.</span>
-        </h1>
-        <p className="mt-8 mx-auto max-w-xl text-base text-slate-400 font-medium leading-relaxed sm:text-lg mb-12">
-          Design premium gifts in real-time. Handcrafted with passion, delivered with care.
-        </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+      {/* Dynamic Hero Slider */}
+      <section className="relative h-[600px] w-full overflow-hidden mb-20">
+        {heroImages.map((img, i) => (
+          <div 
+            key={i}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${i === currentSlide ? "opacity-100" : "opacity-0"}`}
+          >
+            <img src={img} className="h-full w-full object-cover" alt="Hero" />
+            <div className="absolute inset-0 bg-black/40" />
+          </div>
+        ))}
+
+        <div className="absolute inset-0 z-10 flex flex-col items-start justify-center px-8 sm:px-20 text-white">
+          <h1 className="text-5xl sm:text-8xl font-serif font-bold mb-6 animate-fade-in drop-shadow-2xl max-w-4xl leading-tight">
+            Perfect Gifts for <br /> Every Occasion
+          </h1>
+          <p className="text-xl sm:text-2xl font-medium mb-10 opacity-90 drop-shadow-lg max-w-2xl">
+            Discover unique presents that tell your story
+          </p>
           <button 
             onClick={() => navigate("/studio")}
-            className="focus-ring bg-ink text-white h-14 px-10 rounded-2xl text-base font-black hover:bg-slate-800 transition-all flex items-center gap-3 w-full sm:w-auto shadow-xl shadow-ink/20"
+            className="bg-[#facc15] hover:bg-[#eab308] text-black h-14 px-12 rounded-xl text-lg font-black transition-all shadow-xl shadow-black/20 flex items-center gap-3"
           >
-            <Sparkles size={20} className="text-orange-500" />
-            Open Studio
-          </button>
-          <button 
-             onClick={() => {
-                document.getElementById('shop-categories')?.scrollIntoView({ behavior: 'smooth' });
-             }}
-             className="focus-ring bg-white border border-slate-200 text-ink h-14 px-10 rounded-2xl text-base font-black hover:border-mint transition-all w-full sm:w-auto"
-          >
-            View Varieties
+            Shop Now
           </button>
         </div>
+
+        {/* Slider Controls */}
+        <button 
+          onClick={prevSlide}
+          className="absolute left-6 top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all"
+        >
+          <ChevronLeft size={24} />
+        </button>
+        <button 
+          onClick={nextSlide}
+          className="absolute right-6 top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all"
+        >
+          <ChevronRight size={24} />
+        </button>
       </section>
 
       {/* Categories - Simplified Grid */}
