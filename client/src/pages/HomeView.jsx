@@ -34,46 +34,36 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
       {/* 📱 MOBILE-ONLY REFINED VIEW */}
       <div className="block sm:hidden w-full overflow-x-hidden">
         
-        {/* ABSOLUTE LOCKDOWN MOBILE HEADER */}
-        <div 
-          className="fixed top-0 left-0 w-full h-16 bg-white/95 backdrop-blur-2xl border-b border-slate-100 z-[999] flex items-center px-4 box-border"
-          style={{ width: '100vw' }}
-        >
-          <div className="relative flex-1">
+        {/* REFINED SEARCH BAR - MOVED DOWN, NON-FIXED */}
+        <div className="w-full px-4 py-6 box-border bg-white border-b border-slate-50 mb-8">
+          <div className="relative w-full overflow-hidden">
             <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
             <input 
               type="text" 
-              placeholder="Search unique gifts... (LOCKED)"
-              className="w-full bg-slate-100/80 border-none h-10 pl-12 pr-4 rounded-xl text-sm font-semibold focus:ring-0 appearance-none"
+              placeholder="Search for your next gift..."
+              className="w-full bg-slate-100/70 border-none h-12 pl-12 pr-4 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-coral/20 appearance-none"
             />
-          </div>
-          <div className="ml-3 p-2 text-ink" onClick={() => navigate("/cart")}>
-             <ShoppingBag size={22} />
           </div>
         </div>
 
-        {/* Placeholder to prevent overlap */}
-        <div className="h-16 w-full" />
-
-        <div className="space-y-12 mt-10 w-full overflow-x-hidden">
+        <div className="space-y-12 w-full overflow-x-hidden">
           
-          {/* FORCED OVERFLOW STORIES - MASSIVE GAPS TO ENSURE SCROLL */}
+          {/* DYNAMIC SCROLLING STORIES */}
           <div className="w-full overflow-x-auto scrollbar-none py-2 touch-pan-x">
-             <div className="flex flex-nowrap gap-10 px-8 w-max">
+             <div className="flex flex-nowrap gap-8 px-6 w-max">
                 {dynamicCategories.map((cat) => (
                   <button 
                     key={cat.id} 
                     onClick={() => navigate(`/studio?category=${cat.name}`)} 
                     className="flex flex-col items-center gap-3 shrink-0 active:scale-95"
                   >
-                    <div className="relative w-24 h-24 rounded-full p-1 bg-white shadow-lg border border-slate-50">
+                    <div className="relative w-[84px] h-[84px] rounded-full p-1 bg-white shadow-md border border-slate-50">
                       <img src={cat.image} className="w-full h-full rounded-full object-cover" alt={cat.name} />
                     </div>
-                    <span className="text-[12px] font-black text-ink uppercase tracking-tight">{cat.name}</span>
+                    <span className="text-[11px] font-black text-ink uppercase tracking-tight">{cat.name}</span>
                   </button>
                 ))}
-                {/* Visual End Buffer */}
-                <div className="w-8 h-24 shrink-0" />
+                <div className="w-6 shrink-0" />
              </div>
           </div>
 
@@ -81,7 +71,7 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
           <div className="w-full overflow-hidden">
             <div 
               onClick={() => navigate("/studio")}
-              className="relative aspect-[16/9] w-full overflow-hidden"
+              className="relative aspect-[16/9.5] w-full overflow-hidden"
             >
               <img 
                 src="https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&q=80&w=800" 
@@ -109,7 +99,7 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div key={i} className="flex items-center gap-3">
                   <Sparkles size={14} className="text-coral" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white text-xs">Premium Quality • Express Delivery • Handcrafted</span>
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white">Premium Quality • Express Delivery • Handcrafted</span>
                 </div>
               ))}
             </div>
