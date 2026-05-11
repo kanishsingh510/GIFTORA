@@ -22,7 +22,7 @@ export default function ProductCard({ product, selected, onSelect }) {
           alt={product.name}
           loading="lazy"
           onLoad={() => setLoaded(true)}
-          onError={(e) => { e.target.src = placeholderImage; }}
+          onError={(e) => { e.target.src = placeholderImage; setLoaded(true); }}
           className={`relative z-10 h-full w-full object-cover transition-all duration-700 ${loaded ? "opacity-100" : "opacity-0"} ${selected ? "scale-105" : "hover:scale-105"}`}
         />
         {selected && (
