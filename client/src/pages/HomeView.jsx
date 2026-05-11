@@ -11,28 +11,28 @@ const categories = [
     id: "birthday",
     name: "Birthday Gifts",
     subtitle: "Make their special day unforgettable",
-    image: "https://images.unsplash.com/photo-1530103043960-ef38714abb15?w=500",
+    image: "https://images.unsplash.com/photo-1530103043960-ef38714abb15?auto=format&fit=crop&q=70&w=400",
     count: 124
   },
   {
     id: "anniversary",
     name: "Anniversary Gifts",
     subtitle: "Celebrate love and togetherness",
-    image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=500",
+    image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=70&w=400",
     count: 89
   },
   {
     id: "personalized",
     name: "Personalized Gifts",
     subtitle: "Custom gifts with a personal touch",
-    image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=500",
+    image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&q=70&w=400",
     count: 156
   },
   {
     id: "marriage",
     name: "Marriage Gifts",
     subtitle: "Elegant gifts for the perfect couple",
-    image: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=500",
+    image: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=70&w=400",
     count: 42
   }
 ];
@@ -51,12 +51,21 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
   return (
     <div className="animate-fade-in pb-24">
       {/* Hero Section — Full-bleed, mobile-first */}
-      <section className="relative h-[420px] sm:h-[600px] overflow-hidden mb-10 sm:mb-24 bg-slate-900 -mx-4 sm:-mx-6 lg:-mx-8" style={{width: 'calc(100% + 2rem)'}}>
+      <section className="relative h-[420px] sm:h-[600px] overflow-hidden mb-6 sm:mb-16 bg-slate-900 relative left-1/2 -translate-x-1/2 w-screen">
         <div className="absolute inset-0 w-full h-full">
           <img 
-            src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&q=90&w=1600" 
-            className="h-full w-full object-cover opacity-60" 
-            alt="Giftora Hero" 
+            src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&q=75&w=1200"
+            srcSet="
+              https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&q=70&w=600 600w,
+              https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&q=75&w=1000 1000w,
+              https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&q=75&w=1600 1600w
+            "
+            sizes="100vw"
+            className="h-full w-full object-cover opacity-60"
+            alt="Giftora Hero"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
           />
           {/* Gradient overlay for better text contrast */}
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/30 via-slate-900/40 to-slate-900/70" />

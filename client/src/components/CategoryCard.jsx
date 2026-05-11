@@ -15,6 +15,7 @@ export default function CategoryCard({ category, image, subtitle, count, onClick
         <img 
           src={image || placeholderImage} 
           alt={category} 
+          loading="lazy"
           className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-90" />
