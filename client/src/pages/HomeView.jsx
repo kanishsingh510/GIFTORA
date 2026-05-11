@@ -34,58 +34,61 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
       {/* 📱 MOBILE-ONLY REFINED VIEW */}
       <div className="block sm:hidden w-full overflow-x-hidden">
         
-        {/* MOBILE FIXED HEADER (Search) */}
-        <div className="sticky top-0 z-[100] w-full bg-white/95 backdrop-blur-2xl border-b border-slate-100 flex items-center h-20 px-4 box-border">
-          <div className="relative w-full flex items-center gap-3">
-            <div className="relative flex-1">
-              <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-              <input 
-                type="text" 
-                placeholder="Search unique gifts... (v3.1)"
-                className="w-full bg-slate-100/80 border-none h-11 pl-12 pr-4 rounded-xl text-sm font-semibold focus:ring-0 appearance-none"
-              />
-            </div>
-            <div className="bg-coral/10 p-2.5 rounded-xl text-coral">
-               <ShoppingBag size={20} />
-            </div>
+        {/* ABSOLUTE LOCKDOWN MOBILE HEADER */}
+        <div 
+          className="fixed top-0 left-0 w-full h-16 bg-white/95 backdrop-blur-2xl border-b border-slate-100 z-[999] flex items-center px-4 box-border"
+          style={{ width: '100vw' }}
+        >
+          <div className="relative flex-1">
+            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+            <input 
+              type="text" 
+              placeholder="Search unique gifts... (LOCKED)"
+              className="w-full bg-slate-100/80 border-none h-10 pl-12 pr-4 rounded-xl text-sm font-semibold focus:ring-0 appearance-none"
+            />
+          </div>
+          <div className="ml-3 p-2 text-ink" onClick={() => navigate("/cart")}>
+             <ShoppingBag size={22} />
           </div>
         </div>
 
-        <div className="space-y-12 mt-8">
-          {/* DYNAMIC SCROLLING STORIES - HARDENED WRAPPER */}
-          <div className="w-full overflow-hidden">
-            <div className="flex overflow-x-auto scrollbar-none gap-6 px-6 pb-2 snap-x snap-mandatory">
-              {dynamicCategories.map((cat) => (
-                <button 
-                  key={cat.id} 
-                  onClick={() => navigate(`/studio?category=${cat.name}`)} 
-                  className="flex flex-col items-center gap-3 shrink-0 snap-center active:scale-90 transition-transform"
-                >
-                  <div className="relative">
-                    <div className="absolute -inset-2 rounded-full bg-gradient-to-tr from-coral via-mint to-lemon animate-spin-slow opacity-30" />
-                    <div className="relative w-20 h-20 rounded-full p-1 bg-white shadow-lg border border-white">
+        {/* Placeholder to prevent overlap */}
+        <div className="h-16 w-full" />
+
+        <div className="space-y-12 mt-10 w-full overflow-x-hidden">
+          
+          {/* FORCED OVERFLOW STORIES - MASSIVE GAPS TO ENSURE SCROLL */}
+          <div className="w-full overflow-x-auto scrollbar-none py-2 touch-pan-x">
+             <div className="flex flex-nowrap gap-10 px-8 w-max">
+                {dynamicCategories.map((cat) => (
+                  <button 
+                    key={cat.id} 
+                    onClick={() => navigate(`/studio?category=${cat.name}`)} 
+                    className="flex flex-col items-center gap-3 shrink-0 active:scale-95"
+                  >
+                    <div className="relative w-24 h-24 rounded-full p-1 bg-white shadow-lg border border-slate-50">
                       <img src={cat.image} className="w-full h-full rounded-full object-cover" alt={cat.name} />
                     </div>
-                  </div>
-                  <span className="text-[11px] font-black text-ink uppercase tracking-tight">{cat.name}</span>
-                </button>
-              ))}
-              <div className="min-w-[40px] shrink-0" aria-hidden="true" />
-            </div>
+                    <span className="text-[12px] font-black text-ink uppercase tracking-tight">{cat.name}</span>
+                  </button>
+                ))}
+                {/* Visual End Buffer */}
+                <div className="w-8 h-24 shrink-0" />
+             </div>
           </div>
 
           {/* LUXURY BANNER */}
           <div className="w-full overflow-hidden">
             <div 
               onClick={() => navigate("/studio")}
-              className="relative aspect-[16/9.5] w-full overflow-hidden"
+              className="relative aspect-[16/9] w-full overflow-hidden"
             >
               <img 
                 src="https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&q=80&w=800" 
                 className="absolute inset-0 w-full h-full object-cover"
                 alt="Luxury"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
               <div className="absolute inset-0 p-8 flex flex-col justify-end">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="h-px w-8 bg-coral" />
@@ -106,7 +109,7 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div key={i} className="flex items-center gap-3">
                   <Sparkles size={14} className="text-coral" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white">Premium Quality • Express Delivery • Handcrafted</span>
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white text-xs">Premium Quality • Express Delivery • Handcrafted</span>
                 </div>
               ))}
             </div>
