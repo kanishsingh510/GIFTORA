@@ -17,30 +17,29 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
   const navigate = useNavigate();
 
   const displayProducts = products.length > 0 ? products : apiMode === "demo" ? fallbackProducts : [];
-  // Show more products for the bestseller swipe
   const featuredProducts = [...displayProducts].sort((a, b) => (b.orders || 0) - (a.orders || 0)).slice(0, 12);
 
   return (
     <div className="pb-24 w-full overflow-x-hidden">
       
       {/* 📱 MOBILE-ONLY VIEW */}
-      <div className="block sm:hidden space-y-12 w-full overflow-x-hidden">
+      <div className="block sm:hidden space-y-0 w-full overflow-x-hidden">
         
         {/* Modern Search */}
-        <div className="pt-2 px-4">
-          <div className="relative group">
-            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-coral transition-colors" />
+        <div className="pt-2 px-4 mb-8">
+          <div className="relative">
+            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
             <input 
               type="text" 
               placeholder="Search unique gifts..."
-              className="w-full bg-slate-100 border-none h-12 pl-12 pr-4 rounded-2xl text-sm font-medium focus:ring-2 focus:ring-coral/20"
+              className="w-full bg-slate-100 border-none h-12 pl-12 pr-4 rounded-2xl text-sm font-medium focus:ring-0"
             />
           </div>
         </div>
 
-        {/* Stories */}
-        <div className="w-full overflow-hidden">
-          <div className="flex overflow-x-auto scrollbar-none gap-5 px-4 pb-1">
+        {/* Stories - Full Bleed */}
+        <div className="w-full overflow-hidden mb-10">
+          <div className="flex overflow-x-auto scrollbar-none gap-5 px-4 pb-2">
             {categories.map((cat) => (
               <button key={cat.id} onClick={() => navigate(`/studio?category=${cat.id}`)} className="flex flex-col items-center gap-2 shrink-0">
                 <div className="w-16 h-16 rounded-full p-0.5 border-2 border-coral shadow-sm">
@@ -52,40 +51,49 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
           </div>
         </div>
 
-        {/* NEW GRAPHIC SECTION: "The Collection" Banners */}
-        <div className="px-4 space-y-4">
-          <div className="relative h-[240px] rounded-[32px] overflow-hidden group shadow-xl">
+        {/* FULL-BLEED GRAPHIC BANNERS - Pure Native Optimization */}
+        <div className="w-full space-y-1 mb-10">
+          <div 
+            onClick={() => navigate("/studio")}
+            className="relative aspect-[16/10] w-full overflow-hidden"
+          >
             <img 
               src="https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&q=75&w=800" 
               className="absolute inset-0 w-full h-full object-cover"
               alt="Luxury"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/30 to-transparent" />
             <div className="absolute inset-0 p-8 flex flex-col justify-center">
-              <span className="text-[10px] font-black text-coral uppercase tracking-widest mb-2">✦ Handpicked</span>
-              <h2 className="text-2xl font-serif font-bold text-white mb-4">Luxury<br />Hampers</h2>
-              <button onClick={() => navigate("/studio")} className="w-fit bg-white text-ink px-5 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider active:scale-95 transition-transform">
-                Explore Now
+              <span className="text-[10px] font-black text-coral uppercase tracking-widest mb-2">✦ Handpicked Selection</span>
+              <h2 className="text-3xl font-serif font-bold text-white mb-4 leading-tight">Luxury<br />Gift Hampers</h2>
+              <button className="w-fit bg-white text-ink px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-wider">
+                Explore Collection
               </button>
             </div>
           </div>
-          <div className="relative h-[200px] rounded-[32px] overflow-hidden shadow-lg">
-            <img 
-              src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&q=75&w=800" 
-              className="absolute inset-0 w-full h-full object-cover"
-              alt="Eco"
-            />
-            <div className="absolute inset-0 bg-ink/40 backdrop-blur-[2px]" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
-              <Zap size={24} className="text-lemon mb-3" />
-              <h2 className="text-xl font-black text-white uppercase tracking-tight mb-2">Sustainable Gifting</h2>
-              <p className="text-white/80 text-[10px] font-bold uppercase tracking-widest">Earth friendly • Thoughtfully made</p>
+          
+          <div 
+            onClick={() => navigate("/studio")}
+            className="relative aspect-[16/7] w-full overflow-hidden bg-mint flex items-center px-8"
+          >
+            <div className="absolute top-0 right-0 w-1/2 h-full opacity-30 grayscale mix-blend-overlay">
+               <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=400" className="w-full h-full object-cover" alt="deco" />
+            </div>
+            <div className="relative z-10">
+               <div className="flex items-center gap-2 mb-2">
+                 <Zap size={18} className="text-white fill-white" />
+                 <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">Eco Friendly</span>
+               </div>
+               <h2 className="text-xl font-black text-white uppercase tracking-tight">Sustainable Gifting</h2>
+            </div>
+            <div className="ml-auto relative z-10">
+               <ChevronRight className="text-white opacity-50" size={32} />
             </div>
           </div>
         </div>
 
         {/* Moving Strip */}
-        <div className="w-full overflow-hidden bg-slate-900 py-3.5">
+        <div className="w-full overflow-hidden bg-slate-900 py-4 mb-10">
           <div className="flex animate-marquee whitespace-nowrap gap-12 items-center">
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <div key={i} className="flex items-center gap-3">
@@ -96,16 +104,11 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
           </div>
         </div>
 
-        {/* Bestsellers - More products, smooth swipe */}
-        <div>
+        {/* Bestsellers */}
+        <div className="mb-10">
           <div className="flex items-center justify-between mb-5 px-4">
-            <div className="flex flex-col">
-              <h3 className="text-xl font-black text-ink">Bestsellers</h3>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Swipe to explore</p>
-            </div>
-            <button onClick={() => navigate("/studio")} className="h-10 w-10 rounded-full bg-slate-100 flex items-center justify-center text-ink active:scale-90 transition-transform">
-              <ChevronRight size={20} />
-            </button>
+            <h3 className="text-xl font-black text-ink">Bestsellers</h3>
+            <button onClick={() => navigate("/studio")} className="text-[11px] font-black text-coral uppercase tracking-widest">See All</button>
           </div>
           <div className="flex overflow-x-auto gap-4 pb-6 scrollbar-none snap-x snap-mandatory px-4">
             {featuredProducts.map((p) => (
@@ -118,7 +121,7 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
               className="min-w-[160px] w-[160px] snap-start rounded-[32px] bg-slate-100 border-2 border-dashed border-slate-200 flex flex-col items-center justify-center gap-3 text-slate-400"
             >
               <ShoppingBag size={24} />
-              <span className="text-[10px] font-black uppercase tracking-widest text-center">See Entire<br />Collection</span>
+              <span className="text-[10px] font-black uppercase tracking-widest">Explore More</span>
             </div>
           </div>
         </div>
@@ -187,7 +190,7 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
             <button onClick={() => navigate("/studio")} className="text-xs font-black text-orange-500 uppercase tracking-widest hover:text-ink transition-colors py-2 pl-3">View All →</button>
           </div>
           <div className="grid grid-cols-4 gap-6">
-            {featuredProducts.slice(0, 8).slice(0, 4).map((p) => (
+            {featuredProducts.slice(0, 4).map((p) => (
               <ProductCard key={p.id} product={p} selected={false} onSelect={() => navigate("/studio")} />
             ))}
           </div>
