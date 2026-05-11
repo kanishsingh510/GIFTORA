@@ -151,6 +151,18 @@ export default function App() {
   }, [selectedProduct?.slug]);
 
   // Handlers
+  function updateCartQuantity(cartId, value) {
+    const quantity = parseInt(value, 10);
+    if (isNaN(quantity) || quantity < 1) return;
+    setCart((current) =>
+      current.map((item) => (item.cartId === cartId ? { ...item, quantity } : item))
+    );
+  }
+
+  function removeFromCart(cartId) {
+    setCart((current) => current.filter((item) => item.cartId !== cartId));
+  }
+
   function handleTabClick(tab) {
     if (tab.id === "admin" && session?.role !== "seller") {
       openLogin("seller");
