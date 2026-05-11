@@ -11,42 +11,42 @@ const categories = [
     id: "birthday",
     name: "Birthday Gifts",
     subtitle: "Make their special day unforgettable",
-    image: "https://images.unsplash.com/photo-1530103043960-ef38714abb15?q=80&w=800",
+    image: "https://images.unsplash.com/photo-1530103043960-ef38714abb15?w=500",
     count: 124
   },
   {
     id: "anniversary",
     name: "Anniversary Gifts",
     subtitle: "Celebrate love and togetherness",
-    image: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800",
+    image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=500",
     count: 89
   },
   {
     id: "personalized",
     name: "Personalized Gifts",
     subtitle: "Custom gifts with a personal touch",
-    image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800",
+    image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=500",
     count: 156
   },
   {
     id: "marriage",
     name: "Marriage Gifts",
     subtitle: "Elegant gifts for the perfect couple",
-    image: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=800",
+    image: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=500",
     count: 42
   },
   {
     id: "corporate",
     name: "Corporate Gifts",
     subtitle: "Professional gifts for valued partners",
-    image: "https://images.unsplash.com/photo-1512418490979-92798ccc1380?q=80&w=800",
+    image: "https://images.unsplash.com/photo-1512418490979-92798ccc1380?w=500",
     count: 67
   },
   {
     id: "luxury",
     name: "Luxury Selection",
     subtitle: "Exquisite gifts for refined tastes",
-    image: "https://images.unsplash.com/photo-1603006905003-be475563bc59?q=80&w=800",
+    image: "https://images.unsplash.com/photo-1603006905003-be475563bc59?w=500",
     count: 28
   }
 ];
@@ -126,7 +126,7 @@ export default function HomeView() {
           <p className="text-sm text-slate-400 font-bold uppercase tracking-widest">Handpicked Collections</p>
         </div>
         
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map((cat) => (
             <CategoryCard 
               key={cat.id} 
