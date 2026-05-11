@@ -124,10 +124,6 @@ h1, h2, h3, h4, .font-heading {
     height: 150px;
   }
 
-  h1 { font-size: 2rem !important; line-height: 1.1 !important; }
-  h2 { font-size: 1.5rem !important; }
-  h3 { font-size: 1.25rem !important; }
-  
   .section-padding {
     padding-left: 1rem;
     padding-right: 1rem;
@@ -135,7 +131,7 @@ h1, h2, h3, h4, .font-heading {
 }
 
 @media (max-width: 480px) {
-  h1 { font-size: 1.75rem !important; }
+  /* h1 { font-size: 1.75rem !important; } */
   .preview-stage {
     min-height: 280px;
   }

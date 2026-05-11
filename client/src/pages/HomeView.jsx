@@ -51,19 +51,19 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
   return (
     <div className="animate-fade-in pb-20">
       {/* Hero Section - Restored to Static Elegant Version */}
-      <section className="relative h-[450px] sm:h-[600px] w-full overflow-hidden mb-16 sm:mb-24 bg-slate-900">
+      <section className="relative h-[400px] sm:h-[600px] w-full overflow-hidden mb-12 sm:mb-24 bg-slate-900">
         <div className="absolute inset-0 w-full h-full">
           <img 
             src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&q=90&w=1600" 
-            className="h-full w-full object-cover opacity-60" 
+            className="h-full w-full object-cover opacity-60 scale-110 sm:scale-100" 
             alt="Giftora Hero" 
           />
         </div>
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-4 text-white">
-          <h1 className="text-4xl sm:text-7xl font-serif font-bold mb-6 drop-shadow-2xl max-w-4xl leading-tight">
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6 text-white">
+          <h1 className="text-3xl sm:text-7xl font-serif font-bold mb-3 sm:mb-6 drop-shadow-2xl max-w-4xl leading-[1.1] sm:leading-tight">
             Perfect Gifts for <br /> Every Occasion
           </h1>
-          <p className="text-xl sm:text-2xl font-medium mb-10 opacity-90 drop-shadow-lg max-w-2xl">
+          <p className="text-base sm:text-2xl font-medium mb-6 sm:mb-10 opacity-90 drop-shadow-lg max-w-2xl">
             Discover unique presents that tell your story
           </p>
           <div className="flex flex-wrap gap-3 sm:gap-4 justify-center">
@@ -72,7 +72,7 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
                 navigate("/studio");
                 window.scrollTo(0, 0);
               }}
-              className="bg-[#facc15] hover:bg-[#eab308] text-black h-12 sm:h-14 px-8 sm:px-12 rounded-xl text-base sm:text-lg font-black transition-all shadow-xl shadow-black/20"
+              className="bg-[#facc15] hover:bg-[#eab308] text-black h-11 sm:h-14 px-6 sm:px-12 rounded-lg sm:rounded-xl text-sm sm:text-lg font-black transition-all shadow-xl shadow-black/20"
             >
               Shop Now
             </button>
@@ -81,7 +81,7 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
                 const el = document.getElementById('shop-categories');
                 el?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="bg-white/10 backdrop-blur hover:bg-white/20 text-white border border-white/30 h-12 sm:h-14 px-6 sm:px-10 rounded-xl text-base sm:text-lg font-bold transition-all"
+              className="bg-white/10 backdrop-blur hover:bg-white/20 text-white border border-white/30 h-11 sm:h-14 px-5 sm:px-10 rounded-lg sm:rounded-xl text-sm sm:text-lg font-bold transition-all"
             >
               Explore All
             </button>
@@ -90,13 +90,13 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
       </section>
 
       {/* Categories Section */}
-      <section id="shop-categories" className="mb-32 px-4 max-w-full lg:max-w-7xl mx-auto overflow-hidden">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-black text-ink mb-3 text-center">Shop by Gift Type</h2>
-          <div className="h-1.5 w-24 bg-mint mx-auto rounded-full" />
+      <section id="shop-categories" className="mb-16 sm:mb-32 px-4 max-w-full lg:max-w-7xl mx-auto overflow-hidden">
+        <div className="text-center mb-10 sm:mb-16">
+          <h2 className="text-2xl sm:text-4xl font-black text-ink mb-2 sm:mb-3 text-center">Shop by Gift Type</h2>
+          <div className="h-1 w-16 sm:h-1.5 sm:w-24 bg-mint mx-auto rounded-full" />
         </div>
         
-        <div className="grid gap-4 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-3 sm:gap-8 grid-cols-2 lg:grid-cols-4">
           {(products.length > 0 ? 
             // Derive categories from products
             Object.values(products.reduce((acc, p) => {
@@ -131,18 +131,18 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
       </section>
 
       {/* Bestsellers Section */}
-      <section className="mb-32 px-4 max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-12">
-          <h2 className="text-3xl font-black text-ink">Bestsellers</h2>
+      <section className="mb-12 sm:mb-32 px-4 max-w-7xl mx-auto">
+        <div className="flex items-center justify-between mb-6 sm:mb-12">
+          <h2 className="text-xl sm:text-3xl font-black text-ink">Bestsellers</h2>
           <button 
              onClick={() => navigate("/studio")}
-             className="text-xs font-black text-orange-500 uppercase tracking-[0.2em] hover:text-ink transition-colors"
+             className="text-[9px] sm:text-xs font-black text-orange-500 uppercase tracking-[0.2em] hover:text-ink transition-colors border-b border-orange-500/20 pb-1"
           >
-            View All Varieties
+            View All
           </button>
         </div>
         
-        <div className="grid gap-4 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-3 sm:gap-8 grid-cols-2 lg:grid-cols-4">
           {featuredProducts.length > 0 ? (
             featuredProducts.map((p) => (
               <ProductCard 
@@ -165,19 +165,19 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
       </section>
 
       {/* Trust Bar */}
-      <section className="max-w-7xl mx-auto px-4 mb-32">
-         <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4 p-6 sm:p-8 rounded-[30px] sm:rounded-[40px] bg-slate-50 border border-slate-100">
+      <section className="max-w-7xl mx-auto px-4 mb-16 sm:mb-32">
+         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-4 sm:p-8 rounded-3xl sm:rounded-[40px] bg-slate-50 border border-slate-100">
             {[
                { icon: Gift, label: "Premium Packaging" },
                { icon: Truck, label: "Express Delivery" },
                { icon: ShieldCheck, label: "Quality Guarantee" },
                { icon: ShoppingBag, label: "Bulk Gifting" }
             ].map((f, i) => (
-               <div key={i} className="flex items-center gap-4 px-4 text-center justify-center flex-col md:flex-row">
-                  <div className="h-10 w-10 shrink-0 rounded-xl bg-white border border-slate-100 flex items-center justify-center text-mint">
-                     <f.icon size={20} />
+               <div key={i} className="flex items-center gap-2 sm:gap-4 px-2 text-center justify-center flex-col md:flex-row">
+                  <div className="h-8 w-8 sm:h-10 sm:w-10 shrink-0 rounded-lg sm:rounded-xl bg-white border border-slate-100 flex items-center justify-center text-mint">
+                     <f.icon size={16} />
                   </div>
-                  <p className="font-black text-xs text-ink leading-tight">{f.label}</p>
+                  <p className="font-black text-[10px] sm:text-xs text-ink leading-tight">{f.label}</p>
                </div>
             ))}
          </div>
@@ -186,14 +186,14 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
       <Testimonials />
 
       {/* Final CTA */}
-      <section className="mt-20 mx-4 max-w-7xl lg:mx-auto rounded-[40px] sm:rounded-[60px] bg-mint p-10 sm:p-16 text-center text-ink relative overflow-hidden">
-        <h2 className="text-3xl sm:text-4xl font-black mb-6 leading-tight">Create your next memory.</h2>
-        <p className="text-ink/60 max-w-md mx-auto mb-10 text-base font-bold">
+      <section className="mt-10 sm:mt-20 mx-4 max-w-7xl lg:mx-auto rounded-3xl sm:rounded-[60px] bg-mint p-8 sm:p-16 text-center text-ink relative overflow-hidden">
+        <h2 className="text-2xl sm:text-4xl font-black mb-4 sm:mb-6 leading-tight">Create your next memory.</h2>
+        <p className="text-ink/60 max-w-md mx-auto mb-8 sm:mb-10 text-sm sm:text-base font-bold">
           Step into our studio and experience real-time gift design.
         </p>
         <button 
           onClick={() => navigate("/studio")}
-          className="bg-ink text-white h-14 px-10 rounded-2xl text-base font-black hover:bg-slate-800 transition-all shadow-xl shadow-ink/20"
+          className="bg-ink text-white h-12 sm:h-14 px-8 sm:px-10 rounded-xl sm:rounded-2xl text-sm sm:text-base font-black hover:bg-slate-800 transition-all shadow-xl shadow-ink/20"
         >
           Enter Studio
         </button>

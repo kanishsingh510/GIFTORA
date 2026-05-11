@@ -11,10 +11,10 @@ const reviews = [
 
 export default function Testimonials() {
   return (
-    <section className="py-24 overflow-hidden bg-slate-50/50">
-      <div className="text-center mb-16">
-        <p className="text-sm font-bold uppercase tracking-[0.22em] text-coral mb-4">Customer Love</p>
-        <h2 className="text-4xl font-black text-ink sm:text-5xl">What Our Community Says</h2>
+    <section className="py-12 sm:py-24 overflow-hidden bg-slate-50/50">
+      <div className="text-center mb-10 sm:mb-16 px-4">
+        <p className="text-[10px] sm:text-sm font-bold uppercase tracking-[0.22em] text-coral mb-2 sm:mb-4">Customer Love</p>
+        <h2 className="text-2xl sm:text-5xl font-black text-ink leading-tight">What Our Community Says</h2>
       </div>
       
       <div className="relative flex w-full">

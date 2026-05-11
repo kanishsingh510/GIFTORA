@@ -20,19 +20,19 @@ export default function CategoryCard({ category, image, subtitle, count, onClick
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent opacity-80" />
       </div>
       
-      <div className="absolute inset-0 z-10 flex flex-col justify-end p-8 text-white">
+      <div className="absolute inset-0 z-10 flex flex-col justify-end p-4 sm:p-8 text-white">
         <div className="flex items-end justify-between">
           <div className="flex-1">
-            <h3 className="text-2xl font-serif font-medium mb-1 leading-tight">{category}</h3>
-            <p className="text-[10px] font-medium text-white/80 mb-2 line-clamp-1">
+            <h3 className="text-lg sm:text-2xl font-serif font-medium mb-0.5 sm:mb-1 leading-tight">{category}</h3>
+            <p className="text-[9px] sm:text-[10px] font-medium text-white/80 mb-1 sm:mb-2 line-clamp-1">
               {subtitle}
             </p>
-            <p className="text-[9px] font-bold text-white/50 tracking-wider uppercase">
+            <p className="text-[8px] sm:text-[9px] font-bold text-white/50 tracking-wider uppercase">
               {count} Gifts
             </p>
           </div>
-          <div className="h-10 w-10 rounded-full border border-white/30 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-500">
-            <ArrowRight size={20} />
+          <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border border-white/30 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-500 shrink-0">
+            <ArrowRight size={16} className="sm:size-[20px]" />
           </div>
         </div>
       </div>

@@ -38,13 +38,13 @@ export default function ProductCard({ product, selected, onSelect }) {
           </div>
         )}
       </div>
-      <div className="p-5">
-        <div className="flex items-start justify-between gap-3">
+      <div className="p-3 sm:p-5">
+        <div className="flex flex-col sm:flex-row items-start justify-between gap-1 sm:gap-3">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">{product.category}</p>
-            <h4 className="mt-1 text-lg font-black tracking-tight text-ink">{product.name}</h4>
+            <p className="text-[8px] sm:text-[10px] font-bold uppercase tracking-widest text-slate-400">{product.category}</p>
+            <h4 className="mt-0.5 sm:mt-1 text-sm sm:text-lg font-black tracking-tight text-ink line-clamp-1">{product.name}</h4>
           </div>
-          <p className="text-base font-black text-ink">{money(product.price)}</p>
+          <p className="text-sm sm:text-base font-black text-ink">{money(product.price)}</p>
         </div>
       </div>
     </article>

@@ -325,23 +325,23 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-bg-main overflow-x-hidden">
+    <div className="min-h-screen flex flex-col bg-bg-main overflow-x-hidden pb-20 lg:pb-0">
       <header className="sticky top-0 z-40 border-b border-slate-100 bg-white/80 backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-between gap-4 lg:flex-nowrap">
             {/* Logo Group */}
-            <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate("/")}>
-              <div className="grid h-10 w-10 sm:h-11 sm:w-11 place-items-center rounded-lg bg-ink text-white ring-4 ring-orange-500/10 transition-all hover:ring-orange-500/20">
-                <Sparkles size={20} className="text-orange-500 sm:size-[22px]" aria-hidden="true" />
+            <div className="flex items-center gap-2 sm:gap-3 cursor-pointer" onClick={() => navigate("/")}>
+              <div className="grid h-8 w-8 sm:h-11 sm:w-11 place-items-center rounded-lg bg-ink text-white ring-2 sm:ring-4 ring-orange-500/10 transition-all hover:ring-orange-500/20">
+                <Sparkles size={16} className="text-orange-500 sm:size-[22px]" aria-hidden="true" />
               </div>
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-orange-500 sm:text-xs">Premium</p>
-                <h1 className="text-lg font-black leading-tight sm:text-2xl">Giftora Studio</h1>
+                <p className="text-[8px] font-bold uppercase tracking-[0.22em] text-orange-500 sm:text-xs">Premium</p>
+                <h1 className="text-sm font-black leading-tight sm:text-2xl">Giftora Studio</h1>
               </div>
             </div>
 
             {/* Auth/User Group - Order 2 on mobile, Order 3 on Desktop */}
-            <div className="flex items-center gap-2 sm:gap-4 order-2 lg:order-3">
+            <div className="flex items-center gap-2 sm:gap-4 order-2">
               {checkingSession ? (
                 <RefreshCcw className="animate-spin text-slate-300" size={18} />
               ) : session ? (
@@ -352,26 +352,26 @@ export default function App() {
                      </div>
                      <span className="hidden sm:inline text-sm font-bold text-slate-700">{session.name}</span>
                   </div>
-                  <button onClick={logout} className="text-sm font-bold text-slate-400 hover:text-coral transition-colors">
+                  <button onClick={logout} className="text-[10px] sm:text-sm font-bold text-slate-400 hover:text-coral transition-colors">
                     Logout
                   </button>
                 </div>
               ) : (
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <button onClick={() => openLogin("consumer")} className="focus-ring bg-ink text-white h-10 sm:h-11 px-4 sm:px-6 rounded-xl text-xs sm:text-sm font-black hover:bg-slate-800 transition-all flex items-center gap-2">
-                    <User size={16} className="text-coral sm:size-[18px]" />
+                <div className="flex items-center gap-1.5 sm:gap-3">
+                  <button onClick={() => openLogin("consumer")} className="focus-ring bg-ink text-white h-8 sm:h-11 px-3 sm:px-6 rounded-lg sm:rounded-xl text-[10px] sm:text-sm font-black hover:bg-slate-800 transition-all flex items-center gap-1 sm:gap-2">
+                    <User size={12} className="text-coral sm:size-[18px]" />
                     Login
                   </button>
-                  <button onClick={() => openLogin("seller")} className="focus-ring border border-slate-200 bg-white h-10 sm:h-11 px-3 sm:px-5 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:border-ink transition-all flex items-center gap-2">
-                    <ShieldCheck size={16} className="sm:size-[18px]" />
+                  <button onClick={() => openLogin("seller")} className="focus-ring border border-slate-200 bg-white h-8 sm:h-11 px-2 sm:px-5 rounded-lg sm:rounded-xl text-[10px] sm:text-sm font-bold text-slate-700 hover:border-ink transition-all flex items-center gap-1 sm:gap-2">
+                    <ShieldCheck size={12} className="sm:size-[18px]" />
                     Admin
                   </button>
                 </div>
               )}
             </div>
 
-            {/* Nav Group - Order 3 on mobile, Order 2 on Desktop */}
-            <nav className="w-full flex items-center gap-1 overflow-x-auto pb-1 scrollbar-none order-3 lg:order-2 lg:w-auto lg:pb-0 lg:overflow-visible">
+            {/* Desktop Nav Group */}
+            <nav className="hidden lg:flex items-center gap-1 order-2">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
                 const selected = location.pathname === tab.path;
@@ -379,9 +379,9 @@ export default function App() {
                   <button
                     key={tab.id}
                     onClick={() => handleTabClick(tab)}
-                    className={`nav-link flex shrink-0 items-center gap-2 text-[13px] sm:text-sm font-bold ${selected ? "active" : ""}`}
+                    className={`nav-link flex items-center gap-2 text-sm font-bold ${selected ? "active" : ""}`}
                   >
-                    <Icon size={14} className="sm:size-[16px]" aria-hidden="true" />
+                    <Icon size={16} aria-hidden="true" />
                     {tab.label}
                     {tab.id === "cart" && cart.length > 0 && (
                       <span className="ml-1 rounded-full bg-coral px-1.5 py-0.5 text-[9px] text-white">
@@ -487,6 +487,31 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+
+      {/* Mobile Bottom Navigation */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-lg border-t border-slate-100 px-6 py-3 flex items-center justify-between shadow-[0_-8px_30px_rgba(0,0,0,0.05)]">
+        {tabs.map((tab) => {
+          const Icon = tab.icon;
+          const selected = location.pathname === tab.path;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => handleTabClick(tab)}
+              className={`flex flex-col items-center gap-1 transition-all duration-300 ${selected ? "text-primary scale-110" : "text-slate-400"}`}
+            >
+              <div className={`p-2 rounded-xl transition-colors ${selected ? "bg-primary/10" : ""}`}>
+                <Icon size={20} />
+              </div>
+              <span className="text-[10px] font-black uppercase tracking-tighter">{tab.label}</span>
+              {tab.id === "cart" && cart.length > 0 && (
+                <span className="absolute top-2 right-2 flex h-4 w-4 items-center justify-center rounded-full bg-coral text-[8px] font-bold text-white ring-2 ring-white">
+                  {cart.length}
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </nav>
     </div>
   );
 }
