@@ -1,16 +1,30 @@
+import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 
+const placeholderImage = "https://images.unsplash.com/photo-1594322436404-5a0526db4d13?q=80&w=400";
+
 export default function CategoryCard({ category, image, subtitle, count, onClick }) {
+  const [loaded, setLoaded] = useState(false);
+
   return (
     <div 
       onClick={onClick}
       className="group relative h-80 overflow-hidden rounded-3xl border border-slate-100 bg-white cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500"
     >
+      <div className="absolute inset-0 z-0 bg-slate-100 animate-pulse transition-opacity duration-500" style={{ opacity: loaded ? 0 : 1 }}>
+      </div>
       <div className="absolute inset-0 z-0">
         <img 
-          src={image} 
+          src={image || placeholderImage} 
           alt={category} 
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+          onLoad={() => setLoaded(true)}
+          onError={(e) => { 
+            if (e.target.src !== placeholderImage) {
+              e.target.src = placeholderImage; 
+              setLoaded(true); 
+            }
+          }}
+          className={`h-full w-full object-cover transition-all duration-700 ${loaded ? "opacity-100 scale-100" : "opacity-0 scale-110"} group-hover:scale-110`}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
       </div>
