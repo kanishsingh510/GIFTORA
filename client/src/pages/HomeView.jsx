@@ -90,13 +90,13 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
       </section>
 
       {/* Categories Section */}
-      <section id="shop-categories" className="mb-12 sm:mb-32 px-3 sm:px-4 max-w-full lg:max-w-7xl mx-auto overflow-hidden">
+      <section id="shop-categories" className="mb-12 sm:mb-32 px-3 sm:px-4 max-w-full lg:max-w-7xl mx-auto">
         <div className="text-center mb-6 sm:mb-16">
           <h2 className="text-lg sm:text-4xl font-black text-ink mb-1 sm:mb-3 text-center">Shop by Gift Type</h2>
           <div className="h-0.5 w-10 sm:h-1.5 sm:w-24 bg-mint mx-auto rounded-full" />
         </div>
         
-        <div className="grid grid-cols-2 gap-2.5 sm:gap-8">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-8 w-full">
           {(products.length > 0 ? 
             // Derive categories from products
             Object.values(products.reduce((acc, p) => {
@@ -115,17 +115,18 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
             }, {}))
             : categories // Fallback to static if no products
           ).slice(0, 4).map((cat) => (
-            <CategoryCard 
-              key={cat.id} 
-              category={cat.name}
-              image={cat.image || placeholderImg}
-              subtitle={cat.subtitle}
-              count={cat.count}
-              onClick={() => {
-                navigate("/studio");
-                window.scrollTo(0, 0);
-              }} 
-            />
+            <div key={cat.id} className="min-w-0 w-full">
+              <CategoryCard 
+                category={cat.name}
+                image={cat.image || placeholderImg}
+                subtitle={cat.subtitle}
+                count={cat.count}
+                onClick={() => {
+                  navigate("/studio");
+                  window.scrollTo(0, 0);
+                }} 
+              />
+            </div>
           ))}
         </div>
       </section>
@@ -142,18 +143,19 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
           </button>
         </div>
         
-        <div className="grid grid-cols-2 gap-2.5 sm:gap-8 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2 sm:gap-8 lg:grid-cols-4 w-full">
           {featuredProducts.length > 0 ? (
             featuredProducts.map((p) => (
-              <ProductCard 
-                key={p.id || p.slug} 
-                product={p} 
-                selected={false} 
-                onSelect={() => {
-                  navigate("/studio");
-                  window.scrollTo(0, 0);
-                }} 
-              />
+              <div key={p.id} className="min-w-0">
+                <ProductCard 
+                  product={p} 
+                  selected={false} 
+                  onSelect={() => {
+                    navigate("/studio");
+                    window.scrollTo(0, 0);
+                  }} 
+                />
+              </div>
             ))
           ) : (
             // Skeleton / Loading state
