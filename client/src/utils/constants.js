@@ -1,5 +1,89 @@
 export const fallbackProducts = [
-  // Mugs & Bottles
+  {
+    id: "jewelry-box",
+    slug: "jewelry-box",
+    name: "Artisan Jewelry Box",
+    category: "Boxes",
+    price: 1899,
+    compareAt: 2499,
+    image: "https://images.unsplash.com/photo-1582142407894-ec85a1260a46?auto=format&fit=crop&q=90&w=1200",
+    description: "Handcrafted wooden jewelry box with velvet lining and name engraving.",
+    leadTime: "5 days",
+    rating: 4.9,
+    orders: 210,
+    material: "Wood & Velvet",
+    colors: ["#92400e", "#111827", "#fef2f2"],
+    customizationAreas: ["top-lid", "inside-mirror"],
+    active: true
+  },
+  {
+    id: "engraved-powerbank",
+    slug: "engraved-powerbank",
+    name: "Slim 10k Power Bank",
+    category: "Corporate",
+    price: 1999,
+    compareAt: 2499,
+    image: "https://images.unsplash.com/photo-1609592424109-dd9892f1b177?auto=format&fit=crop&q=90&w=1200",
+    description: "Fast-charging power bank with laser-etched name or company slogan.",
+    leadTime: "4 days",
+    rating: 4.8,
+    orders: 670,
+    material: "Aluminum",
+    colors: ["#111827", "#e5e7eb"],
+    customizationAreas: ["back-center"],
+    active: true
+  },
+  {
+    id: "tea-gift-set",
+    slug: "tea-gift-set",
+    name: "Premium Tea Gift Set",
+    category: "Gift Sets",
+    price: 2199,
+    compareAt: 2999,
+    image: "https://images.unsplash.com/photo-1594631252845-29fc4586c55c?auto=format&fit=crop&q=90&w=1200",
+    description: "Collection of 6 exotic loose-leaf tea blends in personalized tin boxes.",
+    leadTime: "4 days",
+    rating: 4.9,
+    orders: 120,
+    material: "Metal Tins",
+    colors: ["#14532d", "#78350f", "#000000"],
+    customizationAreas: ["box-top", "message-card"],
+    active: true
+  },
+  {
+    id: "artisan-mug-set",
+    slug: "artisan-mug-set",
+    name: "Ceramic Couple Mug Set",
+    category: "Handmade",
+    price: 1299,
+    compareAt: 1699,
+    image: "https://images.unsplash.com/photo-1574633611414-049830879681?auto=format&fit=crop&q=90&w=1200",
+    description: "Set of 2 hand-thrown ceramic mugs with unique glazes and custom initials.",
+    leadTime: "6 days",
+    rating: 4.9,
+    orders: 280,
+    material: "Stone Clay",
+    colors: ["#d97706", "#2563eb"],
+    customizationAreas: ["bottom-seal", "handle"],
+    active: true
+  },
+  {
+    id: "silk-sleep-kit",
+    slug: "silk-sleep-kit",
+    name: "Pure Silk Sleep Mask",
+    category: "Luxury",
+    price: 999,
+    compareAt: 1499,
+    image: "https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&q=90&w=1200",
+    description: "100% Mulberry silk mask with embroidered initials for ultimate comfort.",
+    leadTime: "2 days",
+    rating: 4.7,
+    orders: 390,
+    material: "Mulberry Silk",
+    colors: ["#f472b6", "#1e293b", "#ffffff"],
+    customizationAreas: ["front-embroidery"],
+    active: true
+  },
   {
     id: "signature-mug",
     slug: "signature-mug",
@@ -34,8 +118,6 @@ export const fallbackProducts = [
     customizationAreas: ["front", "vertical"],
     active: true
   },
-
-  // Corporate Gifts
   {
     id: "leather-planner",
     slug: "leather-planner",
@@ -71,25 +153,6 @@ export const fallbackProducts = [
     active: true
   },
   {
-    id: "engraved-powerbank",
-    slug: "engraved-powerbank",
-    name: "Slim 10k Power Bank",
-    category: "Corporate",
-    price: 1999,
-    compareAt: 2499,
-    image: "https://images.unsplash.com/photo-1609592424109-dd9892f1b177?auto=format&fit=crop&q=90&w=1200",
-    description: "Fast-charging power bank with laser-etched name or company slogan.",
-    leadTime: "4 days",
-    rating: 4.8,
-    orders: 670,
-    material: "Aluminum",
-    colors: ["#111827", "#e5e7eb"],
-    customizationAreas: ["back-center"],
-    active: true
-  },
-
-  // Anniversary & Romantic
-  {
     id: "anniversary-hamper",
     slug: "anniversary-hamper",
     name: "Romantic Anniversary Hamper",
@@ -123,25 +186,6 @@ export const fallbackProducts = [
     customizationAreas: ["surface-wrap"],
     active: true
   },
-
-  // Handmade & Luxury
-  {
-    id: "artisan-mug-set",
-    slug: "artisan-mug-set",
-    name: "Ceramic Couple Mug Set",
-    category: "Handmade",
-    price: 1299,
-    compareAt: 1699,
-    image: "https://images.unsplash.com/photo-1574633611414-049830879681?auto=format&fit=crop&q=90&w=1200",
-    description: "Set of 2 hand-thrown ceramic mugs with unique glazes and custom initials.",
-    leadTime: "6 days",
-    rating: 4.9,
-    orders: 280,
-    material: "Stone Clay",
-    colors: ["#d97706", "#2563eb"],
-    customizationAreas: ["bottom-seal", "handle"],
-    active: true
-  },
   {
     id: "soy-candle-kit",
     slug: "soy-candle-kit",
@@ -160,25 +204,6 @@ export const fallbackProducts = [
     active: true
   },
   {
-    id: "silk-sleep-kit",
-    slug: "silk-sleep-kit",
-    name: "Pure Silk Sleep Mask",
-    category: "Luxury",
-    price: 999,
-    compareAt: 1499,
-    image: "https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&q=90&w=1200",
-    description: "100% Mulberry silk mask with embroidered initials for ultimate comfort.",
-    leadTime: "2 days",
-    rating: 4.7,
-    orders: 390,
-    material: "Mulberry Silk",
-    colors: ["#f472b6", "#1e293b", "#ffffff"],
-    customizationAreas: ["front-embroidery"],
-    active: true
-  },
-
-  // Stationery & More
-  {
     id: "notebook-set",
     slug: "notebook-set",
     name: "Customized Notebook Set",
@@ -193,40 +218,6 @@ export const fallbackProducts = [
     material: "Paper & Board",
     colors: ["#1e293b", "#166534", "#991b1b", "#ffffff"],
     customizationAreas: ["front-cover"],
-    active: true
-  },
-  {
-    id: "jewelry-box",
-    slug: "jewelry-box",
-    name: "Artisan Jewelry Box",
-    category: "Boxes",
-    price: 1899,
-    compareAt: 2499,
-    image: "https://images.unsplash.com/photo-1582142407894-ec85a1260a46?auto=format&fit=crop&q=90&w=1200",
-    description: "Handcrafted wooden jewelry box with velvet lining and name engraving.",
-    leadTime: "5 days",
-    rating: 4.9,
-    orders: 210,
-    material: "Wood & Velvet",
-    colors: ["#92400e", "#111827", "#fef2f2"],
-    customizationAreas: ["top-lid", "inside-mirror"],
-    active: true
-  },
-  {
-    id: "tea-gift-set",
-    slug: "tea-gift-set",
-    name: "Premium Tea Gift Set",
-    category: "Gift Sets",
-    price: 2199,
-    compareAt: 2999,
-    image: "https://images.unsplash.com/photo-1594631252845-29fc4586c55c?auto=format&fit=crop&q=90&w=1200",
-    description: "Collection of 6 exotic loose-leaf tea blends in personalized tin boxes.",
-    leadTime: "4 days",
-    rating: 4.9,
-    orders: 120,
-    material: "Metal Tins",
-    colors: ["#14532d", "#78350f", "#000000"],
-    customizationAreas: ["box-top", "message-card"],
     active: true
   },
   {
