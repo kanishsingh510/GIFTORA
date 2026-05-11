@@ -15,7 +15,7 @@ export default function ProductCard({ product, selected, onSelect }) {
           : "border-slate-100 bg-white hover:border-slate-200"
       }`}
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-slate-50">
+      <div className="relative aspect-square overflow-hidden bg-slate-50">
         <div className={`absolute inset-0 bg-slate-200 animate-pulse transition-opacity duration-500 ${loaded ? "opacity-0" : "opacity-100"}`} />
         <img
           src={product.image || placeholderImage}

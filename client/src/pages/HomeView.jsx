@@ -10,42 +10,42 @@ const categories = [
     id: "birthday",
     name: "Birthday Gifts",
     subtitle: "Make their special day unforgettable",
-    image: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=800",
+    image: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=400",
     count: 24
   },
   {
     id: "anniversary",
     name: "Anniversary Gifts",
     subtitle: "Timeless tokens of your lasting love",
-    image: "https://images.unsplash.com/photo-1518199266791-2398a24d8824?q=80&w=800",
+    image: "https://images.unsplash.com/photo-1518199266791-2398a24d8824?q=80&w=400",
     count: 18
   },
   {
     id: "marriage",
     name: "Marriage Gifts",
     subtitle: "Elegant gifts for the perfect couple",
-    image: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=800",
+    image: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=400",
     count: 12
   },
   {
     id: "personalized",
     name: "Personalized Studio",
     subtitle: "Unique items crafted just for you",
-    image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=800",
+    image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=400",
     count: 56
   },
   {
     id: "corporate",
     name: "Corporate Gifts",
     subtitle: "Professional gifts for valued partners",
-    image: "https://images.unsplash.com/photo-1512418490979-92798ccc1380?q=80&w=800",
+    image: "https://images.unsplash.com/photo-1512418490979-92798ccc1380?q=80&w=400",
     count: 30
   },
   {
     id: "luxury",
     name: "Luxury Selection",
     subtitle: "Exquisite gifts for refined tastes",
-    image: "https://images.unsplash.com/photo-1603006905003-be475563bc59?q=80&w=800",
+    image: "https://images.unsplash.com/photo-1603006905003-be475563bc59?q=80&w=400",
     count: 15
   }
 ];
