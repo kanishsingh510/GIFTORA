@@ -21,14 +21,12 @@ export default function ProductCard({ product, selected, onSelect }) {
           src={product.image || placeholderImage}
           alt={product.name}
           loading="lazy"
-          onLoad={() => setLoaded(true)}
           onError={(e) => { 
             if (e.target.src !== placeholderImage) {
               e.target.src = placeholderImage; 
-              setLoaded(true); 
             }
           }}
-          className={`relative z-10 h-full w-full object-cover transition-all duration-700 ${loaded ? "opacity-100" : "opacity-0"} ${selected ? "scale-105" : "hover:scale-105"}`}
+          className={`relative z-10 h-full w-full object-cover transition-all duration-700 ${selected ? "scale-105" : "hover:scale-105"}`}
         />
         {selected && (
           <div className="absolute right-3 top-3 z-20 grid h-6 w-6 place-items-center rounded-full bg-primary text-white shadow-lg">
