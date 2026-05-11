@@ -49,6 +49,16 @@ export default function AdminView({ metrics, products, orders, updateProduct, ad
     setShowPanel(true);
   }
 
+  function handleFileChange(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setForm({ ...form, image: reader.result });
+    };
+    reader.readAsDataURL(file);
+  }
+
   return (
     <div className="space-y-12 animate-fade-in pb-20">
       {/* Header */}
@@ -105,7 +115,27 @@ export default function AdminView({ metrics, products, orders, updateProduct, ad
                     </select>
                   </label>
                   <Field label="Price (Rs)" type="number" value={form.price} onChange={(v) => setForm({ ...form, price: v })} placeholder="0" />
-                  <Field label="Image URL" value={form.image} onChange={(v) => setForm({ ...form, image: v })} placeholder="Unsplash URL" />
+                  <div className="grid gap-2">
+                    <span className="text-xs font-bold uppercase tracking-widest text-slate-500">Product Image</span>
+                    <div className="flex gap-3">
+                       <label className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50 px-4 text-xs font-black text-slate-500 hover:border-mint hover:text-mint cursor-pointer transition-all">
+                          <ImageIcon size={16} />
+                          {form.image ? "Change Local Image" : "Upload Local Image"}
+                          <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
+                       </label>
+                       <div className="w-px bg-slate-100 my-2" />
+                       <input 
+                        type="text" 
+                        value={form.image && !form.image.startsWith('data:') ? form.image : ""} 
+                        onChange={(e) => setForm({ ...form, image: e.target.value })}
+                        placeholder="Or paste URL"
+                        className="flex-1 h-12 rounded-xl border border-slate-200 bg-slate-50 px-4 text-xs font-bold outline-none"
+                       />
+                    </div>
+                    {form.image && (
+                      <p className="text-[10px] font-bold text-mint">Image attached: {form.image.startsWith('data:') ? "Local File" : "Remote URL"}</p>
+                    )}
+                  </div>
                 </div>
                 
                 <Field label="Description" value={form.description} onChange={(v) => setForm({ ...form, description: v })} placeholder="Tell us about the product..." />
