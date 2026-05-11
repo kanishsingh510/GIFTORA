@@ -84,7 +84,14 @@ export default function HomeView() {
             key={i}
             className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${i === currentSlide ? "opacity-100" : "opacity-0"}`}
           >
-            <img src={img} className="h-full w-full object-cover" alt="Hero" />
+            <img 
+              src={img} 
+              className="h-full w-full object-cover" 
+              alt="Hero" 
+              onError={(e) => {
+                e.target.src = "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=1600";
+              }}
+            />
             <div className="absolute inset-0 bg-black/40" />
           </div>
         ))}
