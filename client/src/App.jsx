@@ -327,66 +327,71 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-bg-main overflow-x-hidden">
       <header className="sticky top-0 z-40 border-b border-slate-100 bg-white/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate("/")}>
-            <div className="grid h-11 w-11 place-items-center rounded-lg bg-ink text-white ring-4 ring-orange-500/10 transition-all hover:ring-orange-500/20">
-              <Sparkles size={22} className="text-orange-500" aria-hidden="true" />
+        <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-between gap-4 lg:flex-nowrap">
+            {/* Logo Group */}
+            <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate("/")}>
+              <div className="grid h-10 w-10 sm:h-11 sm:w-11 place-items-center rounded-lg bg-ink text-white ring-4 ring-orange-500/10 transition-all hover:ring-orange-500/20">
+                <Sparkles size={20} className="text-orange-500 sm:size-[22px]" aria-hidden="true" />
+              </div>
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-orange-500 sm:text-xs">Premium</p>
+                <h1 className="text-lg font-black leading-tight sm:text-2xl">Giftora Studio</h1>
+              </div>
             </div>
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-orange-500">Premium</p>
-              <h1 className="text-xl font-black leading-tight sm:text-2xl">Giftora Studio</h1>
-            </div>
-          </div>
 
-          <nav className="flex items-center gap-1 overflow-x-auto pb-2 scrollbar-none lg:overflow-visible">
-            {tabs.map((tab) => {
-              const Icon = tab.icon;
-              const selected = location.pathname === tab.path;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => handleTabClick(tab)}
-                  className={`nav-link flex shrink-0 items-center gap-2 text-sm font-bold ${selected ? "active" : ""}`}
-                >
-                  <Icon size={16} aria-hidden="true" />
-                  {tab.label}
-                  {tab.id === "cart" && cart.length > 0 && (
-                    <span className="ml-1 rounded-full bg-coral px-2 py-0.5 text-[10px] text-white">
-                      {cart.length}
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </nav>
-
-          <div className="flex items-center gap-4">
-            {checkingSession ? (
-              <RefreshCcw className="animate-spin text-slate-300" size={18} />
-            ) : session ? (
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                   <div className="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center">
-                      {session.role === "seller" ? <ShieldCheck size={14} /> : <User size={14} />}
-                   </div>
-                   <span className="text-sm font-bold text-slate-700">{session.name}</span>
+            {/* Auth/User Group - Order 2 on mobile, Order 3 on Desktop */}
+            <div className="flex items-center gap-2 sm:gap-4 order-2 lg:order-3">
+              {checkingSession ? (
+                <RefreshCcw className="animate-spin text-slate-300" size={18} />
+              ) : session ? (
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="flex items-center gap-2">
+                     <div className="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center">
+                        {session.role === "seller" ? <ShieldCheck size={14} /> : <User size={14} />}
+                     </div>
+                     <span className="hidden sm:inline text-sm font-bold text-slate-700">{session.name}</span>
+                  </div>
+                  <button onClick={logout} className="text-sm font-bold text-slate-400 hover:text-coral transition-colors">
+                    Logout
+                  </button>
                 </div>
-                <button onClick={logout} className="text-sm font-bold text-slate-400 hover:text-coral transition-colors">
-                  Logout
-                </button>
-              </div>
-            ) : (
-              <div className="flex items-center gap-3">
-                <button onClick={() => openLogin("consumer")} className="focus-ring bg-ink text-white h-11 px-6 rounded-xl text-sm font-black hover:bg-slate-800 transition-all flex items-center gap-2">
-                  <User size={18} className="text-coral" />
-                  Login
-                </button>
-                <button onClick={() => openLogin("seller")} className="focus-ring border border-slate-200 bg-white h-11 px-5 rounded-xl text-sm font-bold text-slate-700 hover:border-ink transition-all flex items-center gap-2">
-                  <ShieldCheck size={18} />
-                  Admin
-                </button>
-              </div>
-            )}
+              ) : (
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <button onClick={() => openLogin("consumer")} className="focus-ring bg-ink text-white h-10 sm:h-11 px-4 sm:px-6 rounded-xl text-xs sm:text-sm font-black hover:bg-slate-800 transition-all flex items-center gap-2">
+                    <User size={16} className="text-coral sm:size-[18px]" />
+                    Login
+                  </button>
+                  <button onClick={() => openLogin("seller")} className="focus-ring border border-slate-200 bg-white h-10 sm:h-11 px-3 sm:px-5 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:border-ink transition-all flex items-center gap-2">
+                    <ShieldCheck size={16} className="sm:size-[18px]" />
+                    Admin
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Nav Group - Order 3 on mobile, Order 2 on Desktop */}
+            <nav className="w-full flex items-center gap-1 overflow-x-auto pb-1 scrollbar-none order-3 lg:order-2 lg:w-auto lg:pb-0 lg:overflow-visible">
+              {tabs.map((tab) => {
+                const Icon = tab.icon;
+                const selected = location.pathname === tab.path;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => handleTabClick(tab)}
+                    className={`nav-link flex shrink-0 items-center gap-2 text-[13px] sm:text-sm font-bold ${selected ? "active" : ""}`}
+                  >
+                    <Icon size={14} className="sm:size-[16px]" aria-hidden="true" />
+                    {tab.label}
+                    {tab.id === "cart" && cart.length > 0 && (
+                      <span className="ml-1 rounded-full bg-coral px-1.5 py-0.5 text-[9px] text-white">
+                        {cart.length}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </nav>
           </div>
         </div>
       </header>

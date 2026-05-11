@@ -95,7 +95,7 @@ export default function LoginPanel({ role, mode, setMode, form, setForm, selectR
                 onChange={(value) => setForm({ ...form, name: value })}
               />
               <Field
-                label="Phone (Optional)"
+                label="Phone Number"
                 value={form.phone}
                 onChange={(value) => setForm({ ...form, phone: value })}
               />
