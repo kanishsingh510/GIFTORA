@@ -60,10 +60,10 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
           />
         </div>
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6 text-white">
-          <h1 className="text-3xl sm:text-7xl font-serif font-bold mb-3 sm:mb-6 drop-shadow-2xl max-w-4xl leading-[1.1] sm:leading-tight">
+          <h1 className="text-2xl sm:text-7xl font-serif font-bold mb-3 sm:mb-6 drop-shadow-2xl max-w-xs sm:max-w-4xl leading-[1.1] sm:leading-tight">
             Perfect Gifts for <br /> Every Occasion
           </h1>
-          <p className="text-base sm:text-2xl font-medium mb-6 sm:mb-10 opacity-90 drop-shadow-lg max-w-2xl">
+          <p className="text-sm sm:text-2xl font-medium mb-6 sm:mb-10 opacity-90 drop-shadow-lg max-w-[280px] sm:max-w-2xl">
             Discover unique presents that tell your story
           </p>
           <div className="flex flex-wrap gap-3 sm:gap-4 justify-center">
@@ -91,9 +91,9 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
 
       {/* Categories Section */}
       <section id="shop-categories" className="mb-16 sm:mb-32 px-4 max-w-full lg:max-w-7xl mx-auto overflow-hidden">
-        <div className="text-center mb-10 sm:mb-16">
-          <h2 className="text-2xl sm:text-4xl font-black text-ink mb-2 sm:mb-3 text-center">Shop by Gift Type</h2>
-          <div className="h-1 w-16 sm:h-1.5 sm:w-24 bg-mint mx-auto rounded-full" />
+        <div className="text-center mb-8 sm:mb-16">
+          <h2 className="text-xl sm:text-4xl font-black text-ink mb-1.5 sm:mb-3 text-center">Shop by Gift Type</h2>
+          <div className="h-0.5 w-12 sm:h-1.5 sm:w-24 bg-mint mx-auto rounded-full" />
         </div>
         
         <div className="grid gap-3 sm:gap-8 grid-cols-2 lg:grid-cols-4">
@@ -132,11 +132,11 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
 
       {/* Bestsellers Section */}
       <section className="mb-12 sm:mb-32 px-4 max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-6 sm:mb-12">
-          <h2 className="text-xl sm:text-3xl font-black text-ink">Bestsellers</h2>
+        <div className="flex items-center justify-between mb-5 sm:mb-12">
+          <h2 className="text-lg sm:text-3xl font-black text-ink">Bestsellers</h2>
           <button 
              onClick={() => navigate("/studio")}
-             className="text-[9px] sm:text-xs font-black text-orange-500 uppercase tracking-[0.2em] hover:text-ink transition-colors border-b border-orange-500/20 pb-1"
+             className="text-[8px] sm:text-xs font-black text-orange-500 uppercase tracking-[0.2em] hover:text-ink transition-colors border-b border-orange-500/20 pb-0.5"
           >
             View All
           </button>
@@ -165,19 +165,19 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
       </section>
 
       {/* Trust Bar */}
-      <section className="max-w-7xl mx-auto px-4 mb-16 sm:mb-32">
-         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-4 sm:p-8 rounded-3xl sm:rounded-[40px] bg-slate-50 border border-slate-100">
+      <section className="max-w-7xl mx-auto px-4 mb-12 sm:mb-32">
+         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 p-3 sm:p-8 rounded-2xl sm:rounded-[40px] bg-slate-50 border border-slate-100">
             {[
                { icon: Gift, label: "Premium Packaging" },
                { icon: Truck, label: "Express Delivery" },
                { icon: ShieldCheck, label: "Quality Guarantee" },
                { icon: ShoppingBag, label: "Bulk Gifting" }
             ].map((f, i) => (
-               <div key={i} className="flex items-center gap-2 sm:gap-4 px-2 text-center justify-center flex-col md:flex-row">
-                  <div className="h-8 w-8 sm:h-10 sm:w-10 shrink-0 rounded-lg sm:rounded-xl bg-white border border-slate-100 flex items-center justify-center text-mint">
-                     <f.icon size={16} />
+               <div key={i} className="flex items-center gap-1.5 sm:gap-4 px-1 text-center justify-center flex-col md:flex-row">
+                  <div className="h-7 w-7 sm:h-10 sm:w-10 shrink-0 rounded-lg sm:rounded-xl bg-white border border-slate-100 flex items-center justify-center text-mint">
+                     <f.icon size={14} />
                   </div>
-                  <p className="font-black text-[10px] sm:text-xs text-ink leading-tight">{f.label}</p>
+                  <p className="font-black text-[9px] sm:text-xs text-ink leading-tight">{f.label}</p>
                </div>
             ))}
          </div>
@@ -186,14 +186,14 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
       <Testimonials />
 
       {/* Final CTA */}
-      <section className="mt-10 sm:mt-20 mx-4 max-w-7xl lg:mx-auto rounded-3xl sm:rounded-[60px] bg-mint p-8 sm:p-16 text-center text-ink relative overflow-hidden">
-        <h2 className="text-2xl sm:text-4xl font-black mb-4 sm:mb-6 leading-tight">Create your next memory.</h2>
-        <p className="text-ink/60 max-w-md mx-auto mb-8 sm:mb-10 text-sm sm:text-base font-bold">
+      <section className="mt-8 sm:mt-20 mx-4 max-w-7xl lg:mx-auto rounded-2xl sm:rounded-[60px] bg-mint p-6 sm:p-16 text-center text-ink relative overflow-hidden">
+        <h2 className="text-xl sm:text-4xl font-black mb-3 sm:mb-6 leading-tight">Create your next memory.</h2>
+        <p className="text-ink/60 max-w-[240px] sm:max-w-md mx-auto mb-6 sm:mb-10 text-xs sm:text-base font-bold">
           Step into our studio and experience real-time gift design.
         </p>
         <button 
           onClick={() => navigate("/studio")}
-          className="bg-ink text-white h-12 sm:h-14 px-8 sm:px-10 rounded-xl sm:rounded-2xl text-sm sm:text-base font-black hover:bg-slate-800 transition-all shadow-xl shadow-ink/20"
+          className="bg-ink text-white h-11 sm:h-14 px-8 sm:px-10 rounded-lg sm:rounded-2xl text-xs sm:text-base font-black hover:bg-slate-800 transition-all shadow-xl shadow-ink/20"
         >
           Enter Studio
         </button>

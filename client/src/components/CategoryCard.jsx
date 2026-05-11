@@ -23,11 +23,11 @@ export default function CategoryCard({ category, image, subtitle, count, onClick
       <div className="absolute inset-0 z-10 flex flex-col justify-end p-4 sm:p-8 text-white">
         <div className="flex items-end justify-between">
           <div className="flex-1">
-            <h3 className="text-lg sm:text-2xl font-serif font-medium mb-0.5 sm:mb-1 leading-tight">{category}</h3>
-            <p className="text-[9px] sm:text-[10px] font-medium text-white/80 mb-1 sm:mb-2 line-clamp-1">
+            <h3 className="text-base sm:text-2xl font-serif font-medium mb-0.5 sm:mb-1 leading-tight">{category}</h3>
+            <p className="text-[8px] sm:text-[10px] font-medium text-white/80 mb-0.5 sm:mb-2 line-clamp-1">
               {subtitle}
             </p>
-            <p className="text-[8px] sm:text-[9px] font-bold text-white/50 tracking-wider uppercase">
+            <p className="text-[7px] sm:text-[9px] font-bold text-white/50 tracking-wider uppercase">
               {count} Gifts
             </p>
           </div>
