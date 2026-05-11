@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus, Boxes, BarChart3, CreditCard, Settings, Trash2, Edit3, X, Image as ImageIcon } from "lucide-react";
 import { money } from "../utils/helpers.js";
 import { statusFlow } from "../utils/constants.js";
@@ -49,6 +49,32 @@ export default function AdminView({ metrics, products, orders, updateProduct, ad
     setShowPanel(true);
   }
 
+  // Global Paste Listener
+  useEffect(() => {
+    const handleGlobalPaste = (e) => {
+      if (!showPanel) return;
+      // Don't intercept if user is typing in an input (except URL input)
+      const target = e.target;
+      if (target.tagName === 'INPUT' && target.placeholder !== 'Or paste URL' && target.placeholder !== 'Unsplash URL') return;
+
+      const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+      for (let index in items) {
+        const item = items[index];
+        if (item.kind === 'file' && item.type.includes('image')) {
+          const blob = item.getAsFile();
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setForm(prev => ({ ...prev, image: reader.result }));
+          };
+          reader.readAsDataURL(blob);
+        }
+      }
+    };
+
+    window.addEventListener("paste", handleGlobalPaste);
+    return () => window.removeEventListener("paste", handleGlobalPaste);
+  }, [showPanel]);
+
   function handleFileChange(e) {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -59,18 +85,6 @@ export default function AdminView({ metrics, products, orders, updateProduct, ad
     reader.readAsDataURL(file);
   }
 
-  function handlePaste(e) {
-    const items = (e.clipboardData || e.originalEvent.clipboardData).items;
-    for (let index in items) {
-      const item = items[index];
-      if (item.kind === 'file' && item.type.includes('image')) {
-        const blob = item.getAsFile();
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setForm({ ...form, image: reader.result });
-        };
-        reader.readAsDataURL(blob);
-      }
     }
   }
 
@@ -111,12 +125,9 @@ export default function AdminView({ metrics, products, orders, updateProduct, ad
         {/* Main List & Form Area */}
         <div className="space-y-10">
           {showPanel && (
-            <div 
-              onPaste={handlePaste}
-              className="rounded-3xl border-2 border-primary/20 bg-white p-8 shadow-2xl shadow-primary/10 animate-fade-in relative"
-            >
-              <div className="absolute -top-3 right-8 bg-ink text-white text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
-                Pro Tip: Ctrl+V to paste image
+            <div className="rounded-3xl border-2 border-primary/20 bg-white p-8 shadow-2xl shadow-primary/10 animate-fade-in relative">
+              <div className="absolute -top-3 right-8 bg-mint text-white text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg animate-pulse">
+                Active: Paste image anywhere (Ctrl+V)
               </div>
               <div className="flex items-center justify-between mb-8">
                 <h2 className="text-2xl font-black">{editingSlug ? "Update Product" : "New Catalog Item"}</h2>
