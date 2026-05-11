@@ -62,11 +62,11 @@ export default function HomeView() {
     <div className="animate-fade-in pb-20">
       {/* Hero Section */}
       <section className="relative py-24 px-4 text-center overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-mint/5 rounded-full blur-[120px] -z-10" />
-        <p className="text-xs font-black uppercase tracking-[0.4em] text-coral mb-6">India's Premium Gifting Studio</p>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-orange-500/5 rounded-full blur-[120px] -z-10" />
+        <p className="text-xs font-black uppercase tracking-[0.4em] text-orange-500 mb-6">India's Premium Gifting Studio</p>
         <h2 className="text-6xl font-black tracking-tighter sm:text-9xl text-ink leading-[1] mb-8">
           Personalized <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-mint to-teal-600 italic">With Love.</span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-mint to-teal-600 italic">With Love.</span>
         </h2>
         <p className="mt-8 mx-auto max-w-2xl text-lg text-slate-500 font-medium leading-relaxed sm:text-2xl mb-12">
           Design premium gifts in real-time. From corporate kits to artisan hampers, we bring your vision to life.
@@ -76,7 +76,7 @@ export default function HomeView() {
             onClick={() => navigate("/studio")}
             className="focus-ring bg-ink text-white h-16 px-12 rounded-2xl text-lg font-black hover:bg-slate-800 transition-all shadow-2xl shadow-ink/30 flex items-center gap-3 w-full sm:w-auto"
           >
-            <Sparkles size={24} className="text-coral" />
+            <Sparkles size={24} className="text-orange-500" />
             Open Studio
           </button>
           <button 
@@ -112,7 +112,7 @@ export default function HomeView() {
       <section id="shop-categories" className="mb-32">
         <div className="flex flex-col sm:flex-row items-end justify-between gap-6 mb-16">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.25em] text-coral mb-4">The Collection</p>
+            <p className="text-sm font-bold uppercase tracking-[0.25em] text-orange-500 mb-4">The Collection</p>
             <h2 className="text-5xl font-black text-ink">Shop by Gift Type</h2>
           </div>
           <button 
@@ -147,7 +147,7 @@ export default function HomeView() {
                <div className="relative aspect-square overflow-hidden rounded-3xl bg-slate-50 mb-4">
                   <img src={p.image} alt={p.name} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                   <div className="absolute top-4 left-4 h-8 px-3 rounded-full bg-white/90 backdrop-blur shadow-sm flex items-center gap-1 text-[10px] font-black uppercase tracking-widest">
-                     <Star size={10} className="fill-coral text-coral" /> {p.rating}
+                     <Star size={10} className="fill-orange-500 text-orange-500" /> {p.rating}
                   </div>
                   <button className="absolute bottom-4 right-4 h-10 w-10 rounded-full bg-white text-ink shadow-lg grid place-items-center opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all">
                      <Heart size={18} />
@@ -166,7 +166,7 @@ export default function HomeView() {
         <div className="absolute top-0 right-0 w-96 h-96 bg-mint/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
         <div className="grid lg:grid-cols-2 gap-16 items-center">
            <div>
-              <p className="text-xs font-black uppercase tracking-[0.3em] text-coral mb-6">Business Solutions</p>
+              <p className="text-xs font-black uppercase tracking-[0.3em] text-orange-500 mb-6">Business Solutions</p>
               <h2 className="text-5xl font-black mb-8 leading-[1.1]">Elevate Your Corporate <br /> Identity with Style.</h2>
               <p className="text-lg text-slate-400 font-medium mb-10 max-w-lg leading-relaxed">
                  From employee welcome kits to premium client gifts, we specialize in high-quality branding and customization.
@@ -201,7 +201,7 @@ export default function HomeView() {
         <div className="flex items-center justify-between gap-6 mb-16">
           <h2 className="text-5xl font-black text-ink">Luxury Selection</h2>
           <div className="h-px flex-1 bg-slate-100 hidden sm:block" />
-          <button onClick={() => navigate("/studio")} className="text-sm font-black text-coral uppercase tracking-widest">See All</button>
+          <button onClick={() => navigate("/studio")} className="text-sm font-black text-orange-500 uppercase tracking-widest">See All</button>
         </div>
         <div className="grid gap-12 lg:grid-cols-3">
            {luxuryProducts.map(p => (

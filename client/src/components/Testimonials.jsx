@@ -34,7 +34,7 @@ function TestimonialCard({ review }) {
       <Quote className="absolute top-6 right-6 text-mint/10" size={40} />
       <div className="flex gap-1 mb-4">
         {[...Array(review.rating)].map((_, i) => (
-          <Star key={i} size={14} className="fill-coral text-coral" />
+          <Star key={i} size={14} className="fill-orange-500 text-orange-500" />
         ))}
       </div>
       <p className="text-slate-600 font-medium italic mb-6 leading-relaxed">

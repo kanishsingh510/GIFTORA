@@ -16,12 +16,12 @@ export default function CategoryCard({ category, image, subtitle, count, onClick
       </div>
       
       <div className="absolute inset-0 z-10 flex flex-col justify-end p-8 text-white">
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-coral/90 mb-2">{count} Items</p>
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-orange-400 mb-2">{count} Items</p>
         <h3 className="text-2xl font-black mb-1">{category}</h3>
         <p className="text-sm font-medium text-slate-200 mb-4 opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
           {subtitle}
         </p>
-        <div className="flex items-center gap-2 text-sm font-bold text-coral">
+        <div className="flex items-center gap-2 text-sm font-bold text-orange-500">
           Explore Now <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
         </div>
       </div>
