@@ -59,6 +59,21 @@ export default function AdminView({ metrics, products, orders, updateProduct, ad
     reader.readAsDataURL(file);
   }
 
+  function handlePaste(e) {
+    const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+    for (let index in items) {
+      const item = items[index];
+      if (item.kind === 'file' && item.type.includes('image')) {
+        const blob = item.getAsFile();
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setForm({ ...form, image: reader.result });
+        };
+        reader.readAsDataURL(blob);
+      }
+    }
+  }
+
   return (
     <div className="space-y-12 animate-fade-in pb-20">
       {/* Header */}
@@ -96,7 +111,13 @@ export default function AdminView({ metrics, products, orders, updateProduct, ad
         {/* Main List & Form Area */}
         <div className="space-y-10">
           {showPanel && (
-            <div className="rounded-3xl border-2 border-primary/20 bg-white p-8 shadow-2xl shadow-primary/10 animate-fade-in">
+            <div 
+              onPaste={handlePaste}
+              className="rounded-3xl border-2 border-primary/20 bg-white p-8 shadow-2xl shadow-primary/10 animate-fade-in relative"
+            >
+              <div className="absolute -top-3 right-8 bg-ink text-white text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
+                Pro Tip: Ctrl+V to paste image
+              </div>
               <div className="flex items-center justify-between mb-8">
                 <h2 className="text-2xl font-black">{editingSlug ? "Update Product" : "New Catalog Item"}</h2>
                 <button onClick={() => { setShowPanel(false); setEditingSlug(null); }} className="text-slate-400 hover:text-ink"><X size={20} /></button>
