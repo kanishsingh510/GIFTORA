@@ -6,7 +6,7 @@ import ProductCard from "../components/ProductCard.jsx";
 import { fallbackProducts } from "../utils/constants.js";
 import { money, optimiseImage } from "../utils/helpers.js";
 
-const categories = [
+const categoriesData = [
   { id: "birthday", name: "Birthday", image: "https://images.unsplash.com/photo-1530103043960-ef38714abb15?w=400" },
   { id: "anniversary", name: "Anniversary", image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=400" },
   { id: "personalized", name: "Personalized", image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=400" },
@@ -19,47 +19,67 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
   const displayProducts = products.length > 0 ? products : apiMode === "demo" ? fallbackProducts : [];
   const featuredProducts = [...displayProducts].sort((a, b) => (b.orders || 0) - (a.orders || 0)).slice(0, 12);
 
+  // Dynamic Categories from Products
+  const dynamicCategories = products.length > 0 ? Object.values(products.reduce((acc, p) => {
+    const cat = p.category || "Gifts";
+    if (!acc[cat]) {
+      acc[cat] = { id: cat.toLowerCase(), name: cat, image: p.image };
+    }
+    return acc;
+  }, {})).slice(0, 6) : categoriesData;
+
   return (
     <div className="pb-24 w-full overflow-x-hidden bg-[#fafbfc]">
       
-      {/* 📱 MOBILE-ONLY PREMIUM UI */}
+      {/* 📱 MOBILE-ONLY REFINED UI */}
       <div className="block sm:hidden space-y-12 w-full overflow-x-hidden">
         
-        {/* Apple-Style Glass Search */}
-        <div className="sticky top-0 z-40 px-4 py-4 backdrop-blur-xl bg-white/70 border-b border-slate-100/50">
-          <div className="relative group">
-            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-coral transition-colors" />
+        {/* Apple-Style Glass Search - Hardened */}
+        <div className="sticky top-0 z-40 w-full box-border px-4 py-4 backdrop-blur-xl bg-white/80 border-b border-slate-200/50 left-0 right-0">
+          <div className="relative w-full">
+            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
             <input 
               type="text" 
               placeholder="Search for memories..."
-              className="w-full bg-slate-100/50 border-none h-12 pl-12 pr-4 rounded-2xl text-sm font-semibold placeholder:text-slate-400 focus:ring-2 focus:ring-coral/10 transition-all"
+              className="w-full bg-slate-100/80 border-none h-12 pl-12 pr-4 rounded-2xl text-sm font-semibold placeholder:text-slate-400 focus:ring-0"
             />
           </div>
         </div>
 
-        {/* Story Categories */}
+        {/* Dynamic Stories - Perfectly Centered & Dynamic */}
         <div className="w-full overflow-hidden">
-          <div className="flex overflow-x-auto scrollbar-none gap-6 px-4 pb-2">
-            {categories.map((cat) => (
-              <button key={cat.id} onClick={() => navigate(`/studio?category=${cat.id}`)} className="flex flex-col items-center gap-2.5 shrink-0">
-                <div className="relative w-[72px] h-[72px] rounded-full p-1 bg-white shadow-md border border-slate-50">
-                  <img src={cat.image} className="w-full h-full rounded-full object-cover" alt={cat.name} />
+          <div className={`flex overflow-x-auto scrollbar-none gap-6 px-6 pb-2 ${dynamicCategories.length <= 4 ? 'justify-around' : ''}`}>
+            {dynamicCategories.map((cat) => (
+              <button key={cat.id} onClick={() => navigate(`/studio?category=${cat.name}`)} className="flex flex-col items-center gap-2.5 shrink-0">
+                <div className="relative">
+                  <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-coral via-coral/40 to-transparent animate-spin-slow opacity-60" />
+                  <div className="relative w-[68px] h-[68px] rounded-full p-1 bg-white shadow-sm border border-slate-100">
+                    <img src={cat.image} className="w-full h-full rounded-full object-cover" alt={cat.name} />
+                  </div>
                 </div>
-                <span className="text-[11px] font-bold text-ink uppercase tracking-[0.05em]">{cat.name}</span>
+                <span className="text-[10px] font-black text-ink uppercase tracking-tight">{cat.name}</span>
               </button>
             ))}
+            {dynamicCategories.length > 4 && (
+              <button onClick={() => navigate("/studio")} className="flex flex-col items-center gap-2.5 shrink-0">
+                <div className="w-[68px] h-[68px] rounded-full bg-slate-100 flex items-center justify-center border-2 border-dashed border-slate-300 text-slate-400">
+                   <Sparkles size={24} />
+                </div>
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-tight">More</span>
+              </button>
+            )}
           </div>
         </div>
 
-        {/* LUXURY BANNER - REDUCED HEIGHT BUT RESTORED TEXT */}
+        {/* LUXURY BANNER */}
         <div className="w-full space-y-2">
           <div 
             onClick={() => navigate("/studio")}
-            className="relative aspect-[16/9.5] w-full overflow-hidden group"
+            className="relative aspect-[16/9.5] w-full overflow-hidden"
           >
             <img 
               src="https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&q=80&w=800" 
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700"
+              className="absolute inset-0 w-full h-full object-cover"
               alt="Luxury"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
@@ -105,7 +125,12 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
           <div className="flex animate-marquee whitespace-nowrap gap-16 items-center">
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="flex items-center gap-4">
-                <span className="text-[10px] font-black uppercase tracking-[0.25em] text-ink">Free Express Delivery • Quality Guaranteed</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.25em] text-ink flex items-center gap-2">
+                   <div className="h-1.5 w-1.5 rounded-full bg-coral" /> Free Express Delivery
+                </span>
+                <span className="text-[10px] font-black uppercase tracking-[0.25em] text-ink flex items-center gap-2">
+                   <div className="h-1.5 w-1.5 rounded-full bg-mint" /> Quality Guaranteed
+                </span>
               </div>
             ))}
           </div>
@@ -181,7 +206,7 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
               }
               acc[cat].count++;
               return acc;
-            }, {})) : categories).slice(0, 4).map((cat, i) => (
+            }, {})) : categoriesData).slice(0, 4).map((cat, i) => (
               <div key={i} className="min-w-0">
                 <CategoryCard category={cat.category || cat.name} image={cat.image} subtitle={cat.subtitle} count={cat.count} onClick={() => navigate(`/studio?category=${cat.category || cat.id}`)} />
               </div>
