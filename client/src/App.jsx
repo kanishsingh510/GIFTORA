@@ -20,14 +20,16 @@ import {
   blankAddress 
 } from "./utils/constants.js";
 
-// Components
-import LoginPanel from "./components/LoginPanel.jsx";
-
 // Pages
+import HomeView from "./pages/HomeView.jsx";
 import StudioView from "./pages/StudioView.jsx";
 import CartView from "./pages/CartView.jsx";
 import OrdersView from "./pages/OrdersView.jsx";
 import AdminView from "./pages/AdminView.jsx";
+
+// Components
+import LoginPanel from "./components/LoginPanel.jsx";
+import Footer from "./components/Footer.jsx";
 
 export default function App() {
   const navigate = useNavigate();
@@ -42,7 +44,8 @@ export default function App() {
       return [{ id: "admin", label: "Admin", icon: ShieldCheck, path: "/admin" }];
     }
     return [
-      { id: "studio", label: "Studio", icon: Sparkles, path: "/" },
+      { id: "home", label: "Home", icon: Sparkles, path: "/" },
+      { id: "studio", label: "Studio", icon: Sparkles, path: "/studio" },
       ...(session ? [
         { id: "cart", label: "Cart", icon: ShoppingCart, path: "/cart" },
         { id: "orders", label: "Orders", icon: Package, path: "/orders" },
@@ -322,8 +325,8 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen text-ink">
-      <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/92 backdrop-blur">
+    <div className="min-h-screen flex flex-col bg-bg-main overflow-x-hidden">
+      <header className="sticky top-0 z-40 border-b border-slate-100 bg-white/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate("/")}>
             <div className="grid h-11 w-11 place-items-center rounded-lg bg-ink text-white">
@@ -410,7 +413,8 @@ export default function App() {
         )}
 
         <Routes>
-          <Route path="/" element={
+          <Route path="/" element={<HomeView />} />
+          <Route path="/studio" element={
             products.length === 0 ? (
               <div className="flex min-h-[400px] flex-col items-center justify-center text-center">
                 <RefreshCcw className="mb-4 animate-spin text-coral" size={32} />
@@ -477,6 +481,7 @@ export default function App() {
           } />
         </Routes>
       </main>
+      <Footer />
     </div>
   );
 }
