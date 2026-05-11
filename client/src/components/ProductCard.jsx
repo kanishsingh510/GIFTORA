@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CheckCircle2 } from "lucide-react";
-import { money } from "../utils/helpers.js";
+import { money, optimiseImage } from "../utils/helpers.js";
 const placeholderImage = "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=800";
 const secondaryPlaceholder = "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=800";
 
@@ -19,7 +19,7 @@ export default function ProductCard({ product, selected, onSelect }) {
       <div className="relative aspect-square overflow-hidden bg-slate-50">
         <div className={`absolute inset-0 bg-slate-200 animate-pulse transition-opacity duration-500 ${loaded ? "opacity-0" : "opacity-100"}`} />
         <img
-          src={product.image || placeholderImage}
+          src={optimiseImage(product.image, 500, 75) || placeholderImage}
           alt={product.name}
           loading="lazy"
           onLoad={() => setLoaded(true)}
