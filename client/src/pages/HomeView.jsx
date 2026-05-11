@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Sparkles, ShoppingBag, Gift, Truck, ShieldCheck, ArrowRight, Heart, Star } from "lucide-react";
 import CategoryCard from "../components/CategoryCard.jsx";
 import Testimonials from "../components/Testimonials.jsx";
+import ProductCard from "../components/ProductCard.jsx";
 import { fallbackProducts } from "../utils/constants.js";
 import { money } from "../utils/helpers.js";
 
@@ -36,9 +37,16 @@ const categories = [
   }
 ];
 
-export default function HomeView() {
+export default function HomeView({ products = [], apiMode = "connecting" }) {
   const navigate = useNavigate();
-  const featuredProducts = fallbackProducts.slice(0, 4);
+  
+  // Use live products if available, otherwise fallback to static data ONLY if in demo mode
+  const displayProducts = products.length > 0 ? products : (apiMode === "demo" ? fallbackProducts : []);
+  const featuredProducts = [...displayProducts]
+    .sort((a, b) => (b.orders || 0) - (a.orders || 0))
+    .slice(0, 4);
+
+  const placeholderImg = "https://images.unsplash.com/photo-1594322436404-5a0526db4d13?q=80&w=600";
 
   return (
     <div className="animate-fade-in pb-20">
@@ -87,10 +95,30 @@ export default function HomeView() {
         </div>
         
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {categories.map((cat) => (
+          {(products.length > 0 ? 
+            // Derive categories from products
+            Object.values(products.reduce((acc, p) => {
+              const cat = p.category || "Other";
+              if (!acc[cat]) {
+                acc[cat] = {
+                  id: cat.toLowerCase(),
+                  name: cat,
+                  subtitle: `Discover our ${cat} collection`,
+                  image: p.image,
+                  count: 0
+                };
+              }
+              acc[cat].count++;
+              return acc;
+            }, {}))
+            : categories // Fallback to static if no products
+          ).slice(0, 4).map((cat) => (
             <CategoryCard 
               key={cat.id} 
-              {...cat} 
+              category={cat.name}
+              image={cat.image || placeholderImg}
+              subtitle={cat.subtitle}
+              count={cat.count}
               onClick={() => {
                 navigate("/studio");
                 window.scrollTo(0, 0);
@@ -113,23 +141,24 @@ export default function HomeView() {
         </div>
         
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {featuredProducts.map((p) => (
-            <div key={p.id} className="group cursor-pointer" onClick={() => navigate("/studio")}>
-               <div className="relative aspect-square overflow-hidden rounded-[32px] bg-slate-50 mb-4 border border-slate-50">
-                  <img 
-                    src={p.image} 
-                    alt={p.name} 
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                  />
-                  <div className="absolute top-4 left-4 h-7 px-2.5 rounded-full bg-white/90 backdrop-blur shadow-sm flex items-center gap-1 text-[9px] font-black uppercase tracking-widest">
-                     <Star size={10} className="fill-orange-500 text-orange-500" /> {p.rating}
-                  </div>
-               </div>
-               <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none">{p.category}</p>
-               <h4 className="text-base font-black text-ink mt-2 leading-tight">{p.name}</h4>
-               <p className="text-mint font-black mt-1 text-sm">{money(p.price)}</p>
-            </div>
-          ))}
+          {featuredProducts.length > 0 ? (
+            featuredProducts.map((p) => (
+              <ProductCard 
+                key={p.id || p.slug} 
+                product={p} 
+                selected={false} 
+                onSelect={() => {
+                  navigate("/studio");
+                  window.scrollTo(0, 0);
+                }} 
+              />
+            ))
+          ) : (
+            // Skeleton / Loading state
+            Array(4).fill(0).map((_, i) => (
+              <div key={i} className="aspect-square rounded-2xl bg-slate-100 animate-pulse" />
+            ))
+          )}
         </div>
       </section>
 

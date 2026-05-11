@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { money } from "../utils/helpers.js";
-const placeholderImage = "https://images.unsplash.com/photo-1594322436404-5a0526db4d13?q=80&w=600&auto=format&fit=crop";
+const placeholderImage = "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=800";
+const secondaryPlaceholder = "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=800";
 
 export default function ProductCard({ product, selected, onSelect }) {
   const [loaded, setLoaded] = useState(false);
@@ -21,15 +22,15 @@ export default function ProductCard({ product, selected, onSelect }) {
           src={product.image || placeholderImage}
           alt={product.name}
           loading="lazy"
+          onLoad={() => setLoaded(true)}
           onError={(e) => { 
             if (e.target.src !== placeholderImage) {
               e.target.src = placeholderImage; 
-            } else {
-              // Final fallback to a very common gift image
-              e.target.src = "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=400";
+            } else if (e.target.src !== secondaryPlaceholder) {
+              e.target.src = secondaryPlaceholder;
             }
           }}
-          className={`relative z-10 h-full w-full object-cover transition-all duration-700 ${selected ? "scale-105" : "hover:scale-105"}`}
+          className={`relative z-10 h-full w-full object-cover transition-all duration-700 ${loaded ? "opacity-100" : "opacity-0"} ${selected ? "scale-105" : "hover:scale-105"}`}
         />
         {selected && (
           <div className="absolute right-3 top-3 z-20 grid h-6 w-6 place-items-center rounded-full bg-primary text-white shadow-lg">

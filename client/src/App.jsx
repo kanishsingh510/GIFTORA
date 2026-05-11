@@ -413,7 +413,7 @@ export default function App() {
         )}
 
         <Routes>
-          <Route path="/" element={<HomeView />} />
+          <Route path="/" element={<HomeView products={products} apiMode={apiMode} />} />
           <Route path="/studio" element={
             products.length === 0 ? (
               <div className="flex min-h-[400px] flex-col items-center justify-center text-center">
