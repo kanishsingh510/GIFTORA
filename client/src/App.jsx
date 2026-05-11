@@ -291,12 +291,11 @@ export default function App() {
   }
 
   // Admin Functions
-  async function saveProductPrice(slug, value) {
-    const price = Number(value);
-    if (!price || price < 1) return;
+  async function updateProduct(slug, updates) {
     try {
-      const updated = await api(`/products/${slug}`, { method: "PATCH", body: JSON.stringify({ price }) });
+      const updated = await api(`/products/${slug}`, { method: "PATCH", body: JSON.stringify(updates) });
       setProducts((current) => current.map((p) => (p.slug === slug ? updated : p)));
+      setNotice("Product updated successfully!");
     } catch (error) { setNotice(error.message); }
   }
 
@@ -309,10 +308,11 @@ export default function App() {
   }
 
   async function deleteProduct(slug) {
-    if (!window.confirm("Remove item?")) return;
+    if (!window.confirm("Remove item permanently?")) return;
     try {
-      await api(`/products/${slug}`, { method: "PATCH", body: JSON.stringify({ active: false }) });
+      await api(`/products/${slug}`, { method: "DELETE" });
       setProducts((current) => current.filter((p) => p.slug !== slug));
+      setNotice("Product removed.");
     } catch (error) { setNotice(error.message); }
   }
 
@@ -472,7 +472,7 @@ export default function App() {
                 metrics={metrics}
                 products={products}
                 orders={adminOrders}
-                saveProductPrice={saveProductPrice}
+                updateProduct={updateProduct}
                 addProduct={addProduct}
                 updateOrderStatus={updateOrderStatus}
                 deleteProduct={deleteProduct}

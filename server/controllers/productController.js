@@ -31,7 +31,7 @@ export const getProducts = async (req, res) => {
 };
 
 export const updateProduct = async (req, res) => {
-  const allowed = ["price", "compareAt", "active", "leadTime"];
+  const allowed = ["name", "category", "price", "compareAt", "image", "description", "leadTime", "material", "colors", "customizationAreas", "active"];
   const updates = Object.fromEntries(
     Object.entries(req.body || {}).filter(([key]) => allowed.includes(key))
   );
@@ -51,7 +51,7 @@ export const updateProduct = async (req, res) => {
 };
 
 export const createProduct = async (req, res) => {
-  const { name, category, price, description, material, colors, customizationAreas } = req.body;
+  const { name, category, price, description, material, colors, customizationAreas, image } = req.body;
   
   if (!name || !category || !price) {
     return res.status(400).json({ message: "Name, category, and price are required" });
@@ -73,7 +73,8 @@ export const createProduct = async (req, res) => {
     material: material || "Mixed",
     colors: colors || ["#ffffff"],
     customizationAreas: customizationAreas || ["center"],
-    active: true
+    active: true,
+    image: image || "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=800"
   };
 
   if (mongoReady) {
@@ -92,4 +93,17 @@ export const createProduct = async (req, res) => {
   
   memoryStore.products.push(productData);
   res.status(201).json(cleanProduct(productData));
+};
+
+export const deleteProduct = async (req, res) => {
+  if (mongoReady) {
+    const product = await Product.findOneAndDelete({ slug: req.params.slug });
+    if (!product) return res.status(404).json({ message: "Product not found" });
+    return res.json({ message: "Product deleted successfully" });
+  }
+
+  const index = memoryStore.products.findIndex((product) => product.slug === req.params.slug);
+  if (index === -1) return res.status(404).json({ message: "Product not found" });
+  memoryStore.products.splice(index, 1);
+  res.json({ message: "Product deleted successfully" });
 };
