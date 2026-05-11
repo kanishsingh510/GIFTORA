@@ -22,26 +22,26 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
   const placeholderImg = "https://images.unsplash.com/photo-1594322436404-5a0526db4d13?auto=format&fit=crop&q=70&w=400";
 
   return (
-    <div className="animate-fade-in pb-24 w-full overflow-x-hidden">
+    <div className="pb-24 w-full overflow-hidden flex flex-col items-center">
       
       {/* 📱 MOBILE-ONLY VIEW */}
-      <div className="block sm:hidden space-y-10 w-full overflow-x-hidden">
+      <div className="block sm:hidden space-y-10 w-full max-w-full overflow-hidden">
         
         {/* Search */}
-        <div className="px-4 pt-2 w-full box-border">
-          <div className="relative w-full">
+        <div className="px-4 pt-2">
+          <div className="relative">
             <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
             <input 
               type="text" 
-              placeholder="Search for perfect gifts..."
-              className="w-full bg-slate-100 border-none h-12 pl-12 pr-4 rounded-2xl text-sm font-medium"
+              placeholder="Search..."
+              className="w-full bg-slate-100 border-none h-12 pl-12 pr-4 rounded-2xl text-sm font-medium focus:ring-0"
             />
           </div>
         </div>
 
         {/* Stories */}
-        <div className="w-full overflow-hidden">
-          <div className="flex overflow-x-auto scrollbar-none gap-5 px-4 pb-2">
+        <div className="overflow-hidden">
+          <div className="flex overflow-x-auto scrollbar-none gap-5 px-4 pb-1">
             {categories.map((cat) => (
               <button key={cat.id} onClick={() => navigate(`/studio?category=${cat.id}`)} className="flex flex-col items-center gap-2 shrink-0">
                 <div className="w-16 h-16 rounded-full p-0.5 border-2 border-coral shadow-sm">
@@ -53,11 +53,11 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
           </div>
         </div>
 
-        {/* Hero Card - Hardened width and wrapping */}
-        <div className="px-4 w-full box-border">
+        {/* Hero Card - ZERO TRANSFORM SAFE MODE */}
+        <div className="px-4 w-full">
           <div 
             onClick={() => navigate("/studio")}
-            className="relative h-[440px] rounded-[32px] overflow-hidden bg-slate-900 border border-slate-100/10 shadow-lg w-full max-w-full"
+            className="relative h-[400px] rounded-[32px] overflow-hidden bg-slate-900 border border-slate-100/10 shadow-lg w-full"
           >
             <img 
               src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&q=75&w=800" 
@@ -70,7 +70,7 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
                 <Sparkles size={12} /> Featured Gift
               </span>
               <h2 className="text-3xl font-serif font-bold text-white mb-2 leading-tight">Create your<br />perfect gift.</h2>
-              <p className="text-white/80 text-xs font-medium mb-6 leading-relaxed max-w-[200px]">Step into the Giftora Studio and design a memory in real-time.</p>
+              <p className="text-white/80 text-xs font-medium mb-6 leading-relaxed max-w-[200px]">Step into the Giftora Studio and design a memory.</p>
               <button className="w-full bg-coral text-white h-12 rounded-2xl font-black text-sm shadow-xl shadow-coral/30">
                 Start Creating Now
               </button>
@@ -78,27 +78,32 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
           </div>
         </div>
 
-        {/* Marquee - Full Bleed with safety */}
-        <div className="bg-mint/10 py-3 w-full overflow-hidden">
-          <div className="flex animate-marquee whitespace-nowrap gap-10">
-            {[1, 2, 3, 4].map((i) => (
+        {/* Static Trust Bar - NO MARQUEE */}
+        <div className="px-4">
+          <div className="grid grid-cols-2 gap-3 p-4 bg-mint/5 rounded-3xl border border-mint/10">
+            {[
+              { icon: Gift, label: "Premium" },
+              { icon: Truck, label: "Fast" },
+              { icon: ShieldCheck, label: "Quality" },
+              { icon: ShoppingBag, label: "Bulk" },
+            ].map((f, i) => (
               <div key={i} className="flex items-center gap-2">
-                <Truck size={14} className="text-mint" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-ink">Premium Quality & Express Delivery</span>
+                <f.icon size={14} className="text-mint" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-ink">{f.label} Delivery</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Products */}
-        <div className="w-full overflow-hidden">
-          <div className="flex items-center justify-between mb-5 px-4">
+        <div className="px-4">
+          <div className="flex items-center justify-between mb-5">
             <h3 className="text-xl font-black text-ink">New Arrivals</h3>
             <button onClick={() => navigate("/studio")} className="text-[11px] font-black text-coral uppercase tracking-widest">See All</button>
           </div>
-          <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-none snap-x snap-mandatory px-4 w-full">
+          <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-none snap-x snap-mandatory">
             {featuredProducts.map((p) => (
-              <div key={p.id} className="min-w-[180px] w-[180px] snap-start">
+              <div key={p.id} className="min-w-[170px] w-[170px] snap-start">
                 <ProductCard product={p} selected={false} onSelect={() => navigate("/studio")} />
               </div>
             ))}
@@ -109,7 +114,7 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
       </div>
 
       {/* 🖥️ DESKTOP VIEW */}
-      <div className="hidden sm:block">
+      <div className="hidden sm:block w-full">
         <section className="relative h-[480px] lg:h-[580px] overflow-hidden mb-16 bg-slate-900">
           <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&q=75&w=1200" className="absolute inset-0 w-full h-full object-cover opacity-55" alt="Hero" />
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/20 via-slate-900/45 to-slate-900/85" />
