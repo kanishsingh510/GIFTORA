@@ -49,31 +49,37 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
   const placeholderImg = "https://images.unsplash.com/photo-1594322436404-5a0526db4d13?q=80&w=600";
 
   return (
-    <div className="animate-fade-in pb-20">
-      {/* Hero Section - Restored to Static Elegant Version */}
-      <section className="relative h-[280px] sm:h-[600px] w-full overflow-hidden mb-8 sm:mb-24 bg-slate-900">
+    <div className="animate-fade-in pb-24">
+      {/* Hero Section — Full-bleed, mobile-first */}
+      <section className="relative h-[420px] sm:h-[600px] overflow-hidden mb-10 sm:mb-24 bg-slate-900 -mx-4 sm:-mx-6 lg:-mx-8" style={{width: 'calc(100% + 2rem)'}}>
         <div className="absolute inset-0 w-full h-full">
           <img 
             src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&q=90&w=1600" 
-            className="h-full w-full object-cover opacity-60 scale-125 sm:scale-100" 
+            className="h-full w-full object-cover opacity-60" 
             alt="Giftora Hero" 
           />
+          {/* Gradient overlay for better text contrast */}
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/30 via-slate-900/40 to-slate-900/70" />
         </div>
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-4">
-          <div className="bg-slate-900/40 backdrop-blur-md p-6 sm:p-12 rounded-[32px] sm:rounded-[60px] border border-white/10 max-w-[320px] sm:max-w-4xl mx-auto">
-            <h1 className="text-2xl sm:text-7xl font-serif font-bold mb-3 sm:mb-6 text-white leading-tight">
-              Perfect Gifts for <br /> Every Occasion
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-5">
+          <div className="max-w-[340px] sm:max-w-4xl mx-auto">
+            {/* Eyebrow tag */}
+            <span className="inline-block bg-coral/90 text-white text-[10px] sm:text-sm font-black uppercase tracking-widest px-3 py-1 rounded-full mb-4 sm:mb-6">
+              ✦ Premium Gifting
+            </span>
+            <h1 className="text-3xl sm:text-7xl font-serif font-bold mb-3 sm:mb-6 text-white leading-[1.15] sm:leading-tight">
+              Perfect Gifts for<br />Every Occasion
             </h1>
-            <p className="text-xs sm:text-2xl font-medium mb-6 sm:mb-10 text-white/90 drop-shadow-lg max-w-[240px] sm:max-w-2xl mx-auto">
+            <p className="text-sm sm:text-2xl font-medium mb-7 sm:mb-10 text-white/85 drop-shadow-lg max-w-xs sm:max-w-2xl mx-auto leading-relaxed">
               Discover unique presents that tell your story
             </p>
-            <div className="flex flex-wrap gap-3 sm:gap-4 justify-center">
+            <div className="flex gap-3 sm:gap-4 justify-center">
               <button 
                 onClick={() => {
                   navigate("/studio");
                   window.scrollTo(0, 0);
                 }}
-                className="bg-coral text-white h-11 sm:h-14 px-8 sm:px-10 rounded-xl sm:rounded-2xl text-xs sm:text-base font-black hover:bg-[#e24e3c] transition-all shadow-xl shadow-coral/20"
+                className="bg-coral text-white h-12 sm:h-14 px-7 sm:px-10 rounded-2xl text-sm sm:text-base font-black hover:bg-[#e24e3c] transition-all shadow-xl shadow-coral/30 active:scale-95"
               >
                 Shop Now
               </button>
@@ -82,7 +88,7 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
                   const el = document.getElementById('shop-categories');
                   el?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="bg-white/10 backdrop-blur-md text-white border border-white/20 h-11 sm:h-14 px-8 sm:px-10 rounded-xl sm:rounded-2xl text-xs sm:text-base font-black hover:bg-white/20 transition-all"
+                className="bg-white/15 backdrop-blur-md text-white border border-white/30 h-12 sm:h-14 px-7 sm:px-10 rounded-2xl text-sm sm:text-base font-black hover:bg-white/25 transition-all active:scale-95"
               >
                 Explore
               </button>
@@ -92,15 +98,14 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
       </section>
 
       {/* Categories Section */}
-      <section id="shop-categories" className="mb-12 sm:mb-32 px-3 sm:px-4 max-w-full lg:max-w-7xl mx-auto">
+      <section id="shop-categories" className="mb-12 sm:mb-32 max-w-full lg:max-w-7xl mx-auto">
         <div className="text-center mb-6 sm:mb-16">
-          <h2 className="text-lg sm:text-4xl font-black text-ink mb-1 sm:mb-3 text-center">Shop by Gift Type</h2>
-          <div className="h-0.5 w-10 sm:h-1.5 sm:w-24 bg-mint mx-auto rounded-full" />
+          <h2 className="text-xl sm:text-4xl font-black text-ink mb-2 sm:mb-3 text-center">Shop by Gift Type</h2>
+          <div className="h-1 w-12 sm:h-1.5 sm:w-24 bg-mint mx-auto rounded-full" />
         </div>
         
-        <div className="grid grid-cols-2 gap-2.5 sm:gap-8 w-full overflow-hidden">
+        <div className="grid grid-cols-2 gap-3 sm:gap-8 w-full">
           {(products.length > 0 ? 
-            // Derive categories from products
             Object.values(products.reduce((acc, p) => {
               const cat = p.category || "Other";
               if (!acc[cat]) {
@@ -114,9 +119,9 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
               acc[cat].count++;
               return acc;
             }, {}))
-            : categories // Fallback to static if no products
+            : categories
           ).slice(0, 4).map((cat, i) => (
-            <div key={i} className="min-w-0 w-full overflow-hidden">
+            <div key={i} className="min-w-0 w-full">
               <CategoryCard 
                 category={cat.category || cat.name}
                 image={cat.image || placeholderImg}
@@ -133,21 +138,21 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
       </section>
 
       {/* Bestsellers Section */}
-      <section className="mb-12 sm:mb-32 px-3 sm:px-4 max-w-7xl mx-auto">
+      <section className="mb-12 sm:mb-32 max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-5 sm:mb-12">
-          <h2 className="text-lg sm:text-3xl font-black text-ink">Bestsellers</h2>
+          <h2 className="text-xl sm:text-3xl font-black text-ink">Bestsellers</h2>
           <button 
              onClick={() => navigate("/studio")}
-             className="text-[8px] sm:text-xs font-black text-orange-500 uppercase tracking-widest hover:text-ink transition-colors"
+             className="text-xs sm:text-xs font-black text-orange-500 uppercase tracking-widest hover:text-ink transition-colors"
           >
-            View All
+            View All →
           </button>
         </div>
         
-        <div className="grid grid-cols-2 gap-2 sm:gap-8 lg:grid-cols-4 w-full overflow-hidden">
+        <div className="grid grid-cols-2 gap-3 sm:gap-8 lg:grid-cols-4 w-full">
           {featuredProducts.length > 0 ? (
             featuredProducts.map((p) => (
-              <div key={p.id} className="min-w-0 w-full overflow-hidden">
+              <div key={p.id} className="min-w-0 w-full">
                 <ProductCard 
                   product={p} 
                   selected={false} 
@@ -159,7 +164,6 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
               </div>
             ))
           ) : (
-            // Skeleton / Loading state
             [1,2,3,4].map((i) => (
               <div key={i} className="aspect-square rounded-2xl bg-slate-100 animate-pulse" />
             ))
@@ -168,19 +172,19 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
       </section>
 
       {/* Trust Bar */}
-      <section className="max-w-7xl mx-auto px-4 mb-12 sm:mb-32">
-         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 p-3 sm:p-8 rounded-2xl sm:rounded-[40px] bg-slate-50 border border-slate-100">
+      <section className="max-w-7xl mx-auto mb-12 sm:mb-32">
+         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-4 sm:p-8 rounded-2xl sm:rounded-[40px] bg-slate-50 border border-slate-100">
             {[
                { icon: Gift, label: "Premium Packaging" },
                { icon: Truck, label: "Express Delivery" },
                { icon: ShieldCheck, label: "Quality Guarantee" },
                { icon: ShoppingBag, label: "Bulk Gifting" }
             ].map((f, i) => (
-               <div key={i} className="flex items-center gap-1.5 sm:gap-4 px-1 text-center justify-center flex-col md:flex-row">
-                  <div className="h-7 w-7 sm:h-10 sm:w-10 shrink-0 rounded-lg sm:rounded-xl bg-white border border-slate-100 flex items-center justify-center text-mint">
-                     <f.icon size={14} />
+               <div key={i} className="flex items-center gap-2 sm:gap-4 py-1 justify-center flex-col">
+                  <div className="h-9 w-9 sm:h-10 sm:w-10 shrink-0 rounded-xl bg-white border border-slate-100 shadow-sm flex items-center justify-center text-mint">
+                     <f.icon size={16} />
                   </div>
-                  <p className="font-black text-[9px] sm:text-xs text-ink leading-tight">{f.label}</p>
+                  <p className="font-black text-[11px] sm:text-xs text-ink leading-tight text-center">{f.label}</p>
                </div>
             ))}
          </div>
@@ -189,14 +193,17 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
       <Testimonials />
 
       {/* Final CTA */}
-      <section className="mt-8 sm:mt-20 mx-4 max-w-7xl lg:mx-auto rounded-2xl sm:rounded-[60px] bg-mint p-6 sm:p-16 text-center text-ink relative overflow-hidden">
-        <h2 className="text-xl sm:text-4xl font-black mb-3 sm:mb-6 leading-tight">Create your next memory.</h2>
-        <p className="text-ink/60 max-w-[240px] sm:max-w-md mx-auto mb-6 sm:mb-10 text-xs sm:text-base font-bold">
+      <section className="mt-8 sm:mt-20 max-w-7xl mx-auto rounded-3xl sm:rounded-[60px] bg-mint p-8 sm:p-16 text-center text-ink relative overflow-hidden">
+        {/* Decorative blobs */}
+        <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/20 rounded-full blur-3xl" />
+        <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-ink/10 rounded-full blur-3xl" />
+        <h2 className="relative text-2xl sm:text-4xl font-black mb-3 sm:mb-6 leading-tight">Create your next memory.</h2>
+        <p className="relative text-ink/60 max-w-xs sm:max-w-md mx-auto mb-7 sm:mb-10 text-sm sm:text-base font-bold leading-relaxed">
           Step into our studio and experience real-time gift design.
         </p>
         <button 
           onClick={() => navigate("/studio")}
-          className="bg-ink text-white h-11 sm:h-14 px-8 sm:px-10 rounded-lg sm:rounded-2xl text-xs sm:text-base font-black hover:bg-slate-800 transition-all shadow-xl shadow-ink/20"
+          className="relative bg-ink text-white h-12 sm:h-14 px-9 sm:px-10 rounded-2xl text-sm sm:text-base font-black hover:bg-slate-800 transition-all shadow-xl shadow-ink/20 active:scale-95"
         >
           Enter Studio
         </button>

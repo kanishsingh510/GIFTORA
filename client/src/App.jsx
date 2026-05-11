@@ -396,7 +396,7 @@ export default function App() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl px-2.5 py-6 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 overflow-x-hidden">
         {notice && (
           <div className="mb-5 flex items-center gap-3 rounded-lg border border-mint/30 bg-mint/10 px-4 py-3 text-sm font-semibold text-teal-900">
             <CheckCircle2 size={18} aria-hidden="true" />
@@ -489,31 +489,33 @@ export default function App() {
       <Footer />
 
       {/* Mobile Bottom Navigation */}
-      <div className="fixed bottom-4 left-4 right-4 lg:hidden z-[100] bg-white/80 backdrop-blur-2xl border border-slate-200/50 rounded-[28px] py-3 shadow-2xl shadow-ink/10">
-        <div className="flex justify-around items-center px-2">
-          {tabs.map((tab) => {
-            const Icon = tab.icon;
-            const selected = location.pathname === tab.path;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => handleTabClick(tab)}
-                className={`relative flex flex-col items-center gap-1 transition-all duration-300 ${
-                  selected ? "text-coral scale-110" : "text-slate-400"
-                }`}
-              >
-                <div className={`p-1.5 rounded-xl transition-colors ${selected ? "bg-coral/10" : "bg-transparent"}`}>
-                  <Icon size={20} strokeWidth={selected ? 2.5 : 2} />
-                </div>
-                <span className="text-[9px] font-black uppercase tracking-widest">{tab.label}</span>
-                {tab.id === "cart" && cart.length > 0 && (
-                  <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-coral text-[8px] font-bold text-white ring-2 ring-white">
-                    {cart.length}
-                  </span>
-                )}
-              </button>
-            );
-          })}
+      <div className="fixed bottom-0 left-0 right-0 lg:hidden z-[100] pb-safe">
+        <div className="mx-3 mb-3 bg-white/85 backdrop-blur-2xl border border-slate-200/60 rounded-[26px] py-3 shadow-2xl shadow-ink/15">
+          <div className="flex justify-around items-center px-2">
+            {tabs.map((tab) => {
+              const Icon = tab.icon;
+              const selected = location.pathname === tab.path;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => handleTabClick(tab)}
+                  className={`relative flex flex-col items-center gap-1 transition-all duration-300 ${
+                    selected ? "text-coral scale-110" : "text-slate-400"
+                  }`}
+                >
+                  <div className={`p-1.5 rounded-xl transition-colors ${selected ? "bg-coral/10" : "bg-transparent"}`}>
+                    <Icon size={20} strokeWidth={selected ? 2.5 : 2} />
+                  </div>
+                  <span className="text-[9px] font-black uppercase tracking-widest">{tab.label}</span>
+                  {tab.id === "cart" && cart.length > 0 && (
+                    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-coral text-[8px] font-bold text-white ring-2 ring-white">
+                      {cart.length}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
