@@ -97,15 +97,23 @@ export default function StudioView({
         </div>
 
         {/* Right Column: Live Studio */}
-        <div className="order-1 lg:order-2 space-y-8 sticky top-[20px] lg:static z-20 bg-white/95 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none -mx-4 sm:mx-0 px-4 sm:px-0 py-6 sm:py-0 border-b border-slate-100 sm:border-none shadow-xl shadow-slate-200/50 sm:shadow-none" ref={customizerRef}>
+        <div className="order-1 lg:order-2 space-y-8 sticky top-[10px] lg:static z-20 bg-white/95 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none -mx-4 sm:mx-0 px-4 sm:px-0 py-6 sm:py-0 border-b border-slate-100 sm:border-none shadow-xl shadow-slate-200/50 sm:shadow-none" ref={customizerRef}>
            <div className="space-y-1 hidden sm:block">
               <h3 className="text-2xl font-black text-ink leading-none">2. Personalize</h3>
               <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Real-time product proof</p>
            </div>
            
-           <div className="space-y-6">
-              <div className="p-2 bg-slate-50 rounded-[32px] border border-slate-100 sm:bg-white sm:p-0 sm:border-none">
-                 <PreviewPanel product={selectedProduct} customizer={customizer} />
+           <div className="space-y-8">
+              {/* HIGH-END PREVIEW STAGE */}
+              <div className="relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-coral/20 to-orange-500/20 rounded-[40px] blur-xl opacity-50 group-hover:opacity-100 transition-opacity" />
+                <div className="relative aspect-square sm:aspect-auto sm:min-h-[400px] bg-gradient-to-br from-slate-50 to-slate-100 rounded-[32px] border border-white shadow-inner flex items-center justify-center p-8 overflow-hidden">
+                   <div className="absolute top-5 left-5 z-10 flex items-center gap-2 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full border border-slate-100 shadow-sm">
+                      <div className="h-2 w-2 rounded-full bg-coral animate-pulse" />
+                      <span className="text-[10px] font-black uppercase tracking-widest text-ink">Live Preview</span>
+                   </div>
+                   <PreviewPanel product={selectedProduct} customizer={customizer} />
+                </div>
               </div>
               
               <CustomizerPanel
@@ -118,6 +126,7 @@ export default function StudioView({
               />
            </div>
         </div>
+
       </section>
 
     </div>
