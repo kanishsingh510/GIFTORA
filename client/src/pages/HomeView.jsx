@@ -46,7 +46,6 @@ export default function HomeView({ products = [], apiMode = "connecting", sessio
 
       {/* 🖥️ DESKTOP VIEW */}
       <div className="hidden sm:block w-full">
-w-full">
         <section className="relative h-[480px] lg:h-[580px] overflow-hidden mb-16 bg-slate-900 mx-4 rounded-[48px]">
           <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&q=75&w=1200" className="absolute inset-0 w-full h-full object-cover opacity-55" alt="Hero" />
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/20 via-slate-900/45 to-slate-900/85" />
