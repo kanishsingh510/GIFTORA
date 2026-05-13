@@ -407,33 +407,26 @@ export default function App() {
         )}
 
         {loginOpen && (
-          location.pathname === "/" && window.innerWidth < 640 ? (
-            <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-ink/70 backdrop-blur-md" onClick={() => setLoginOpen(false)}>
-              <div onClick={(e) => e.stopPropagation()} className="w-full max-h-[90vh] overflow-y-auto rounded-[32px]">
-                <LoginPanel
-                  role={loginRole}
-                  mode={loginMode}
-                  setMode={setLoginMode}
-                  form={loginForm}
-                  setForm={setLoginForm}
-                  selectRole={setLoginRole}
-                  onSubmit={handleLogin}
-                  onClose={() => setLoginOpen(false)}
-                />
-              </div>
+          <div 
+            className={location.pathname === "/" ? "fixed inset-0 z-[200] flex items-center justify-center p-4 bg-ink/70 backdrop-blur-md sm:relative sm:inset-auto sm:z-0 sm:block sm:p-0 sm:bg-transparent sm:backdrop-blur-none" : ""} 
+            onClick={() => { if(location.pathname === "/" && window.innerWidth < 640) setLoginOpen(false); }}
+          >
+            <div 
+              onClick={(e) => e.stopPropagation()} 
+              className={location.pathname === "/" ? "w-full max-h-[90vh] overflow-y-auto rounded-[32px] sm:max-h-none sm:overflow-visible sm:rounded-none shadow-2xl sm:shadow-none" : ""}
+            >
+              <LoginPanel
+                role={loginRole}
+                mode={loginMode}
+                setMode={setLoginMode}
+                form={loginForm}
+                setForm={setLoginForm}
+                selectRole={setLoginRole}
+                onSubmit={handleLogin}
+                onClose={() => setLoginOpen(false)}
+              />
             </div>
-          ) : (
-            <LoginPanel
-              role={loginRole}
-              mode={loginMode}
-              setMode={setLoginMode}
-              form={loginForm}
-              setForm={setLoginForm}
-              selectRole={setLoginRole}
-              onSubmit={handleLogin}
-              onClose={() => setLoginOpen(false)}
-            />
-          )
+          </div>
         )}
 
         <Routes>

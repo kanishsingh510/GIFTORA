@@ -61,7 +61,9 @@ export default function StudioView({
         <div className="order-2 lg:order-1 space-y-8">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-6">
                <div className="space-y-1">
-                  <h3 className="text-lg font-black sm:text-2xl">1. {window.innerWidth < 640 ? "Pick a Gift" : "Browse Products"}</h3>
+                  <h3 className="text-lg font-black sm:text-2xl">
+                    1. <span className="sm:hidden">Pick a Gift</span><span className="hidden sm:inline">Browse Products</span>
+                  </h3>
                </div>
                
                <div className="relative w-full sm:w-auto">

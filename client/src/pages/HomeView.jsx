@@ -35,7 +35,7 @@ export default function HomeView({ products = [], apiMode = "connecting", sessio
       {/* 📱 MOBILE-ONLY REFINED VIEW */}
       <div className="block sm:hidden">
         <MobileHome 
-          products={products} 
+          products={displayProducts} 
           apiMode={apiMode} 
           navigate={navigate} 
           session={session} 
