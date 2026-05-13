@@ -1,4 +1,4 @@
-import { ShieldCheck, User, LogIn } from "lucide-react";
+import { ShieldCheck, User, LogIn, X, ChevronLeft } from "lucide-react";
 
 export default function LoginPanel({ role, mode, setMode, form, setForm, selectRole, onSubmit, onClose }) {
   const isRegister = mode === "register";
@@ -17,8 +17,14 @@ export default function LoginPanel({ role, mode, setMode, form, setForm, selectR
   const Icon = roleCopy.icon;
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6 bg-ink/60 backdrop-blur-sm animate-fade-in">
-      <section className="w-full max-w-4xl overflow-y-auto max-h-[90vh] rounded-[32px] border border-slate-200 bg-white p-3 sm:p-6 shadow-2xl">
+    <div 
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6 bg-ink/70 backdrop-blur-md animate-fade-in cursor-pointer"
+      onClick={onClose}
+    >
+      <section 
+        className="w-full max-w-4xl overflow-y-auto max-h-[90vh] rounded-[32px] border border-slate-200 bg-white p-3 sm:p-6 shadow-2xl cursor-default"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="grid gap-4 sm:gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <div className="rounded-[24px] bg-ink p-5 sm:p-8 text-white relative overflow-hidden">
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-coral/20 rounded-full blur-3xl" />
@@ -68,8 +74,8 @@ export default function LoginPanel({ role, mode, setMode, form, setForm, selectR
                   <h3 className="text-xl font-black text-ink">{isRegister ? "Start your journey" : "Welcome back"}</h3>
                   <p className="text-xs font-bold text-slate-400">Please enter your credentials</p>
                </div>
-               <button onClick={onClose} className="h-10 w-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:text-ink transition-colors">
-                  <LogIn size={18} className="rotate-180" />
+               <button onClick={onClose} className="h-10 w-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:text-coral hover:bg-coral/5 transition-all">
+                  <X size={20} />
                </button>
             </div>
 
@@ -111,13 +117,24 @@ export default function LoginPanel({ role, mode, setMode, form, setForm, selectR
                 >
                   {isRegister ? "Create Account" : "Access Studio"}
                 </button>
-                <button
-                  type="button"
-                  onClick={() => selectRole(role === "seller" ? "consumer" : "seller")}
-                  className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-300 hover:text-coral transition-colors py-2"
-                >
-                  Switch to {role === "seller" ? "Customer" : "Admin"} Login
-                </button>
+                
+                <div className="flex items-center justify-between mt-2">
+                  <button
+                    type="button"
+                    onClick={() => selectRole(role === "seller" ? "consumer" : "seller")}
+                    className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-300 hover:text-coral transition-colors"
+                  >
+                    Switch to {role === "seller" ? "Customer" : "Admin"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-300 hover:text-ink transition-colors"
+                  >
+                    <ChevronLeft size={12} />
+                    Back to Home
+                  </button>
+                </div>
               </div>
             </form>
           </div>
