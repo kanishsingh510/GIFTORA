@@ -34,24 +34,22 @@ export default function HomeView({ products = [], apiMode = "connecting" }) {
       {/* 📱 MOBILE-ONLY REFINED VIEW */}
       <div className="block sm:hidden w-full overflow-x-hidden bg-white min-h-screen">
         
-        {/* TOP BAR / SEARCH */}
-        <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-md px-4 py-4 border-b border-slate-100">
+        {/* INLINE SEARCH (NOT STICKY TO AVOID CONFLICT) */}
+        <div className="px-4 pt-4 pb-2">
           <div className="flex items-center gap-3">
             <div className="relative flex-1 group">
-              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-coral transition-colors" />
+              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
               <input 
                 type="text" 
-                placeholder="Search for your next gift..."
-                className="w-full bg-slate-50 border border-slate-100 h-11 pl-11 pr-4 rounded-xl text-[13px] font-semibold focus:ring-2 focus:ring-coral/20 focus:border-coral transition-all outline-none"
+                placeholder="Find a perfect gift..."
+                className="w-full bg-slate-50 border border-slate-100 h-12 pl-11 pr-4 rounded-2xl text-[13px] font-semibold focus:ring-2 focus:ring-coral/20 focus:border-coral transition-all outline-none"
               />
             </div>
-            <button className="h-11 w-11 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-ink active:scale-90 transition-transform">
-              <Heart size={18} />
-            </button>
           </div>
         </div>
 
         <div className="space-y-10 pb-10">
+
           
           {/* STORIES-STYLE CATEGORIES */}
           <div className="pt-6">
