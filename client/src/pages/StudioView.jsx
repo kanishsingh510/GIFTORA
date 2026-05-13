@@ -36,15 +36,23 @@ export default function StudioView({
 
   return (
     <div className="min-h-screen flex flex-col space-y-8 sm:space-y-16 animate-fade-in bg-white sm:bg-transparent">
-       {/* 1. STUDIO HEADER */}
-       <section className="text-center py-8 sm:py-16 px-5 bg-ink sm:bg-transparent text-white sm:text-ink -mx-4 sm:mx-0 sm:rounded-none rounded-b-[40px] shadow-2xl shadow-ink/10 sm:shadow-none">
+       {/* 📱 MOBILE-ONLY STUDIO HEADER */}
+       <section className="sm:hidden text-center py-8 px-5 bg-ink text-white -mx-4 rounded-b-[40px] shadow-2xl shadow-ink/10">
           <div className="inline-flex items-center gap-2 bg-coral/20 text-coral px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-6 border border-coral/10">
             <Sparkles size={12} />
             Creative Studio
           </div>
-          <h2 className="text-4xl font-black tracking-tight sm:text-7xl leading-[0.95]">Design Your<br />Own Magic.</h2>
-          <p className="mt-5 mx-auto max-w-xl text-xs sm:text-base text-white/60 sm:text-slate-500 font-medium leading-relaxed sm:text-xl">
+          <h2 className="text-4xl font-black tracking-tight leading-[0.95]">Design Your<br />Own Magic.</h2>
+          <p className="mt-5 mx-auto max-w-xl text-xs text-white/60 font-medium leading-relaxed">
              Pick a premium gift, add your personal touch, and see it come to life instantly.
+          </p>
+       </section>
+
+       {/* 🖥️ DESKTOP-ONLY STUDIO HEADER (RESTORED) */}
+       <section className="hidden sm:block text-center py-10 sm:py-16 px-4">
+          <h2 className="text-3xl font-black tracking-tighter sm:text-7xl text-ink leading-[1.05]">Design your perfect gift.</h2>
+          <p className="mt-4 sm:mt-6 mx-auto max-w-xl text-sm sm:text-base text-slate-500 font-medium leading-relaxed sm:text-xl">
+             Choose a premium item, add your personal touch, and see it come to life in real-time.
           </p>
        </section>
 
