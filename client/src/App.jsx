@@ -326,41 +326,45 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-bg-main overflow-x-hidden pb-20 lg:pb-0">
-      <header className={`sticky top-0 z-40 border-b border-slate-100 bg-white/90 backdrop-blur-xl ${location.pathname === "/" ? "hidden sm:block" : "block"}`}>
-        <div className="mx-auto max-w-7xl px-4 py-3 sm:py-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between gap-2">
+      <header className={`sticky top-0 z-40 border-b border-slate-100 bg-white/80 backdrop-blur-xl ${location.pathname === "/" ? "hidden sm:block" : "block"}`}>
+        <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-between gap-4 lg:flex-nowrap">
             {/* Logo Group */}
-            <div className="flex items-center gap-2 cursor-pointer shrink-0" onClick={() => navigate("/")}>
-              <div className="grid h-8 w-8 sm:h-11 sm:w-11 place-items-center rounded-lg bg-ink text-white ring-2 ring-orange-500/10 transition-all">
+            <div className="flex items-center gap-2 sm:gap-3 cursor-pointer" onClick={() => navigate("/")}>
+              <div className="grid h-8 w-8 sm:h-11 sm:w-11 place-items-center rounded-lg bg-ink text-white ring-2 sm:ring-4 ring-orange-500/10 transition-all hover:ring-orange-500/20">
                 <Sparkles size={16} className="text-orange-500 sm:size-[22px]" aria-hidden="true" />
               </div>
-              <div className="leading-none">
-                <p className="text-[7px] font-black uppercase tracking-[0.2em] text-orange-500 sm:text-xs">Premium</p>
-                <h1 className="text-xs font-black sm:text-2xl">Giftora</h1>
+              <div className="sm:block">
+                <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-orange-500 sm:text-xs">Premium</p>
+                <h1 className="text-sm font-black leading-tight sm:text-2xl">Giftora Studio</h1>
               </div>
             </div>
 
-            {/* Auth/User Group */}
-            <div className="flex items-center gap-2 order-2 shrink-0">
+            {/* Auth/User Group - Order 2 on mobile, Order 3 on Desktop */}
+            <div className="flex items-center gap-2 sm:gap-4 order-2">
               {checkingSession ? (
-                <RefreshCcw className="animate-spin text-slate-300" size={16} />
+                <RefreshCcw className="animate-spin text-slate-300" size={18} />
               ) : session ? (
-                <div className="flex items-center gap-2">
-                   <div className="h-7 w-7 rounded-full bg-slate-100 flex items-center justify-center">
-                      {session.role === "seller" ? <ShieldCheck size={12} /> : <User size={12} />}
-                   </div>
-                   <button onClick={logout} className="text-[10px] font-bold text-slate-400">
-                     Logout
-                   </button>
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="flex items-center gap-2">
+                     <div className="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center">
+                        {session.role === "seller" ? <ShieldCheck size={14} /> : <User size={14} />}
+                     </div>
+                     <span className="hidden sm:inline text-sm font-bold text-slate-700">{session.name}</span>
+                  </div>
+                  <button onClick={logout} className="text-[10px] sm:text-sm font-bold text-slate-400 hover:text-coral transition-colors">
+                    Logout
+                  </button>
                 </div>
               ) : (
-                <div className="flex items-center gap-2">
-                  <button onClick={() => openLogin("consumer")} className="bg-ink text-white h-8 px-3 rounded-lg text-[10px] font-black flex items-center gap-1.5">
-                    <User size={12} className="text-coral" />
+                <div className="flex items-center gap-1.5 sm:gap-3">
+                  <button onClick={() => openLogin("consumer")} className="focus-ring bg-ink text-white h-8 sm:h-11 px-3 sm:px-6 rounded-lg sm:rounded-xl text-[10px] sm:text-sm font-black hover:bg-slate-800 transition-all flex items-center gap-1 sm:gap-2">
+                    <User size={12} className="text-coral sm:size-[18px]" />
                     Login
                   </button>
-                  <button onClick={() => openLogin("seller")} className="border border-slate-200 bg-white h-8 w-8 rounded-lg flex items-center justify-center text-slate-700">
-                    <ShieldCheck size={14} />
+                  <button onClick={() => openLogin("seller")} className="focus-ring border border-slate-200 bg-white h-8 sm:h-11 px-2 sm:px-5 rounded-lg sm:rounded-xl text-[10px] sm:text-sm font-bold text-slate-700 hover:border-ink transition-all flex items-center gap-1 sm:gap-2">
+                    <ShieldCheck size={12} className="sm:size-[18px]" />
+                    Admin
                   </button>
                 </div>
               )}
