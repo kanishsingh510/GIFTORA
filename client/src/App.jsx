@@ -398,7 +398,7 @@ export default function App() {
         </div>
       </header>
 
-      <main className={`mx-auto max-w-7xl overflow-x-hidden ${location.pathname === "/" ? "py-0" : "py-6"}`}>
+      <main className={`mx-auto max-w-7xl overflow-x-hidden ${location.pathname === "/" ? "py-0 sm:py-8" : "py-6"}`}>
         {notice && (
           <div className="mb-5 flex items-center gap-3 rounded-lg border border-mint/30 bg-mint/10 px-4 py-3 text-sm font-semibold text-teal-900">
             <CheckCircle2 size={18} aria-hidden="true" />
@@ -513,13 +513,13 @@ export default function App() {
           } />
         </Routes>
       </main>
+      
       <div className={location.pathname === "/" ? "hidden sm:block" : "block"}>
         <Footer />
       </div>
 
-
-      {/* Mobile Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 lg:hidden z-[100] pb-safe">
+      {/* Mobile Bottom Navigation (Hidden on Laptop) */}
+      <div className="fixed bottom-0 left-0 right-0 sm:hidden z-[100] pb-safe">
         <div className="mx-3 mb-3 bg-white/85 backdrop-blur-2xl border border-slate-200/60 rounded-[26px] py-3 shadow-2xl shadow-ink/15">
           <div className="flex justify-around items-center px-2">
             {tabs.map((tab) => {

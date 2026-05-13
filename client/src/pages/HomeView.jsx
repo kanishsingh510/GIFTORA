@@ -46,16 +46,16 @@ export default function HomeView({ products = [], apiMode = "connecting", sessio
 
       {/* 🖥️ DESKTOP VIEW */}
       <div className="hidden sm:block w-full">
-        <section className="relative h-[480px] lg:h-[680px] overflow-hidden mb-16 bg-slate-900 mx-4 rounded-[48px]">
+        <section className="relative h-[480px] lg:h-[580px] overflow-hidden mb-16 bg-slate-900 mx-4 rounded-[48px]">
           <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&q=75&w=1200" className="absolute inset-0 w-full h-full object-cover opacity-55" alt="Hero" />
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/20 via-slate-900/45 to-slate-900/85" />
           <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-5">
-            <span className="inline-block bg-coral/90 text-white text-xs font-black uppercase tracking-[0.25em] px-4 py-1.5 rounded-full mb-6 border border-white/20">✦ Premium Gifting</span>
-            <h1 className="text-5xl lg:text-7xl font-serif font-bold text-white leading-tight mb-6 max-w-4xl mx-auto">Perfect Gifts for Every Occasion</h1>
-            <p className="text-lg lg:text-xl font-medium text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed">Discover unique presents that tell your story with our interactive design studio.</p>
-            <div className="flex flex-row gap-4 justify-center">
-              <button onClick={() => navigate("/studio")} className="focus-ring bg-coral text-white font-black text-lg h-16 px-12 rounded-2xl hover:bg-[#df4937] active:scale-95 transition-all shadow-xl shadow-coral/20">Shop Now</button>
-              <button onClick={() => document.getElementById("shop-categories")?.scrollIntoView({ behavior: "smooth" })} className="focus-ring bg-white/10 backdrop-blur-md text-white border border-white/30 font-black text-lg h-16 px-12 rounded-2xl hover:bg-white/20 active:scale-95 transition-all">Explore</button>
+            <span className="inline-block bg-coral/90 text-white text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full mb-5">✦ Premium Gifting</span>
+            <h1 className="text-5xl lg:text-6xl font-serif font-bold text-white leading-tight mb-4 max-w-2xl mx-auto">Perfect Gifts for Every Occasion</h1>
+            <p className="text-lg lg:text-xl font-medium text-white/80 mb-8 max-w-md mx-auto leading-relaxed">Discover unique presents that tell your story</p>
+            <div className="flex flex-row gap-3 justify-center">
+              <button onClick={() => navigate("/studio")} className="bg-coral text-white font-black text-base h-14 px-10 rounded-2xl hover:bg-[#e24e3c] active:scale-95 transition-all shadow-lg">Shop Now</button>
+              <button onClick={() => document.getElementById("shop-categories")?.scrollIntoView({ behavior: "smooth" })} className="bg-white/15 backdrop-blur-md text-white border border-white/30 font-black text-base h-14 px-10 rounded-2xl hover:bg-white/25 active:scale-95 transition-all">Explore</button>
             </div>
           </div>
         </section>
