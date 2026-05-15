@@ -72,7 +72,9 @@ para("Update the .env file with your credentials:")
 code_block("""PORT=5000
 CLIENT_ORIGIN=http://localhost:5173
 MONGODB_URI=your_mongodb_connection_string
-JWT_SECRET=your_secure_secret_key""")
+JWT_SECRET=your_secure_secret_key
+RAZORPAY_KEY_ID=your_razorpay_key_id
+RAZORPAY_KEY_SECRET=your_razorpay_key_secret""")
 
 h2("3.3 Frontend Configuration")
 para("The frontend is configured to proxy requests to localhost:5000 in development. No manual .env is required for local setup unless deploying to production.")

@@ -278,6 +278,9 @@ export default function App() {
     };
 
     try {
+      console.log("Starting checkout with method:", paymentMethod);
+      setNotice("Initializing payment...");
+
       // Step 2: Create Razorpay order
       const rzpOrder = await api("/payment/create-order", {
         method: "POST",
@@ -288,10 +291,11 @@ export default function App() {
         })
       });
 
+      console.log("Razorpay order created on backend:", rzpOrder);
+
       // Step 3: Handle Demo vs Real Razorpay
-      // If the user didn't select Razorpay, or if we want to bypass for demo, we can.
-      // But the user wants it integrated, so let's try to open the modal if "Razorpay" is chosen.
       if (paymentMethod !== "Razorpay" && rzpOrder.demo) {
+        console.log("Processing as demo order (no Razorpay modal)");
         orderPayload.payment = {
           method: paymentMethod,
           status: "Paid (Demo Mode)",
@@ -307,8 +311,13 @@ export default function App() {
 
       // Step 4: Open Razorpay checkout modal
       if (!window.Razorpay) {
-        setNotice("Razorpay SDK not loaded. Please check your internet connection.");
+        console.error("Razorpay SDK (checkout.js) not found on window object.");
+        setNotice("Payment gateway script not loaded. Please refresh the page.");
         return;
+      }
+
+      if (!rzpOrder.key || rzpOrder.key.includes("placeholder")) {
+        console.warn("Using a placeholder or missing Razorpay key:", rzpOrder.key);
       }
 
       const options = {
@@ -317,10 +326,12 @@ export default function App() {
         currency: rzpOrder.currency,
         name: "Giftora Studio",
         description: `Order — ${cart.length} custom gift(s)`,
-        order_id: rzpOrder.demo ? undefined : rzpOrder.id, // Only send order_id if it's real
+        order_id: (rzpOrder.demo || !rzpOrder.id.startsWith("order_")) ? undefined : rzpOrder.id,
         handler: async function (response) {
+          console.log("Razorpay payment successful:", response.razorpay_payment_id);
+          setNotice("Verifying payment...");
           try {
-            // Step 4: Verify payment on server
+            // Step 5: Verify payment on server
             const verification = await api("/payment/verify", {
               method: "POST",
               body: JSON.stringify({
@@ -331,7 +342,8 @@ export default function App() {
             });
 
             if (verification.verified) {
-              // Step 5: Place order
+              console.log("Payment verified. Placing final order...");
+              // Step 6: Place order
               orderPayload.payment = {
                 method: "Razorpay",
                 status: "Paid",
@@ -340,15 +352,16 @@ export default function App() {
               const created = await api("/orders", { method: "POST", body: JSON.stringify(orderPayload) });
               setOrders((current) => [created, ...current]);
               setCart([]);
-              setNotice(`Order ${created.orderNumber} placed! Payment ID: ${response.razorpay_payment_id}`);
+              setNotice(`Order ${created.orderNumber} placed successfully!`);
               navigate("/orders");
             } else {
-              setNotice("Payment verification failed. Please contact support.");
+              setNotice("Payment verification failed.");
             }
           } catch (error) {
-            setNotice(`Order failed after payment: ${error.message}`);
+            console.error("Verification error:", error);
+            setNotice(`Order verification failed: ${error.message}`);
           }
-        },
+        },},
         prefill: {
           name: user.name,
           email: user.email,
