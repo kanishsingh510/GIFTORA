@@ -4,7 +4,6 @@ import { mongoReady, memoryStore } from "../config/db.js";
 function cleanProduct(product) {
   const raw = product.toObject ? product.toObject() : product;
   return {
-    id: raw.slug,
     slug: raw.slug,
     name: raw.name,
     category: raw.category,
@@ -22,12 +21,28 @@ function cleanProduct(product) {
   };
 }
 
+function cleanProductLite(product) {
+  const raw = product.toObject ? product.toObject() : product;
+  return {
+    slug: raw.slug,
+    name: raw.name,
+    category: raw.category,
+    price: raw.price,
+    image: raw.image,
+    description: raw.description,
+    colors: raw.colors,
+    customizationAreas: raw.customizationAreas,
+    active: raw.active
+  };
+}
+
 export const getProducts = async (req, res) => {
+  const lite = req.query.lite === "true";
   if (mongoReady) {
     const products = await Product.find({ active: true }).sort({ category: 1, price: 1 });
-    return res.json(products.map(cleanProduct));
+    return res.json(products.map(p => lite ? cleanProductLite(p) : cleanProduct(p)));
   }
-  res.json(memoryStore.products.map(cleanProduct));
+  res.json(memoryStore.products.filter(p => p.active).map(p => lite ? cleanProductLite(p) : cleanProduct(p)));
 };
 
 export const updateProduct = async (req, res) => {

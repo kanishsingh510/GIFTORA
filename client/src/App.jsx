@@ -100,33 +100,30 @@ export default function App() {
     };
   }, [adminOrders, cart.length]);
 
-  // Initial Load: Session and Products
   useEffect(() => {
     async function init() {
-      // 1. Check session
-      try {
-        const user = await api("/auth/me");
-        setSession(user);
-        if (user.role === "consumer") {
-          setUser({ name: user.name, email: user.email, phone: user.phone || "" });
-        }
-      } catch (err) {
-        setSession(null);
-      } finally {
-        setCheckingSession(false);
-      }
+      // Parallelize session check and product loading
+      const sessionPromise = api("/auth/me").catch(() => null);
+      const productsPromise = api("/products?lite=true").catch(() => fallbackProducts);
 
-      // 2. Load products
-      try {
-        const data = await api("/products");
-        if (data && data.length > 0) {
-          setProducts(data);
-          setApiMode("api");
-        } else {
-          setProducts(fallbackProducts);
-          setApiMode("demo");
+      const [userData, productData] = await Promise.all([sessionPromise, productsPromise]);
+
+      // 1. Handle session
+      if (userData) {
+        setSession(userData);
+        if (userData.role === "consumer") {
+          setUser({ name: userData.name, email: userData.email, phone: userData.phone || "" });
         }
-      } catch (err) {
+      } else {
+        setSession(null);
+      }
+      setCheckingSession(false);
+
+      // 2. Handle products
+      if (productData && productData.length > 0) {
+        setProducts(productData);
+        setApiMode("api");
+      } else {
         setProducts(fallbackProducts);
         setApiMode("demo");
       }
@@ -441,9 +438,30 @@ export default function App() {
           } />
           <Route path="/studio" element={
             products.length === 0 ? (
-              <div className="flex min-h-[400px] flex-col items-center justify-center text-center">
-                <RefreshCcw className="mb-4 animate-spin text-coral" size={32} />
-                <p className="text-sm font-black uppercase tracking-widest text-slate-400">Syncing with studio...</p>
+              <div className="px-4 sm:px-6 lg:px-8 py-8 animate-pulse">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12">
+                   {/* Catalog Skeleton */}
+                   <div className="lg:col-span-8 space-y-8">
+                      <div className="h-10 w-48 bg-slate-100 rounded-lg mb-8" />
+                      <div className="flex gap-2 overflow-hidden mb-8">
+                         {[1,2,3,4].map(i => <div key={i} className="h-9 w-20 bg-slate-50 rounded-full shrink-0" />)}
+                      </div>
+                      <div className="grid gap-4 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+                        {[1,2,3,4,5,6,7,8].map(i => (
+                          <div key={i} className="aspect-square bg-slate-50 rounded-2xl border border-slate-100 p-4 space-y-3">
+                             <div className="aspect-square bg-slate-100 rounded-xl" />
+                             <div className="h-3 w-1/2 bg-slate-100 rounded-full" />
+                             <div className="h-4 w-3/4 bg-slate-200 rounded-full" />
+                          </div>
+                        ))}
+                      </div>
+                   </div>
+                   {/* Customizer Skeleton */}
+                   <div className="lg:col-span-4 space-y-8">
+                      <div className="h-8 w-32 bg-slate-100 rounded-lg" />
+                      <div className="h-[400px] bg-slate-50 rounded-[32px] border border-slate-100" />
+                   </div>
+                </div>
               </div>
             ) : (
               <StudioView
