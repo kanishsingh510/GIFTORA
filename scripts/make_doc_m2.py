@@ -105,9 +105,11 @@ for title, desc in [
      "update quantities inline, remove items, and proceed to checkout. The checkout collects delivery "
      "address, validates all required fields, and submits orders to the backend API."),
     ("Payment Gateway Integration",
-     "A simulated secure payment system supports three methods: Giftora Secure Demo Pay, Card test "
-     "payment, and UPI test payment. Automatic pricing logic: Rs. 79 delivery waived above Rs. 999, "
-     "Rs. 150 discount applied above Rs. 1,499. Each order generates a unique transaction ID."),
+     "A full Razorpay integration provides secure payment processing. The system supports "
+     "creating Razorpay orders via the backend, a native checkout modal on the frontend, "
+     "and server-side signature verification to prevent tampering. Automatic pricing logic "
+     "is applied: Rs. 79 delivery is waived for orders above Rs. 999, and a Rs. 150 "
+     "discount applies to orders above Rs. 1,499. Each order generates a unique transaction ID."),
     ("Order Tracking System",
      "After checkout, orders receive a unique order number (format: GFT-XXXXXX-XXX) and are persisted "
      "to MongoDB with full customer, items, totals, payment, and tracking data. Customers view all "
@@ -166,20 +168,23 @@ for i, (p2,v) in enumerate([
     if i % 2 == 0: shade_row(r)
 doc.add_paragraph()
 
-h2("3.3 CORS Policy")
-para("The server accepts credentials from any origin to support the decoupled Vercel frontend + API model:")
-code_block("""app.use(cors({
-  origin: (origin, callback) => callback(null, true),
-  credentials: true
-}));""")
+h2("3.3 Razorpay Integration Details")
+bullets_razorpay = [
+    "Razorpay SDK integrated on the backend for secure order creation",
+    "Frontend loads Razorpay checkout.js for a native payment experience",
+    "Signature verification (HMAC-SHA256) on the server to ensure payment authenticity",
+    "Supports Credit/Debit Cards, UPI, Netbanking, and Wallets",
+    "Graceful fallback to demo mode if API keys are not provided",
+]
+for b in bullets_razorpay:
+    bullet(b)
 doc.add_paragraph()
 
-h2("3.4 Vite Dev Proxy")
-para("In development, the Vite config proxies /api requests to the local Express server:")
-code_block("""server: {
-  port: 5173,
-  proxy: { "/api": "http://localhost:5000" }
-}""")
+h2("3.4 Checkout Validation")
+para("1. User must be logged in as Consumer → 2. Cart must not be empty → "
+     "3. Name + Email required → 4. Address line1 + City required → "
+     "5. Payment method selected → 6. Order submitted via POST /api/orders → "
+     "7. Order number generated → 8. Cart cleared → 9. Redirected to Orders page")
 doc.add_paragraph()
 
 # ═══════════════════ 4. CART & CHECKOUT ═══════════════════
@@ -210,12 +215,6 @@ for i, (rule,val) in enumerate([
     if i % 2 == 0: shade_row(r)
 doc.add_paragraph()
 
-h2("4.3 Checkout Flow")
-para("1. User must be logged in as Consumer → 2. Cart must not be empty → "
-     "3. Name + Email required → 4. Address line1 + City required → "
-     "5. Payment method selected → 6. Order submitted via POST /api/orders → "
-     "7. Order number generated → 8. Cart cleared → 9. Redirected to Orders page")
-doc.add_paragraph()
 
 # ═══════════════════ 5. ORDER SYSTEM ═══════════════════
 h1("5. Order Tracking System"); add_hr()
@@ -327,9 +326,11 @@ doc.add_paragraph()
 
 # ═══════════════════ 7. API ENDPOINTS ═══════════════════
 h1("7. API Endpoints — Milestone 2"); add_hr()
-api = doc.add_table(rows=8, cols=3); api.style = 'Table Grid'
+api = doc.add_table(rows=10, cols=3); api.style = 'Table Grid'
 orange_header(api, ["Method + Route", "Description", "Auth"])
 for i, (m,d,a) in enumerate([
+    ("POST /api/payment/create-order",        "Create a Razorpay order for the cart total",               "Consumer"),
+    ("POST /api/payment/verify",              "Verify Razorpay payment signature",                        "Consumer"),
     ("GET /api/orders",                       "Fetch all (seller) or by email (consumer)",    "Yes"),
     ("POST /api/orders",                      "Place order with items, totals, address",       "Consumer"),
     ("PATCH /api/orders/:orderNumber/status",  "Update order fulfillment status",              "Seller"),
@@ -414,5 +415,5 @@ cr = cl.add_run("All deliverables for Milestone 2 have been completed, tested, a
                 "The Giftora platform is fully operational end-to-end.")
 cr.italic = True; cr.font.size = Pt(11); cr.font.color.rgb = RGBColor(80,80,80)
 
-doc.save(r"C:\Users\siddh\Desktop\Giftora_Milestone2_Report_v2.docx")
+doc.save(r"C:\Users\siddh\Desktop\Giftora_Milestone2_Report_v3.docx")
 print("Milestone 2 saved!")

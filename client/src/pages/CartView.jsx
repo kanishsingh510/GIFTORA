@@ -184,6 +184,7 @@ function CheckoutPanel({
             onChange={(event) => setPaymentMethod(event.target.value)}
             className="focus-ring min-h-11 rounded-lg border border-slate-200 bg-slate-50 px-3"
           >
+            <option>Razorpay</option>
             <option>Giftora Secure Demo Pay</option>
             <option>Card test payment</option>
             <option>UPI test payment</option>
@@ -202,7 +203,7 @@ function CheckoutPanel({
         className="focus-ring mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-ink px-4 text-sm font-black text-white transition hover:bg-slate-800"
       >
         <ShieldCheck size={18} aria-hidden="true" />
-        Confirm secure demo order
+        {paymentMethod === "Razorpay" ? "Pay securely with Razorpay" : "Confirm secure demo order"}
       </button>
     </section>
   );

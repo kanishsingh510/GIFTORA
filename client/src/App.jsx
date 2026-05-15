@@ -65,7 +65,7 @@ export default function App() {
   const [loginForm, setLoginForm] = useState({ name: "", email: "", password: "", phone: "" });
   const [user, setUser] = useState(() => getSaved("giftora-user", blankUser));
   const [address, setAddress] = useState(() => getSaved("giftora-address", blankAddress));
-  const [paymentMethod, setPaymentMethod] = useState("Giftora Secure Demo Pay");
+  const [paymentMethod, setPaymentMethod] = useState("Razorpay");
   const [notice, setNotice] = useState("");
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -278,7 +278,7 @@ export default function App() {
     };
 
     try {
-      // Step 1: Create Razorpay order
+      // Step 2: Create Razorpay order
       const rzpOrder = await api("/payment/create-order", {
         method: "POST",
         body: JSON.stringify({
@@ -288,8 +288,10 @@ export default function App() {
         })
       });
 
-      // Step 2: If demo mode (no real Razorpay keys), skip modal
-      if (rzpOrder.demo) {
+      // Step 3: Handle Demo vs Real Razorpay
+      // If the user didn't select Razorpay, or if we want to bypass for demo, we can.
+      // But the user wants it integrated, so let's try to open the modal if "Razorpay" is chosen.
+      if (paymentMethod !== "Razorpay" && rzpOrder.demo) {
         orderPayload.payment = {
           method: paymentMethod,
           status: "Paid (Demo Mode)",
@@ -303,14 +305,19 @@ export default function App() {
         return;
       }
 
-      // Step 3: Open Razorpay checkout modal
+      // Step 4: Open Razorpay checkout modal
+      if (!window.Razorpay) {
+        setNotice("Razorpay SDK not loaded. Please check your internet connection.");
+        return;
+      }
+
       const options = {
         key: rzpOrder.key,
         amount: rzpOrder.amount,
         currency: rzpOrder.currency,
         name: "Giftora Studio",
         description: `Order — ${cart.length} custom gift(s)`,
-        order_id: rzpOrder.id,
+        order_id: rzpOrder.demo ? undefined : rzpOrder.id, // Only send order_id if it's real
         handler: async function (response) {
           try {
             // Step 4: Verify payment on server
