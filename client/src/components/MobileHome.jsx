@@ -118,36 +118,6 @@ export default function MobileHome({ products, apiMode, navigate, session, openL
         </div>
       </div>
 
-      {/* 6. CUSTOMER FEEDBACK (TESTIMONIALS) */}
-      <div className="mt-16 bg-slate-50/50 py-12">
-        <div className="px-5 mb-8">
-           <p className="text-[10px] font-black uppercase tracking-[0.2em] text-coral mb-2">Social Proof</p>
-           <h3 className="text-2xl font-black text-ink leading-tight">What our circle<br />is saying.</h3>
-        </div>
-        
-        <div className="flex overflow-x-auto gap-4 px-5 scrollbar-none touch-pan-x">
-          {[
-            { name: "Siddhant", text: "The studio is pure magic. Seeing the gift come to life is addictive!", role: "Luxury Buyer" },
-            { name: "Ananya", text: "Fastest delivery I've ever seen for a personalized gift. 10/10.", role: "Corporate" },
-            { name: "Rahul", text: "The quality of the engraving on the bottle was top-notch.", role: "Collector" }
-          ].map((t, i) => (
-            <div key={i} className="shrink-0 w-[280px] bg-white p-6 rounded-[32px] shadow-xl shadow-slate-200/40 border border-slate-100">
-              <div className="flex gap-1 mb-4">
-                {[1, 2, 3, 4, 5].map(s => <Star key={s} size={12} className="fill-orange-400 text-orange-400" />)}
-              </div>
-              <p className="text-[13px] font-medium text-slate-600 leading-relaxed mb-6 italic">"{t.text}"</p>
-              <div className="flex items-center gap-3">
-                <div className="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center font-black text-[10px] text-ink">{t.name[0]}</div>
-                <div>
-                  <p className="text-[11px] font-black text-ink">{t.name}</p>
-                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{t.role}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* 7. TRUST FEATURES */}
       <div className="mt-16 px-5 pb-20">
         <div className="grid grid-cols-2 gap-4">

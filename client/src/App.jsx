@@ -361,7 +361,7 @@ export default function App() {
             console.error("Verification error:", error);
             setNotice(`Order verification failed: ${error.message}`);
           }
-        },},
+        },
         prefill: {
           name: user.name,
           email: user.email,

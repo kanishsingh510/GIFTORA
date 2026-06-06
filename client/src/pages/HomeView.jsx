@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { ShoppingBag, Gift, Truck, ShieldCheck, Search, Sparkles, Heart, Star, ChevronRight, Zap, Flame, Award } from "lucide-react";
 import CategoryCard from "../components/CategoryCard.jsx";
-import Testimonials from "../components/Testimonials.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import MobileHome from "../components/MobileHome.jsx";
 import { fallbackProducts } from "../utils/constants.js";
@@ -110,8 +109,6 @@ export default function HomeView({ products = [], apiMode = "connecting", sessio
             ))}
           </div>
         </section>
-
-        <Testimonials />
 
         <section className="mt-16 max-w-7xl mx-auto rounded-[48px] bg-mint p-16 text-center text-ink relative overflow-hidden mb-16">
           <div className="absolute -top-8 -right-8 w-40 h-40 bg-white/20 rounded-full blur-3xl pointer-events-none" />
